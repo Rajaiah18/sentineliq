@@ -18,8 +18,31 @@ from validation.checks import DataValidator
 from evaluation.evaluator import RiskEvaluator
 from risk_engine.rules import DEFAULT_RULES
 
+
+class CompatibleJinja2Templates(Jinja2Templates):
+    """
+    Subclass that provides seamless compatibility across Starlette versions.
+    Starlette <0.36 used TemplateResponse(name, context)
+    Starlette >=0.36 uses TemplateResponse(request=request, name=name, context=context)
+    """
+    def TemplateResponse(self, *args, **kwargs):
+        if len(args) >= 2 and isinstance(args[0], str) and isinstance(args[1], dict):
+            name = args[0]
+            context = args[1]
+            request = context.get("request") or kwargs.get("request")
+            status_code = kwargs.get("status_code", 200)
+            return super().TemplateResponse(request=request, name=name, context=context, status_code=status_code)
+        elif len(args) == 1 and isinstance(args[0], str):
+            name = args[0]
+            context = kwargs.get("context", {})
+            request = context.get("request") or kwargs.get("request")
+            status_code = kwargs.get("status_code", 200)
+            return super().TemplateResponse(request=request, name=name, context=context, status_code=status_code)
+        return super().TemplateResponse(*args, **kwargs)
+
+
 frontend_router = APIRouter(include_in_schema=False)
-templates = Jinja2Templates(directory="frontend/templates")
+templates = CompatibleJinja2Templates(directory="frontend/templates")
 
 
 def get_session_user(request: Request) -> Optional[dict]:
