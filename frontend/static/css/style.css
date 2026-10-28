@@ -171,6 +171,30 @@ body {
   color: #93c5fd;
 }
 
+.role-pill-admin {
+  background-color: #581c87;
+  color: #d8b4fe;
+  border: 1px solid #7e22ce;
+}
+
+.role-pill-analyst {
+  background-color: #0c4a6e;
+  color: #7dd3fc;
+  border: 1px solid #0284c7;
+}
+
+.role-pill-compliance {
+  background-color: #713f12;
+  color: #fde047;
+  border: 1px solid #ca8a04;
+}
+
+.role-pill-readonly {
+  background-color: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
+}
+
 /* Layout Container */
 .container {
   max-width: 1400px;

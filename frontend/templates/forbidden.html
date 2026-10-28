@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}403 Access Denied | SentinelIQ{% endblock %}
+
+{% block content %}
+<div style="max-width: 650px; margin: 4rem auto; text-align: center;">
+  <div style="width: 72px; height: 72px; margin: 0 auto 1.5rem; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 32px; color: #ef4444; font-weight: 800;">!</span>
+  </div>
+
+  <h1 style="font-size: 28px; font-weight: 800; color: #ffffff; margin-bottom: 0.75rem;">Access Denied — 403 Forbidden</h1>
+  <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 2rem; line-height: 1.6;">
+    Your current role does not have authorization to view or perform operations on this resource.
+  </p>
+
+  <div class="panel-card" style="text-align: left; margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-subtle);">
+      <span style="color: var(--text-muted);">Authenticated User:</span>
+      <strong style="color: #ffffff;">{{ current_user.username if current_user else "Anonymous" }}</strong>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-subtle);">
+      <span style="color: var(--text-muted);">Assigned Role:</span>
+      <span class="role-pill">{{ current_user.role if current_user else "UNAUTHENTICATED" }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-subtle);">
+      <span style="color: var(--text-muted);">Attempted Path:</span>
+      <code style="color: var(--brand-cyan);">{{ attempted_path | default(request.url.path) }}</code>
+    </div>
+    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0;">
+      <span style="color: var(--text-muted);">Required Permission:</span>
+      <span style="color: #f87171; font-weight: 600;">{{ required_permission | default("ELEVATED_ROLE") }}</span>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 1rem; justify-content: center;">
+    <a href="/dashboard" class="btn btn-primary">Return to My Dashboard</a>
+    <a href="/login" class="btn btn-secondary">Switch User / Login</a>
+  </div>
+</div>
+{% endblock %}

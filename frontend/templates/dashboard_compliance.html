@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Compliance Oversight & Review{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
+      <h1 class="page-title">Regulatory Compliance & Case Review</h1>
+      <span class="role-pill" style="background-color: #713f12; color: #fde047; border: 1px solid #ca8a04;">COMPLIANCE REVIEWER</span>
+    </div>
+    <p class="page-subtitle">Oversight of escalated financial crimes, suspicious activity report (SAR) sign-offs, and data quality audits.</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem;">
+    <a href="/cases?status=PENDING_REVIEW" class="btn btn-primary btn-sm">Cases Pending Review</a>
+    <a href="/audit" class="btn btn-secondary btn-sm">Audit Trail</a>
+    <a href="/validation" class="btn btn-secondary btn-sm">Data Quality</a>
+    <a href="/reports" class="btn btn-secondary btn-sm">Reports</a>
+  </div>
+</div>
+
+<!-- Compliance Metric Cards -->
+<div class="metrics-grid">
+  <div class="metric-card open">
+    <div class="metric-label">Cases Awaiting Review</div>
+    <div class="metric-value" style="color: #fb923c;">{{ metrics.pending_review_count | default(0) }}</div>
+    <div class="metric-sub">Pending final disposition</div>
+  </div>
+
+  <div class="metric-card critical">
+    <div class="metric-label">Escalated Cases</div>
+    <div class="metric-value" style="color: #f87171;">{{ metrics.escalated_cases_count | default(0) }}</div>
+    <div class="metric-sub">Requires senior sign-off</div>
+  </div>
+
+  <div class="metric-card high">
+    <div class="metric-label">Confirmed Suspicious (SAR)</div>
+    <div class="metric-value" style="color: #f87171;">{{ metrics.confirmed_suspicious_count | default(0) }}</div>
+    <div class="metric-sub">Regulatory filing candidates</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">False Positive Rate</div>
+    <div class="metric-value">{{ metrics.false_positives_count | default(0) }}</div>
+    <div class="metric-sub">Dismissed investigations</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Detection F1 Score</div>
+    <div class="metric-value" style="color: #4ade80;">{{ metrics.eval_f1 | round(3) }}</div>
+    <div class="metric-sub">P: {{ metrics.eval_precision | round(2) }} | R: {{ metrics.eval_recall | round(2) }}</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Data Quality Integrity</div>
+    <div class="metric-value" style="color: var(--brand-cyan);">{{ metrics.val_checks_pass }} / {{ metrics.val_total_checks }}</div>
+    <div class="metric-sub">24 validation rules passed</div>
+  </div>
+</div>
+
+<!-- Cases Awaiting Compliance Sign-Off -->
+<div class="panel-card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+    <h3 class="panel-title" style="margin-bottom: 0;">Cases Pending Compliance Review & Final Disposition</h3>
+    <a href="/cases?status=PENDING_REVIEW" style="font-size: 12px; color: var(--brand-cyan); text-decoration: none;">View All Pending Review &rarr;</a>
+  </div>
+  {% if metrics.pending_review_cases %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Case ID</th>
+          <th>Title</th>
+          <th>Priority</th>
+          <th>Customer</th>
+          <th>Assigned Analyst</th>
+          <th>Created</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in metrics.pending_review_cases %}
+          <tr>
+            <td><code>{{ c.case_id }}</code></td>
+            <td><strong style="color: #ffffff;">{{ c.case_title }}</strong></td>
+            <td><span class="badge badge-{{ c.priority | lower }}">{{ c.priority }}</span></td>
+            <td><code>{{ c.customer_id }}</code></td>
+            <td>{{ c.assigned_analyst_id | default("UNASSIGNED") }}</td>
+            <td style="color: var(--text-dim); font-size: 11px;">{{ c.created_at[:10] }}</td>
+            <td>
+              <a href="/cases/{{ c.case_id }}" class="btn btn-primary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 11px;">Review & Disposition</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div style="padding: 1.5rem 0; text-align: center;">
+      <p style="color: var(--text-muted); margin-bottom: 0.5rem;">No cases currently awaiting compliance review.</p>
+      <a href="/cases" class="btn btn-secondary btn-sm">Inspect All Active Cases</a>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Recent Compliance & Audit Activity Stream -->
+<div class="panel-card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+    <h3 class="panel-title" style="margin-bottom: 0;">Compliance Audit Activity Feed</h3>
+    <a href="/audit" style="font-size: 12px; color: var(--brand-cyan); text-decoration: none;">Full Audit Trail &rarr;</a>
+  </div>
+  {% if metrics.recent_audit_events %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Event ID</th>
+          <th>Event Type</th>
+          <th>Actor</th>
+          <th>Entity</th>
+          <th>Action Summary</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for evt in metrics.recent_audit_events[:6] %}
+          <tr>
+            <td><code>{{ evt.event_id }}</code></td>
+            <td><span class="badge badge-open">{{ evt.event_type }}</span></td>
+            <td><strong>{{ evt.actor_id }}</strong></td>
+            <td><code>{{ evt.entity_type }}:{{ evt.entity_id }}</code></td>
+            <td><span style="color: var(--text-muted); font-size: 12px;">{{ evt.action_summary | truncate(60) }}</span></td>
+            <td style="color: var(--text-dim); font-size: 11px;">{{ evt.timestamp[:19] | replace("T", " ") }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="color: var(--text-muted); padding: 0.5rem 0;">No audit events found.</p>
+  {% endif %}
+</div>
+{% endblock %}

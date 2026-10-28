@@ -12,7 +12,8 @@
 
 <div class="detail-grid">
   <div>
-    <!-- Trigger Generation Form -->
+    {% if can_run_generator %}
+    <!-- Trigger Generation Form (ADMIN Only) -->
     <div class="panel-card">
       <h3 class="panel-title">Deterministic Generator Orchestration</h3>
       <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem;">
@@ -40,6 +41,14 @@
         </button>
       </form>
     </div>
+    {% else %}
+    <div class="panel-card" style="border-left: 4px solid var(--text-muted); margin-bottom: 1.5rem;">
+      <h3 class="panel-title">Dataset Manifest & Repository</h3>
+      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        Synthetic dataset generation is restricted to <strong>ADMIN</strong> users. Below is the verified export manifest with SHA-256 integrity digests for all generated datasets.
+      </p>
+    </div>
+    {% endif %}
 
     <!-- Available Exports Table -->
     <div class="table-card">

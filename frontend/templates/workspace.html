@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Investigation Workspace{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
+      <h1 class="page-title">Analyst Investigation Workspace</h1>
+      <span class="role-pill" style="background-color: #0c4a6e; color: #7dd3fc; border: 1px solid #0284c7;">INVESTIGATOR</span>
+    </div>
+    <p class="page-subtitle">Streamlined case management, alert association, evidence review, and note keeping.</p>
+  </div>
+  <div>
+    <a href="/cases" class="btn btn-secondary btn-sm">All Cases</a>
+    <a href="/alerts" class="btn btn-primary btn-sm">Triage New Alerts</a>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+  <!-- Left Column: Active Cases Assigned to Me -->
+  <div class="panel-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h3 class="panel-title" style="margin-bottom: 0;">My Active Investigation Cases</h3>
+      <span class="badge badge-open">{{ my_cases | length }} Active</span>
+    </div>
+    {% if my_cases %}
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Case ID</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in my_cases %}
+            <tr>
+              <td><code>{{ c.case_id }}</code></td>
+              <td><strong style="color: #ffffff;">{{ c.case_title }}</strong></td>
+              <td><span class="badge badge-{{ c.priority | lower }}">{{ c.priority }}</span></td>
+              <td><span class="badge badge-open">{{ c.case_status }}</span></td>
+              <td style="color: var(--text-dim); font-size: 11px;">{{ c.created_at[:10] }}</td>
+              <td>
+                <a href="/cases/{{ c.case_id }}" class="btn btn-primary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 11px;">Open Dossier</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div style="padding: 2rem 0; text-align: center;">
+        <p style="color: var(--text-muted); margin-bottom: 0.75rem;">No cases currently assigned to you.</p>
+        <a href="/cases" class="btn btn-secondary btn-sm">Claim an Unassigned Case</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Right Column: Quick Case Opener -->
+  <div class="panel-card">
+    <h3 class="panel-title">Open New Investigation Case</h3>
+    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 1rem;">
+      Create a case linked to an alert and customer profile.
+    </p>
+    <form action="/cases" method="POST">
+      <div style="margin-bottom: 0.75rem;">
+        <label class="form-label" style="font-size: 12px;">Alert ID to Investigate</label>
+        <input type="text" name="alert_id" class="input-field" placeholder="e.g. ALT-2026-00000001" required style="width: 100%;">
+      </div>
+      <div style="margin-bottom: 0.75rem;">
+        <label class="form-label" style="font-size: 12px;">Customer ID</label>
+        <input type="text" name="customer_id" class="input-field" placeholder="e.g. CUST-00001" required style="width: 100%;">
+      </div>
+      <div style="margin-bottom: 0.75rem;">
+        <label class="form-label" style="font-size: 12px;">Case Title</label>
+        <input type="text" name="case_title" class="input-field" placeholder="Brief descriptive summary" required style="width: 100%;">
+      </div>
+      <div style="margin-bottom: 1rem;">
+        <label class="form-label" style="font-size: 12px;">Initial Priority</label>
+        <select name="priority" class="input-field" style="width: 100%;">
+          <option value="LOW">LOW</option>
+          <option value="MEDIUM" selected>MEDIUM</option>
+          <option value="HIGH">HIGH</option>
+          <option value="CRITICAL">CRITICAL</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Create Case & Claim</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

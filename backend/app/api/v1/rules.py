@@ -5,7 +5,7 @@ from typing import Optional, Dict, Any, List
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
 from backend.app.database.repository import repo
-from backend.app.security.permissions import RequireAdmin
+from backend.app.security.permissions import RequireAdmin, RequireAnalyst
 from risk_engine.engine import RiskEngine
 
 router = APIRouter(prefix="/rules", tags=["Risk Rules"])
@@ -50,7 +50,7 @@ def update_rule(rule_id: str, payload: RuleUpdateRequest, user: Dict[str, Any] =
 
 
 @router.post("/{rule_id}/test")
-def execute_rule_test(rule_id: str, payload: RuleTestRequest):
+def execute_rule_test(rule_id: str, payload: RuleTestRequest, user: Dict[str, Any] = RequireAnalyst):
     rule = repo.get_rule_by_id(rule_id)
     if not rule:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Rule {rule_id} not found.")

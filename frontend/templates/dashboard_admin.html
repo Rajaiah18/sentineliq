@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Admin Platform Governance{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
+      <h1 class="page-title">Executive Risk & Platform Administration</h1>
+      <span class="role-pill" style="background-color: #581c87; color: #d8b4fe; border: 1px solid #7e22ce;">ADMIN CONSOLE</span>
+    </div>
+    <p class="page-subtitle">Authoritative telemetry, risk rule management, data quality assurance, and operational controls.</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+    <a href="/generator" class="btn btn-secondary btn-sm">Dataset Generator</a>
+    <a href="/validation" class="btn btn-secondary btn-sm">Run Validation</a>
+    <a href="/users" class="btn btn-primary btn-sm">Manage Users</a>
+    <a href="/settings" class="btn btn-secondary btn-sm">Settings</a>
+  </div>
+</div>
+
+<!-- Primary Administrative Metric Cards -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-label">Monitored Customers</div>
+    <div class="metric-value">{{ metrics.total_customers | default(0) }}</div>
+    <div class="metric-sub">Active profiles</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Monitored Accounts</div>
+    <div class="metric-value">{{ metrics.total_accounts | default(0) }}</div>
+    <div class="metric-sub">Ledger accounts</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Total Transactions</div>
+    <div class="metric-value">{{ metrics.total_transactions | default(0) }}</div>
+    <div class="metric-sub">Evaluated records</div>
+  </div>
+
+  <div class="metric-card high">
+    <div class="metric-label">Total Alerts</div>
+    <div class="metric-value">{{ metrics.total_alerts | default(0) }}</div>
+    <div class="metric-sub">{{ metrics.critical_alerts | default(0) }} Critical</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Active Risk Rules</div>
+    <div class="metric-value" style="color: var(--brand-cyan);">{{ metrics.active_rules | default(12) }} / {{ metrics.total_rules | default(12) }}</div>
+    <div class="metric-sub">Detection rules enabled</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">System Storage</div>
+    <div class="metric-value" style="font-size: 20px; color: {% if metrics.db_healthy %}#4ade80{% else %}#facc15{% endif %}; text-transform: uppercase;">
+      {{ metrics.storage_mode | default("memory") }}
+    </div>
+    <div class="metric-sub">
+      {% if metrics.db_healthy %}Live Atlas ({{ metrics.db_latency_ms | round(1) }}ms){% else %}In-Memory Fallback{% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Split Panels: System Health & Governance Audit -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+  <div class="panel-card" style="margin-bottom: 0;">
+    <h3 class="panel-title">Platform Readiness & Data Quality</h3>
+    <table class="data-table" style="margin-top: 0.5rem;">
+      <tbody>
+        <tr>
+          <td style="color: var(--text-muted);">Database Connection</td>
+          <td>
+            {% if metrics.db_healthy %}
+              <span class="badge badge-low">CONNECTED (Atlas)</span>
+            {% else %}
+              <span class="badge badge-medium">ACTIVE (In-Memory Fallback)</span>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-muted);">Integrity Check Pass Rate</td>
+          <td>
+            <span class="badge {% if metrics.validation_errors == 0 %}badge-low{% else %}badge-high{% endif %}">
+              {{ metrics.validation_status }} ({{ metrics.validation_errors }} errors)
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-muted);">Registered Users</td>
+          <td><strong style="color: #ffffff;">{{ metrics.total_users | default(4) }} users</strong> across 4 roles</td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-muted);">Session Lifetime</td>
+          <td><strong style="color: #ffffff;">60 Minutes (HMAC-SHA256)</strong></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-muted);">Open Investigation Cases</td>
+          <td><strong style="color: var(--brand-cyan);">{{ metrics.open_cases | default(0) }} cases open</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+      <a href="/validation" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center;">View Integrity Report</a>
+      <a href="/evaluation" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center;">View Evaluation F1</a>
+    </div>
+  </div>
+
+  <div class="panel-card" style="margin-bottom: 0;">
+    <h3 class="panel-title">Recent Administrative Audit Stream</h3>
+    {% if metrics.recent_audit_events %}
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+        {% for evt in metrics.recent_audit_events[:5] %}
+          <div style="padding: 0.6rem; background: var(--bg-surface); border-radius: var(--radius-sm); border-left: 3px solid var(--brand-cyan); font-size: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.2rem;">
+              <strong style="color: #ffffff;">{{ evt.event_type }}</strong>
+              <span style="color: var(--text-dim);">{{ evt.timestamp[:19] | replace("T", " ") }}</span>
+            </div>
+            <div style="color: var(--text-muted);">{{ evt.action_summary }}</div>
+            <div style="color: var(--text-dim); margin-top: 0.2rem;">Actor: <code>{{ evt.actor_id }}</code> | Entity: <code>{{ evt.entity_type }}:{{ evt.entity_id }}</code></div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="color: var(--text-muted); padding: 1rem 0;">No administrative events recorded yet.</p>
+    {% endif %}
+    <div style="margin-top: 1rem;">
+      <a href="/audit" class="btn btn-secondary btn-sm" style="width: 100%; text-align: center;">Full Audit Log</a>
+    </div>
+  </div>
+</div>
+
+<!-- Risk Rule Status Catalog -->
+<div class="panel-card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h3 class="panel-title" style="margin-bottom: 0;">Configured Detection Rules</h3>
+    <a href="/rules" class="btn btn-secondary btn-sm">Edit Rules & Thresholds</a>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Rule ID</th>
+        <th>Rule Name</th>
+        <th>Severity</th>
+        <th>Weight</th>
+        <th>Threshold</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rule in metrics.rules_list %}
+        <tr>
+          <td><code>{{ rule.rule_id }}</code></td>
+          <td><strong style="color: #ffffff;">{{ rule.rule_name }}</strong></td>
+          <td>
+            <span class="badge badge-{{ rule.severity | lower }}">{{ rule.severity }}</span>
+          </td>
+          <td>{{ rule.weight }}</td>
+          <td>{{ rule.threshold }}</td>
+          <td>
+            {% if rule.enabled %}
+              <span class="badge badge-low">ENABLED</span>
+            {% else %}
+              <span class="badge badge-closed">DISABLED</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="/rules/{{ rule.rule_id }}" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 11px;">Configure</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

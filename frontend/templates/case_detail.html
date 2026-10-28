@@ -105,7 +105,8 @@
   </div>
 
   <div>
-    <!-- Add Action / Note Form -->
+    {% if can_edit_cases %}
+    <!-- Add Action / Note Form (ADMIN or ANALYST) -->
     <div class="panel-card">
       <h3 class="panel-title">Record Analyst Note / Action</h3>
       <form method="POST" action="/cases/{{ case.case_id }}/action">
@@ -138,9 +139,10 @@
         </button>
       </form>
     </div>
+    {% endif %}
 
-    <!-- Formal Disposition Form -->
-    {% if case.case_status != "CLOSED" %}
+    <!-- Formal Disposition Form (ADMIN or COMPLIANCE_REVIEWER) -->
+    {% if can_disposition and case.case_status != "CLOSED" %}
     <div class="panel-card">
       <h3 class="panel-title">Record Final Case Disposition</h3>
       <form method="POST" action="/cases/{{ case.case_id }}/disposition">
@@ -163,6 +165,15 @@
           Submit Final Disposition
         </button>
       </form>
+    </div>
+    {% endif %}
+
+    {% if not can_edit_cases and not can_disposition %}
+    <div class="panel-card" style="border-left: 4px solid var(--text-muted);">
+      <h3 class="panel-title">Read-Only Investigation View</h3>
+      <p style="color: var(--text-muted); font-size: 13px; line-height: 1.6;">
+        You are viewing this case under <strong>{{ current_user.role }}</strong> permissions. Case notes, status updates, and regulatory dispositions require an authorized Investigator or Compliance Reviewer role.
+      </p>
     </div>
     {% endif %}
   </div>

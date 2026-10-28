@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Investigator Workbench{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
+      <h1 class="page-title">Investigator Workbench — My Telemetry</h1>
+      <span class="role-pill" style="background-color: #0c4a6e; color: #7dd3fc; border: 1px solid #0284c7;">INVESTIGATOR</span>
+    </div>
+    <p class="page-subtitle">Welcome back, <strong>{{ current_user.full_name | default(current_user.username) }}</strong>. Real-time alert triage, case ownership, and investigation velocity.</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem;">
+    <a href="/alerts" class="btn btn-secondary btn-sm">Alert Queue</a>
+    <a href="/cases?filter=my_cases" class="btn btn-primary btn-sm">My Active Cases</a>
+    <a href="/cases/workspace" class="btn btn-secondary btn-sm">Workspace</a>
+  </div>
+</div>
+
+<!-- Analyst Key Metrics -->
+<div class="metrics-grid">
+  <div class="metric-card open">
+    <div class="metric-label">My Assigned Cases</div>
+    <div class="metric-value" style="color: var(--brand-cyan);">{{ metrics.my_open_cases_count | default(0) }}</div>
+    <div class="metric-sub">Active investigations</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Unassigned Cases</div>
+    <div class="metric-value">{{ metrics.unassigned_cases_count | default(0) }}</div>
+    <div class="metric-sub">Available to claim</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Alerts Awaiting Triage</div>
+    <div class="metric-value">{{ metrics.new_alerts_count | default(0) }}</div>
+    <div class="metric-sub">Status: NEW</div>
+  </div>
+
+  <div class="metric-card critical">
+    <div class="metric-label">Critical Alerts</div>
+    <div class="metric-value" style="color: #f87171;">{{ metrics.critical_alerts_count | default(0) }}</div>
+    <div class="metric-sub">Immediate action required</div>
+  </div>
+
+  <div class="metric-card high">
+    <div class="metric-label">High Alerts</div>
+    <div class="metric-value" style="color: #fb923c;">{{ metrics.high_alerts_count | default(0) }}</div>
+    <div class="metric-sub">Risk score &ge; 70</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Case Aging (<24h / 1-3d / >3d)</div>
+    <div class="metric-value" style="font-size: 18px; color: #ffffff;">
+      <span style="color: #4ade80;">{{ metrics.cases_under_24h }}</span> /
+      <span style="color: #facc15;">{{ metrics.cases_1_to_3d }}</span> /
+      <span style="color: #f87171;">{{ metrics.cases_over_3d }}</span>
+    </div>
+    <div class="metric-sub">SLA tracking</div>
+  </div>
+</div>
+
+<!-- Two Priority Work Queues -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+  <!-- Urgent Alerts Panel -->
+  <div class="panel-card" style="margin-bottom: 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+      <h3 class="panel-title" style="margin-bottom: 0;">Urgent Alerts Requiring Triage</h3>
+      <a href="/alerts?severity=CRITICAL" style="font-size: 12px; color: var(--brand-cyan); text-decoration: none;">View All Critical &rarr;</a>
+    </div>
+    {% if metrics.urgent_alerts %}
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Alert ID</th>
+            <th>Score</th>
+            <th>Severity</th>
+            <th>Rule</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for alt in metrics.urgent_alerts[:5] %}
+            <tr>
+              <td><code>{{ alt.alert_id }}</code></td>
+              <td>
+                <span style="font-weight: 700; color: {% if alt.risk_score >= 85 %}#f87171{% elif alt.risk_score >= 70 %}#fb923c{% else %}#facc15{% endif %};">
+                  {{ alt.risk_score | round(1) }}
+                </span>
+              </td>
+              <td><span class="badge badge-{{ alt.severity | lower }}">{{ alt.severity }}</span></td>
+              <td><span style="font-size: 11px;">{{ alt.rule_name | truncate(25) }}</span></td>
+              <td>
+                <a href="/alerts/{{ alt.alert_id }}" class="btn btn-primary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 11px;">Investigate</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p style="color: var(--text-muted); padding: 1rem 0;">No high or critical alerts pending triage.</p>
+    {% endif %}
+  </div>
+
+  <!-- My Cases Panel -->
+  <div class="panel-card" style="margin-bottom: 0;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+      <h3 class="panel-title" style="margin-bottom: 0;">My Active Cases</h3>
+      <a href="/cases?filter=my_cases" style="font-size: 12px; color: var(--brand-cyan); text-decoration: none;">View All My Cases &rarr;</a>
+    </div>
+    {% if metrics.my_cases %}
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Case ID</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in metrics.my_cases %}
+            <tr>
+              <td><code>{{ c.case_id }}</code></td>
+              <td><strong style="color: #ffffff; font-size: 12px;">{{ c.case_title | truncate(30) }}</strong></td>
+              <td><span class="badge badge-{{ c.priority | lower }}">{{ c.priority }}</span></td>
+              <td><span class="badge badge-open">{{ c.case_status }}</span></td>
+              <td>
+                <a href="/cases/{{ c.case_id }}" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 11px;">Workbench</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <div style="padding: 1.5rem 0; text-align: center;">
+        <p style="color: var(--text-muted); margin-bottom: 0.75rem;">You currently have no assigned open cases.</p>
+        <a href="/cases" class="btn btn-secondary btn-sm">Claim an Unassigned Case</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Recent Actions Logged by Analyst -->
+<div class="panel-card">
+  <h3 class="panel-title">My Recent Investigation Actions & Decisions</h3>
+  {% if metrics.recent_actions %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Action ID</th>
+          <th>Case ID</th>
+          <th>Action Type</th>
+          <th>Comment / Evidence</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for act in metrics.recent_actions %}
+          <tr>
+            <td><code>{{ act.action_id }}</code></td>
+            <td><a href="/cases/{{ act.case_id }}" style="color: var(--brand-cyan); text-decoration: none;"><code>{{ act.case_id }}</code></a></td>
+            <td><span class="badge badge-open">{{ act.action_type }}</span></td>
+            <td><span style="color: var(--text-muted); font-size: 12px;">{{ act.comment | truncate(60) }}</span></td>
+            <td style="color: var(--text-dim); font-size: 11px;">{{ act.timestamp[:19] | replace("T", " ") }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="color: var(--text-muted); padding: 0.5rem 0;">No investigation actions logged yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

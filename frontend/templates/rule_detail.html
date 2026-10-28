@@ -26,6 +26,7 @@
         {{ rule.description }}
       </p>
 
+      {% if can_edit_rules %}
       <form method="POST" action="/rules/{{ rule.rule_id }}/update">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
           <div>
@@ -59,6 +60,31 @@
 
         <button type="submit" class="btn btn-primary">Save Rule Configuration</button>
       </form>
+      {% else %}
+      <div style="background: rgba(148, 163, 184, 0.08); border: 1px solid var(--border-color); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Severity:</span>
+            <div><span class="badge badge-{{ rule.severity | lower }}">{{ rule.severity }}</span></div>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Weight:</span>
+            <div style="color: #ffffff; font-weight: 600;">{{ rule.weight }}</div>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Threshold:</span>
+            <div style="color: #ffffff; font-weight: 600;">{{ rule.threshold }}</div>
+          </div>
+          <div>
+            <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Status:</span>
+            <div><span class="badge badge-{{ 'low' if rule.enabled else 'closed' }}">{{ 'ACTIVE' if rule.enabled else 'DISABLED' }}</span></div>
+          </div>
+        </div>
+        <p style="font-size: 12px; color: var(--text-dim); margin-top: 1rem;">
+          Rule parameters are read-only for role <strong>{{ current_user.role }}</strong>. Modifications are restricted to administrators.
+        </p>
+      </div>
+      {% endif %}
     </div>
 
     <!-- Rule Configuration JSON -->
