@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Rule {{ rule.rule_id }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="font-size: 12px; color: var(--brand-cyan); margin-bottom: 0.25rem;">
+      <a href="/rules" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Rules</a>
+    </div>
+    <h1 class="page-title">{{ rule.rule_name }}</h1>
+    <p class="page-subtitle"><code>{{ rule.rule_id }}</code> &bull; Version {{ rule.version }} &bull; Category: {{ rule.rule_category }}</p>
+  </div>
+  <div>
+    <span class="badge badge-{{ 'low' if rule.enabled else 'closed' }}" style="font-size: 13px; padding: 0.35rem 0.75rem;">
+      {{ 'ACTIVE' if rule.enabled else 'DISABLED' }}
+    </span>
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div>
+    <div class="panel-card">
+      <h3 class="panel-title">Rule Specification & Description</h3>
+      <p style="font-size: 14px; color: #ffffff; line-height: 1.6; margin-bottom: 1.5rem;">
+        {{ rule.description }}
+      </p>
+
+      <form method="POST" action="/rules/{{ rule.rule_id }}/update">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Severity Band</label>
+            <select name="severity" class="select-input" style="width: 100%;">
+              <option value="CRITICAL" {% if rule.severity == 'CRITICAL' %}selected{% endif %}>CRITICAL</option>
+              <option value="HIGH" {% if rule.severity == 'HIGH' %}selected{% endif %}>HIGH</option>
+              <option value="MEDIUM" {% if rule.severity == 'MEDIUM' %}selected{% endif %}>MEDIUM</option>
+              <option value="LOW" {% if rule.severity == 'LOW' %}selected{% endif %}>LOW</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Scoring Weight (0 - 100)</label>
+            <input type="number" step="1.0" min="0" max="100" name="weight" value="{{ rule.weight }}" class="input-text" style="width: 100%;">
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Evaluation Threshold</label>
+            <input type="number" step="0.01" name="threshold" value="{{ rule.threshold }}" class="input-text" style="width: 100%;">
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Active Status</label>
+            <select name="enabled" class="select-input" style="width: 100%;">
+              <option value="true" {% if rule.enabled %}selected{% endif %}>Enabled (Active)</option>
+              <option value="false" {% if not rule.enabled %}selected{% endif %}>Disabled (Inactive)</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Rule Configuration</button>
+      </form>
+    </div>
+
+    <!-- Rule Configuration JSON -->
+    <div class="panel-card">
+      <h3 class="panel-title">Extended Rule Configuration Parameters</h3>
+      <pre class="code-box">{{ rule.configuration | tojson(indent=2) }}</pre>
+    </div>
+  </div>
+
+  <div>
+    <!-- Interactive Rule Synthetic Tester -->
+    <div class="panel-card">
+      <h3 class="panel-title">Synthetic Scenario Tester</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 1rem;">
+        Test this rule's detection logic against synthetic financial parameters.
+      </p>
+
+      <div style="margin-bottom: 0.75rem;">
+        <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Test Amount ($)</label>
+        <input type="number" id="test_amount" class="input-text" style="width: 100%;" value="12500.00">
+      </div>
+
+      <div style="margin-bottom: 0.75rem;">
+        <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Account Status</label>
+        <select id="test_acc_status" class="select-input" style="width: 100%;">
+          <option value="OPEN">OPEN</option>
+          <option value="CLOSED">CLOSED</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Customer Risk Tier</label>
+        <select id="test_cust_risk" class="select-input" style="width: 100%;">
+          <option value="LOW">LOW</option>
+          <option value="MEDIUM">MEDIUM</option>
+          <option value="HIGH">HIGH</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="runTestRule()">
+        Execute Test Evaluation
+      </button>
+
+      <div id="test_results" style="margin-top: 1rem; display: none;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase;">Result:</div>
+        <pre id="test_json" class="code-box" style="max-height: 200px;"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function runTestRule() {
+  const payload = {
+    transaction: {
+      transaction_id: "TEST-TXN-001",
+      amount: parseFloat(document.getElementById('test_amount').value),
+      currency: "USD",
+      transaction_status: "COMPLETED",
+      transaction_timestamp: "2026-06-01T12:00:00Z",
+      channel: "WEB_PORTAL"
+    },
+    account: {
+      account_id: "TEST-ACC-001",
+      account_status: document.getElementById('test_acc_status').value,
+      current_balance: 5000.00,
+      overdraft_limit: 0.0
+    },
+    customer: {
+      customer_id: "TEST-CUS-001",
+      risk_profile: document.getElementById('test_cust_risk').value
+    }
+  };
+
+  try {
+    const res = await apiPost('/api/v1/rules/{{ rule.rule_id }}/test', payload);
+    document.getElementById('test_results').style.display = 'block';
+    document.getElementById('test_json').textContent = JSON.stringify(res, null, 2);
+  } catch (e) {
+    console.error(e);
+  }
+}
+</script>
+{% endblock %}

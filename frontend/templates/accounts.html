@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Accounts{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Account Inventory</h1>
+    <p class="page-subtitle">Deposit accounts, overdraft configurations, and ledger balances.</p>
+  </div>
+</div>
+
+<div class="table-card">
+  <form method="GET" action="/accounts" class="table-header-toolbar">
+    <div class="search-filter-box">
+      <select name="status" class="select-input">
+        <option value="">All Account Statuses</option>
+        <option value="OPEN" {% if selected_status == 'OPEN' %}selected{% endif %}>Open</option>
+        <option value="RESTRICTED" {% if selected_status == 'RESTRICTED' %}selected{% endif %}>Restricted</option>
+        <option value="CLOSED" {% if selected_status == 'CLOSED' %}selected{% endif %}>Closed</option>
+      </select>
+
+      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+      {% if selected_status %}
+      <a href="/accounts" class="btn btn-secondary btn-sm">Clear</a>
+      {% endif %}
+    </div>
+
+    <div style="font-size: 12px; color: var(--text-muted);">
+      Total: <strong>{{ total }}</strong> accounts
+    </div>
+  </form>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Account ID</th>
+        <th>Customer ID</th>
+        <th>Type</th>
+        <th>Currency</th>
+        <th>Current Balance</th>
+        <th>Overdraft Limit</th>
+        <th>Status</th>
+        <th>Opened Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for acc in accounts %}
+      <tr>
+        <td><code>{{ acc.account_id }}</code></td>
+        <td><a href="/customers/{{ acc.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ acc.customer_id }}</a></td>
+        <td>{{ acc.account_type }}</td>
+        <td>{{ acc.currency }}</td>
+        <td><strong style="color: {{ '#f87171' if acc.current_balance < 0 else '#ffffff' }};">${{ "%.2f"|format(acc.current_balance) }}</strong></td>
+        <td>${{ "%.2f"|format(acc.overdraft_limit) }}</td>
+        <td>
+          <span class="badge badge-{{ 'low' if acc.account_status == 'OPEN' else 'critical' }}">
+            {{ acc.account_status }}
+          </span>
+        </td>
+        <td>{{ acc.opened_at[:10] }}</td>
+        <td><a href="/accounts/{{ acc.account_id }}" class="btn btn-secondary btn-sm">Inspect</a></td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="9" style="text-align: center; color: var(--text-dim); padding: 2rem;">No matching accounts found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-bar">
+    <div>Showing page {{ page }} ({{ accounts|length }} items)</div>
+    <div class="pagination-controls">
+      {% if page > 1 %}
+      <a href="/accounts?page={{ page - 1 }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
+      {% endif %}
+      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
+      {% if accounts|length == page_size %}
+      <a href="/accounts?page={{ page + 1 }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

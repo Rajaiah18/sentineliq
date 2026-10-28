@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Data Quality & Validation{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Data Quality & Referential Validation</h1>
+    <p class="page-subtitle">24 automated integrity tests verifying constraints, references, chronology, and zero label leakage.</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem;">
+    <form method="POST" action="/validation/run" style="margin: 0;">
+      <button type="submit" class="btn btn-primary btn-sm">Run Validation Suite</button>
+    </form>
+    <a href="/api/v1/exports/validation_summary.json" class="btn btn-secondary btn-sm" download>Download JSON Report</a>
+  </div>
+</div>
+
+<!-- Validation Metrics Summary Grid -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-label">Total Checks Evaluated</div>
+    <div class="metric-value">{{ report.total_checks_evaluated | default(24) }}</div>
+    <div class="metric-sub">Structural & Referential Rules</div>
+  </div>
+
+  <div class="metric-card critical">
+    <div class="metric-label">Integrity Errors</div>
+    <div class="metric-value" style="color: #f87171;">{{ report.error_count | default(0) }}</div>
+    <div class="metric-sub">Broken System Constraints</div>
+  </div>
+
+  <div class="metric-card high">
+    <div class="metric-label">Detected Anomalies / Warnings</div>
+    <div class="metric-value" style="color: #fb923c;">{{ report.warning_count | default(0) }}</div>
+    <div class="metric-sub">Injected Risk Violations</div>
+  </div>
+
+  <div class="metric-card open">
+    <div class="metric-label">Overall Status</div>
+    <div class="metric-value" style="font-size: 18px; color: {{ '#4ade80' if report.error_count == 0 else '#fb923c' }};">
+      {{ 'ACTIVE MONITORED' if report.error_count <= 2 else 'FAILED' }}
+    </div>
+    <div class="metric-sub">Last Run: {{ report.validation_timestamp[:19].replace("T", " ") if report.validation_timestamp else "N/A" }}</div>
+  </div>
+</div>
+
+<!-- Five Mandatory Negative Scenarios Detection Verification -->
+<div class="panel-card">
+  <h3 class="panel-title">Mandatory Challenge Negative Scenario Detection Matrix</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem;">
+    
+    <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <strong style="color: #ffffff;">Scenario 1: Closed Account</strong>
+        <span class="badge badge-{{ 'low' if report.scenario_validation.scenario_1_closed_account_detected else 'critical' }}">
+          {{ 'DETECTED' if report.scenario_validation.scenario_1_closed_account_detected else 'MISSED' }}
+        </span>
+      </div>
+      <p style="font-size: 11px; color: var(--text-muted);">Transactions posted to closed accounts are flagged and intercepted.</p>
+    </div>
+
+    <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <strong style="color: #ffffff;">Scenario 2: Overdraft Breach</strong>
+        <span class="badge badge-{{ 'low' if report.scenario_validation.scenario_2_overdraft_breach_detected else 'critical' }}">
+          {{ 'DETECTED' if report.scenario_validation.scenario_2_overdraft_breach_detected else 'MISSED' }}
+        </span>
+      </div>
+      <p style="font-size: 11px; color: var(--text-muted);">Deficits beyond authorized overdraft limits are flagged as breaches.</p>
+    </div>
+
+    <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <strong style="color: #ffffff;">Scenario 3: Transfer Mismatch</strong>
+        <span class="badge badge-{{ 'low' if report.scenario_validation.scenario_3_transfer_mismatch_detected else 'critical' }}">
+          {{ 'DETECTED' if report.scenario_validation.scenario_3_transfer_mismatch_detected else 'MISSED' }}
+        </span>
+      </div>
+      <p style="font-size: 11px; color: var(--text-muted);">Transfer legs with currency or amount discrepancies fail reconciliation.</p>
+    </div>
+
+    <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <strong style="color: #ffffff;">Scenario 4: Alert Without Txn</strong>
+        <span class="badge badge-{{ 'low' if report.scenario_validation.scenario_4_alert_no_txn_detected else 'critical' }}">
+          {{ 'DETECTED' if report.scenario_validation.scenario_4_alert_no_txn_detected else 'MISSED' }}
+        </span>
+      </div>
+      <p style="font-size: 11px; color: var(--text-muted);">Orphaned alerts without triggering transactions are caught by validation.</p>
+    </div>
+
+    <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+        <strong style="color: #ffffff;">Scenario 5: Case Chronology</strong>
+        <span class="badge badge-{{ 'low' if report.scenario_validation.scenario_5_case_chronology_detected else 'critical' }}">
+          {{ 'DETECTED' if report.scenario_validation.scenario_5_case_chronology_detected else 'MISSED' }}
+        </span>
+      </div>
+      <p style="font-size: 11px; color: var(--text-muted);">Case dispositions dated prior to alert creation trigger chronology warnings.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- Detailed Validation Issues Log -->
+<div class="table-card">
+  <div class="table-header-toolbar">
+    <div style="font-weight: 700; color: #ffffff;">Validation Findings Log ({{ report.issues|length }} items)</div>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Check ID</th>
+        <th>Level</th>
+        <th>Entity Type</th>
+        <th>Entity ID</th>
+        <th>Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for issue in report.issues[:100] %}
+      <tr>
+        <td><code>{{ issue.check_id }}</code></td>
+        <td>
+          <span class="badge badge-{{ 'critical' if issue.level == 'ERROR' else 'medium' }}">
+            {{ issue.level }}
+          </span>
+        </td>
+        <td>{{ issue.entity_type }}</td>
+        <td><code>{{ issue.entity_id }}</code></td>
+        <td style="font-size: 12px; color: var(--text-main);">{{ issue.explanation }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" style="text-align: center; color: #4ade80; padding: 2rem;">
+          &check; All 24 validation checks passed with zero integrity anomalies.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

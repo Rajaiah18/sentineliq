@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Alert {{ alert.alert_id }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="font-size: 12px; color: var(--brand-cyan); margin-bottom: 0.25rem;">
+      <a href="/alerts" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Alerts Queue</a>
+    </div>
+    <h1 class="page-title">{{ alert.title }} ({{ alert.alert_id }})</h1>
+    <p class="page-subtitle">Detection generated at {{ alert.created_at }} &bull; Customer: <a href="/customers/{{ alert.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ alert.customer_id }}</a></p>
+  </div>
+  <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <span class="badge badge-{{ alert.severity | lower }}" style="font-size: 14px; padding: 0.4rem 0.8rem;">
+      {{ alert.severity }} SEVERITY
+    </span>
+    <span class="badge badge-open" style="font-size: 14px; padding: 0.4rem 0.8rem;">
+      {{ alert.alert_status }}
+    </span>
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div>
+    <!-- Transparent Explanation Panel -->
+    <div class="panel-card">
+      <h3 class="panel-title">Explainable Decision Narrative</h3>
+      <div style="background-color: var(--bg-surface); border-left: 4px solid var(--brand-cyan); padding: 1rem 1.25rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+        <p style="font-size: 14px; color: #ffffff; line-height: 1.6;">{{ alert.explanation }}</p>
+      </div>
+
+      <div style="margin-top: 1rem;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase;">
+          Reason Codes
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          {% for rc in alert.reason_codes %}
+          <span style="font-family: monospace; font-size: 12px; background-color: #032b43; color: #38bdf8; border: 1px solid #0284c7; padding: 0.25rem 0.6rem; border-radius: 4px;">
+            {{ rc }}
+          </span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Triggering Transactions Table -->
+    <div class="table-card">
+      <div class="table-header-toolbar">
+        <div style="font-weight: 700; color: #ffffff;">Triggering Ledger Transactions</div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Channel</th>
+            <th>Timestamp</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for txn in triggering_transactions %}
+          <tr>
+            <td><code>{{ txn.transaction_id }}</code></td>
+            <td>{{ txn.transaction_type }}</td>
+            <td><strong style="color: #38bdf8;">${{ "%.2f"|format(txn.amount) }}</strong> {{ txn.currency }}</td>
+            <td>{{ txn.channel }}</td>
+            <td>{{ txn.transaction_timestamp }}</td>
+            <td><a href="/transactions/{{ txn.transaction_id }}" class="btn btn-secondary btn-sm">Inspect</a></td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" style="text-align: center; color: #f87171; padding: 1.5rem;">
+              <strong>Data Integrity Anomaly:</strong> No triggering transactions found for this alert.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Structured Evidence Snapshot -->
+    <div class="panel-card">
+      <h3 class="panel-title">Audit-Proof Evidence Payload</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 0.75rem;">
+        Deterministic runtime parameters and threshold deltas recorded at detection time.
+      </p>
+      <pre class="code-box">{{ alert.evidence | tojson(indent=2) }}</pre>
+    </div>
+  </div>
+
+  <div>
+    <!-- Risk Scoring Card -->
+    <div class="panel-card">
+      <h3 class="panel-title">Risk Scoring Matrix</h3>
+      <div style="text-align: center; padding: 1rem 0;">
+        <div style="font-size: 38px; font-weight: 800; color: #38bdf8;">
+          {{ "%.1f"|format(alert.risk_score) }}
+        </div>
+        <div style="font-size: 11px; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.05em;">
+          Normalized Score (0 - 100 Range)
+        </div>
+        <div style="margin: 0.75rem auto; width: 80%; height: 8px; background-color: var(--border-color); border-radius: 4px; overflow: hidden;">
+          <div style="width: {{ alert.risk_score }}%; height: 100%; background: linear-gradient(90deg, #38bdf8, #ef4444);"></div>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.75rem; margin-top: 0.5rem;">
+        <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.4rem;">
+          Triggered Risk Rules:
+        </div>
+        {% for r in alert.triggered_rule_ids %}
+        <div style="font-size: 12px; color: #ffffff; padding: 0.2rem 0;">&bull; <code>{{ r }}</code></div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Recommended Investigation Steps -->
+    <div class="panel-card">
+      <h3 class="panel-title">Recommended Investigator Actions</h3>
+      <ul style="list-style: decimal; padding-left: 1.25rem; font-size: 12px; color: var(--text-main); line-height: 1.6;">
+        {% if alert.evidence and alert.evidence.recommended_investigation_steps %}
+          {% for step in alert.evidence.recommended_investigation_steps %}
+          <li style="margin-bottom: 0.5rem;">{{ step }}</li>
+          {% endfor %}
+        {% else %}
+          <li>Conduct standard enhanced due diligence (EDD) review on account profile.</li>
+          <li>Verify source of funds and business documentation with customer.</li>
+        {% endif %}
+      </ul>
+    </div>
+
+    <!-- Action Workflow Controls -->
+    <div class="panel-card">
+      <h3 class="panel-title">Investigation Workflow</h3>
+      
+      {% if linked_cases %}
+      <div style="margin-bottom: 1rem;">
+        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 0.3rem;">Linked Cases:</div>
+        {% for c in linked_cases %}
+        <div>
+          <a href="/cases/{{ c.case_id }}" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; margin-bottom: 0.3rem;">
+            Open Case {{ c.case_id }} ({{ c.case_status }})
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <form method="POST" action="/cases" style="margin-bottom: 1.25rem;">
+        <input type="hidden" name="alert_id" value="{{ alert.alert_id }}">
+        <input type="hidden" name="customer_id" value="{{ alert.customer_id }}">
+        <input type="hidden" name="case_title" value="Investigation into {{ alert.title }}">
+        <input type="hidden" name="priority" value="{{ alert.severity }}">
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+          + Create Investigation Case
+        </button>
+      </form>
+      {% endif %}
+
+      <div style="border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+        <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.4rem;">
+          Update Alert Status
+        </label>
+        <form method="POST" action="/alerts/{{ alert.alert_id }}/status" style="display: flex; gap: 0.4rem;">
+          <select name="status" class="select-input" style="flex: 1;">
+            <option value="NEW" {% if alert.alert_status == 'NEW' %}selected{% endif %}>NEW</option>
+            <option value="UNDER_REVIEW" {% if alert.alert_status == 'UNDER_REVIEW' %}selected{% endif %}>UNDER_REVIEW</option>
+            <option value="ESCALATED" {% if alert.alert_status == 'ESCALATED' %}selected{% endif %}>ESCALATED</option>
+            <option value="CLOSED" {% if alert.alert_status == 'CLOSED' %}selected{% endif %}>CLOSED</option>
+          </select>
+          <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

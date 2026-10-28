@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Account {{ account.account_id }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="font-size: 12px; color: var(--brand-cyan); margin-bottom: 0.25rem;">
+      <a href="/accounts" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Accounts</a>
+    </div>
+    <h1 class="page-title">Account: {{ account.account_id }}</h1>
+    <p class="page-subtitle">{{ account.account_type }} Account &bull; Currency: {{ account.currency }}</p>
+  </div>
+  <div>
+    <span class="badge badge-{{ 'low' if account.account_status == 'OPEN' else 'critical' }}" style="font-size: 13px; padding: 0.35rem 0.75rem;">
+      {{ account.account_status }}
+    </span>
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div>
+    <!-- Ledger Metrics Panel -->
+    <div class="panel-card">
+      <h3 class="panel-title">Account Ledger Snapshot</h3>
+      <div class="data-row">
+        <span class="data-label">Account ID</span>
+        <span class="data-value"><code>{{ account.account_id }}</code></span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Current Balance</span>
+        <span class="data-value" style="font-size: 18px; color: {{ '#f87171' if account.current_balance < 0 else '#38bdf8' }};">
+          ${{ "%.2f"|format(account.current_balance) }} {{ account.currency }}
+        </span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Opening Balance</span>
+        <span class="data-value">${{ "%.2f"|format(account.opening_balance) }} {{ account.currency }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Authorized Overdraft Limit</span>
+        <span class="data-value">${{ "%.2f"|format(account.overdraft_limit) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Effective Available Funds</span>
+        <span class="data-value">${{ "%.2f"|format(account.current_balance + account.overdraft_limit) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Opened Timestamp</span>
+        <span class="data-value">{{ account.opened_at }}</span>
+      </div>
+      {% if account.closed_at %}
+      <div class="data-row">
+        <span class="data-label">Closed Timestamp</span>
+        <span class="data-value" style="color: #f87171; font-weight: 700;">{{ account.closed_at }}</span>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Account Transactions Table -->
+    <div class="table-card">
+      <div class="table-header-toolbar">
+        <div style="font-weight: 700; color: #ffffff;">Recent Transactions on this Account</div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Balance After</th>
+            <th>Status</th>
+            <th>Timestamp</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for txn in transactions %}
+          <tr>
+            <td><code>{{ txn.transaction_id }}</code></td>
+            <td>{{ txn.transaction_type }}</td>
+            <td><strong>${{ "%.2f"|format(txn.amount) }}</strong></td>
+            <td>${{ "%.2f"|format(txn.balance_after) if txn.balance_after is not none else "-" }}</td>
+            <td>
+              <span class="badge badge-{{ 'low' if txn.transaction_status == 'COMPLETED' else 'critical' }}">
+                {{ txn.transaction_status }}
+              </span>
+            </td>
+            <td>{{ txn.transaction_timestamp }}</td>
+            <td><a href="/transactions/{{ txn.transaction_id }}" class="btn btn-secondary btn-sm">Inspect</a></td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 1.5rem;">No transactions posted to this account.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <!-- Owner Profile -->
+    <div class="panel-card">
+      <h3 class="panel-title">Account Owner</h3>
+      {% if customer %}
+      <div class="data-row">
+        <span class="data-label">Customer ID</span>
+        <span class="data-value"><a href="/customers/{{ customer.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ customer.customer_id }}</a></span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Full Name</span>
+        <span class="data-value">{{ customer.first_name }} {{ customer.last_name }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Risk Profile</span>
+        <span class="data-value">
+          <span class="badge badge-{{ 'low' if customer.risk_profile == 'LOW' else ('high' if customer.risk_profile == 'HIGH' else 'medium') }}">
+            {{ customer.risk_profile }}
+          </span>
+        </span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Customer Status</span>
+        <span class="data-value">{{ customer.customer_status }}</span>
+      </div>
+      {% else %}
+      <p style="color: var(--text-dim);">No owner profile attached.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Case {{ case.case_id }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="font-size: 12px; color: var(--brand-cyan); margin-bottom: 0.25rem;">
+      <a href="/cases" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Cases</a>
+    </div>
+    <h1 class="page-title">{{ case.case_title }}</h1>
+    <p class="page-subtitle">Case ID: <code>{{ case.case_id }}</code> &bull; Customer: <a href="/customers/{{ case.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ case.customer_id }}</a> &bull; Opened: {{ case.created_at }}</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem; align-items: center;">
+    <span class="badge badge-{{ case.priority | lower }}" style="font-size: 13px; padding: 0.35rem 0.75rem;">
+      {{ case.priority }} PRIORITY
+    </span>
+    <span class="badge badge-{{ 'open' if case.case_status != 'CLOSED' else 'closed' }}" style="font-size: 13px; padding: 0.35rem 0.75rem;">
+      {{ case.case_status }}
+    </span>
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div>
+    <!-- Case Overview Panel -->
+    <div class="panel-card">
+      <h3 class="panel-title">Investigation Brief</h3>
+      <p style="font-size: 14px; color: #ffffff; line-height: 1.6; margin-bottom: 1rem;">
+        {{ case.description }}
+      </p>
+
+      {% if case.disposition %}
+      <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 1rem; margin-top: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Final Disposition</span>
+          <span class="badge badge-{{ 'critical' if case.disposition == 'CONFIRMED_SUSPICIOUS' else ('low' if case.disposition == 'FALSE_POSITIVE' else 'medium') }}" style="font-size: 12px;">
+            {{ case.disposition }}
+          </span>
+        </div>
+        <p style="font-size: 13px; color: #ffffff;">{{ case.disposition_reason or "Disposition recorded following procedural review." }}</p>
+        <div style="font-size: 11px; color: var(--text-dim); margin-top: 0.4rem;">Closed at: {{ case.closed_at or case.updated_at }}</div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Linked Alerts Table -->
+    <div class="table-card">
+      <div class="table-header-toolbar">
+        <div style="font-weight: 700; color: #ffffff;">Attached Alerts (Under Investigation)</div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Alert ID</th>
+            <th>Title</th>
+            <th>Severity</th>
+            <th>Risk Score</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for alt in alerts %}
+          <tr>
+            <td><code>{{ alt.alert_id }}</code></td>
+            <td>{{ alt.title }}</td>
+            <td><span class="badge badge-{{ alt.severity | lower }}">{{ alt.severity }}</span></td>
+            <td><strong style="color: #38bdf8;">{{ "%.1f"|format(alt.risk_score) }}</strong></td>
+            <td><a href="/alerts/{{ alt.alert_id }}" class="btn btn-secondary btn-sm">Inspect Alert</a></td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-dim); padding: 1.5rem;">No linked alerts.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Immutable Timeline of Analyst Actions -->
+    <div class="panel-card">
+      <h3 class="panel-title">Audit Trail & Action Timeline</h3>
+      <ul class="timeline">
+        {% for act in actions_timeline %}
+        <li class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-time">{{ act.timestamp }} &bull; <strong>{{ act.analyst_id }}</strong></div>
+            <div style="font-weight: 600; color: #ffffff; font-size: 13px; margin-bottom: 0.25rem;">
+              {{ act.action_type }}
+              {% if act.new_status and act.new_status != act.previous_status %}
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: normal;">
+                  ({{ act.previous_status or "None" }} &rarr; {{ act.new_status }})
+                </span>
+              {% endif %}
+            </div>
+            <p style="font-size: 12px; color: var(--text-main);">{{ act.comment }}</p>
+          </div>
+        </li>
+        {% else %}
+        <p style="color: var(--text-dim); font-size: 13px;">No actions logged yet.</p>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <!-- Add Action / Note Form -->
+    <div class="panel-card">
+      <h3 class="panel-title">Record Analyst Note / Action</h3>
+      <form method="POST" action="/cases/{{ case.case_id }}/action">
+        <div style="margin-bottom: 0.75rem;">
+          <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Action Type</label>
+          <select name="action_type" class="select-input" style="width: 100%;">
+            <option value="NOTE_ADDED">NOTE_ADDED</option>
+            <option value="STATUS_CHANGE">STATUS_CHANGE</option>
+            <option value="ESCALATED">ESCALATED</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 0.75rem;">
+          <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Transition Status</label>
+          <select name="new_status" class="select-input" style="width: 100%;">
+            <option value="">Keep Current ({{ case.case_status }})</option>
+            <option value="IN_PROGRESS">IN_PROGRESS</option>
+            <option value="PENDING_REVIEW">PENDING_REVIEW</option>
+            <option value="CLOSED">CLOSED</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Investigator Comment</label>
+          <textarea name="comment" class="input-text" style="width: 100%; height: 80px;" required placeholder="Document evidence findings, customer outreach, or SAR drafting rationale..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+          Record Action to Audit Trail
+        </button>
+      </form>
+    </div>
+
+    <!-- Formal Disposition Form -->
+    {% if case.case_status != "CLOSED" %}
+    <div class="panel-card">
+      <h3 class="panel-title">Record Final Case Disposition</h3>
+      <form method="POST" action="/cases/{{ case.case_id }}/disposition">
+        <div style="margin-bottom: 0.75rem;">
+          <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Disposition Outcome</label>
+          <select name="disposition" class="select-input" style="width: 100%;" required>
+            <option value="CONFIRMED_SUSPICIOUS">CONFIRMED_SUSPICIOUS (File SAR/STR)</option>
+            <option value="FALSE_POSITIVE">FALSE_POSITIVE (Normal Activity)</option>
+            <option value="INCONCLUSIVE">INCONCLUSIVE (Under Surveillance)</option>
+            <option value="ESCALATED">ESCALATED (Senior Management Review)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Formal Justification Reason</label>
+          <textarea name="reason" class="input-text" style="width: 100%; height: 80px;" required placeholder="State exact regulatory and factual reasoning for this outcome..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-danger" style="width: 100%; justify-content: center;">
+          Submit Final Disposition
+        </button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

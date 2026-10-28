@@ -1,0 +1,3340 @@
+{
+  "validation_timestamp": "2026-10-28T12:34:41.868131Z",
+  "passed": false,
+  "total_checks_evaluated": 24,
+  "error_count": 1,
+  "warning_count": 256,
+  "info_count": 0,
+  "scenario_validation": {
+    "scenario_1_closed_account_detected": true,
+    "scenario_2_overdraft_breach_detected": true,
+    "scenario_3_transfer_mismatch_detected": true,
+    "scenario_4_alert_no_txn_detected": true,
+    "scenario_5_case_chronology_detected": true
+  },
+  "issues": [
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000001",
+      "explanation": "Transaction TXN-2026-00000001 posted to closed account ACC-CUS-000001-01 (Closed at: 2026-07-17T14:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000001-01",
+        "closed_at": "2026-07-17T14:00:00+00:00",
+        "txn_timestamp": "2026-07-23T01:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000002",
+      "explanation": "Transaction TXN-2026-00000002 posted to closed account ACC-CUS-000036-01 (Closed at: 2026-08-06T16:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000036-01",
+        "closed_at": "2026-08-06T16:00:00+00:00",
+        "txn_timestamp": "2026-08-09T03:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000003",
+      "explanation": "Transaction TXN-2026-00000003 posted to closed account ACC-CUS-000071-01 (Closed at: 2026-04-15T10:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000071-01",
+        "closed_at": "2026-04-15T10:00:00+00:00",
+        "txn_timestamp": "2026-04-30T22:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000004",
+      "explanation": "Transaction TXN-2026-00000004 posted to closed account ACC-CUS-000106-01 (Closed at: 2026-03-19T03:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000106-01",
+        "closed_at": "2026-03-19T03:00:00+00:00",
+        "txn_timestamp": "2026-04-06T12:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000005",
+      "explanation": "Transaction TXN-2026-00000005 posted to closed account ACC-CUS-000141-01 (Closed at: 2026-07-13T02:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000141-01",
+        "closed_at": "2026-07-13T02:00:00+00:00",
+        "txn_timestamp": "2026-07-17T14:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000006",
+      "explanation": "Transaction TXN-2026-00000006 posted to closed account ACC-CUS-000176-01 (Closed at: 2026-04-14T21:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000176-01",
+        "closed_at": "2026-04-14T21:00:00+00:00",
+        "txn_timestamp": "2026-05-01T04:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000007",
+      "explanation": "Transaction TXN-2026-00000007 posted to closed account ACC-CUS-000211-01 (Closed at: 2026-07-02T08:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000211-01",
+        "closed_at": "2026-07-02T08:00:00+00:00",
+        "txn_timestamp": "2026-07-20T11:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000008",
+      "explanation": "Transaction TXN-2026-00000008 posted to closed account ACC-CUS-000246-01 (Closed at: 2026-05-16T21:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000246-01",
+        "closed_at": "2026-05-16T21:00:00+00:00",
+        "txn_timestamp": "2026-05-25T07:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000009",
+      "explanation": "Transaction TXN-2026-00000009 posted to closed account ACC-CUS-000281-01 (Closed at: 2026-04-04T08:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000281-01",
+        "closed_at": "2026-04-04T08:00:00+00:00",
+        "txn_timestamp": "2026-04-24T15:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000010",
+      "explanation": "Transaction TXN-2026-00000010 posted to closed account ACC-CUS-000316-01 (Closed at: 2026-04-28T22:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000316-01",
+        "closed_at": "2026-04-28T22:00:00+00:00",
+        "txn_timestamp": "2026-05-11T00:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000011",
+      "explanation": "Transaction TXN-2026-00000011 posted to closed account ACC-CUS-000351-01 (Closed at: 2026-07-17T00:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000351-01",
+        "closed_at": "2026-07-17T00:00:00+00:00",
+        "txn_timestamp": "2026-07-28T01:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000012",
+      "explanation": "Transaction TXN-2026-00000012 posted to closed account ACC-CUS-000386-01 (Closed at: 2026-08-16T05:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000386-01",
+        "closed_at": "2026-08-16T05:00:00+00:00",
+        "txn_timestamp": "2026-08-20T15:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000013",
+      "explanation": "Transaction TXN-2026-00000013 posted to closed account ACC-CUS-000421-01 (Closed at: 2026-03-19T21:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000421-01",
+        "closed_at": "2026-03-19T21:00:00+00:00",
+        "txn_timestamp": "2026-03-21T09:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000014",
+      "explanation": "Transaction TXN-2026-00000014 posted to closed account ACC-CUS-000456-01 (Closed at: 2026-04-01T14:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000456-01",
+        "closed_at": "2026-04-01T14:00:00+00:00",
+        "txn_timestamp": "2026-04-13T21:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000015",
+      "explanation": "Transaction TXN-2026-00000015 posted to closed account ACC-CUS-000491-01 (Closed at: 2026-04-28T13:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000491-01",
+        "closed_at": "2026-04-28T13:00:00+00:00",
+        "txn_timestamp": "2026-05-13T15:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000016",
+      "explanation": "Transaction TXN-2026-00000016 posted to closed account ACC-CUS-000526-01 (Closed at: 2026-05-20T19:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000526-01",
+        "closed_at": "2026-05-20T19:00:00+00:00",
+        "txn_timestamp": "2026-05-21T22:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000017",
+      "explanation": "Transaction TXN-2026-00000017 posted to closed account ACC-CUS-000561-01 (Closed at: 2026-02-23T22:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000561-01",
+        "closed_at": "2026-02-23T22:00:00+00:00",
+        "txn_timestamp": "2026-03-03T05:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000018",
+      "explanation": "Transaction TXN-2026-00000018 posted to closed account ACC-CUS-000596-01 (Closed at: 2026-03-03T18:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000596-01",
+        "closed_at": "2026-03-03T18:00:00+00:00",
+        "txn_timestamp": "2026-03-07T22:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000019",
+      "explanation": "Transaction TXN-2026-00000019 posted to closed account ACC-CUS-000631-01 (Closed at: 2026-04-18T03:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000631-01",
+        "closed_at": "2026-04-18T03:00:00+00:00",
+        "txn_timestamp": "2026-04-23T10:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000020",
+      "explanation": "Transaction TXN-2026-00000020 posted to closed account ACC-CUS-000666-01 (Closed at: 2026-08-10T05:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000666-01",
+        "closed_at": "2026-08-10T05:00:00+00:00",
+        "txn_timestamp": "2026-08-22T08:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000021",
+      "explanation": "Transaction TXN-2026-00000021 posted to closed account ACC-CUS-000701-01 (Closed at: 2026-03-06T08:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000701-01",
+        "closed_at": "2026-03-06T08:00:00+00:00",
+        "txn_timestamp": "2026-03-19T14:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000022",
+      "explanation": "Transaction TXN-2026-00000022 posted to closed account ACC-CUS-000736-01 (Closed at: 2026-03-24T00:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000736-01",
+        "closed_at": "2026-03-24T00:00:00+00:00",
+        "txn_timestamp": "2026-04-03T01:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000023",
+      "explanation": "Transaction TXN-2026-00000023 posted to closed account ACC-CUS-000771-01 (Closed at: 2026-05-08T14:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000771-01",
+        "closed_at": "2026-05-08T14:00:00+00:00",
+        "txn_timestamp": "2026-05-23T23:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000024",
+      "explanation": "Transaction TXN-2026-00000024 posted to closed account ACC-CUS-000806-01 (Closed at: 2026-06-28T16:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000806-01",
+        "closed_at": "2026-06-28T16:00:00+00:00",
+        "txn_timestamp": "2026-07-03T17:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000025",
+      "explanation": "Transaction TXN-2026-00000025 posted to closed account ACC-CUS-000841-01 (Closed at: 2026-08-13T03:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000841-01",
+        "closed_at": "2026-08-13T03:00:00+00:00",
+        "txn_timestamp": "2026-08-19T15:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000026",
+      "explanation": "Transaction TXN-2026-00000026 posted to closed account ACC-CUS-000876-01 (Closed at: 2026-03-29T12:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000876-01",
+        "closed_at": "2026-03-29T12:00:00+00:00",
+        "txn_timestamp": "2026-04-12T18:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000027",
+      "explanation": "Transaction TXN-2026-00000027 posted to closed account ACC-CUS-000911-01 (Closed at: 2026-03-12T22:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000911-01",
+        "closed_at": "2026-03-12T22:00:00+00:00",
+        "txn_timestamp": "2026-03-15T08:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000028",
+      "explanation": "Transaction TXN-2026-00000028 posted to closed account ACC-CUS-000946-01 (Closed at: 2026-06-23T13:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000946-01",
+        "closed_at": "2026-06-23T13:00:00+00:00",
+        "txn_timestamp": "2026-06-28T22:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000029",
+      "explanation": "Transaction TXN-2026-00000029 posted to closed account ACC-CUS-000981-01 (Closed at: 2026-07-27T17:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-000981-01",
+        "closed_at": "2026-07-27T17:00:00+00:00",
+        "txn_timestamp": "2026-08-05T00:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000030",
+      "explanation": "Transaction TXN-2026-00000030 posted to closed account ACC-CUS-001016-01 (Closed at: 2026-02-03T22:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001016-01",
+        "closed_at": "2026-02-03T22:00:00+00:00",
+        "txn_timestamp": "2026-02-19T00:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000031",
+      "explanation": "Transaction TXN-2026-00000031 posted to closed account ACC-CUS-001051-01 (Closed at: 2026-08-11T22:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001051-01",
+        "closed_at": "2026-08-11T22:00:00+00:00",
+        "txn_timestamp": "2026-08-31T07:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000032",
+      "explanation": "Transaction TXN-2026-00000032 posted to closed account ACC-CUS-001086-01 (Closed at: 2026-03-15T07:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001086-01",
+        "closed_at": "2026-03-15T07:00:00+00:00",
+        "txn_timestamp": "2026-03-21T09:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000033",
+      "explanation": "Transaction TXN-2026-00000033 posted to closed account ACC-CUS-001121-01 (Closed at: 2026-05-30T14:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001121-01",
+        "closed_at": "2026-05-30T14:00:00+00:00",
+        "txn_timestamp": "2026-06-18T22:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000034",
+      "explanation": "Transaction TXN-2026-00000034 posted to closed account ACC-CUS-001156-01 (Closed at: 2026-02-20T06:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001156-01",
+        "closed_at": "2026-02-20T06:00:00+00:00",
+        "txn_timestamp": "2026-02-28T15:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000035",
+      "explanation": "Transaction TXN-2026-00000035 posted to closed account ACC-CUS-001191-01 (Closed at: 2026-02-22T15:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001191-01",
+        "closed_at": "2026-02-22T15:00:00+00:00",
+        "txn_timestamp": "2026-03-13T02:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000036",
+      "explanation": "Transaction TXN-2026-00000036 posted to closed account ACC-CUS-001226-01 (Closed at: 2026-03-02T03:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001226-01",
+        "closed_at": "2026-03-02T03:00:00+00:00",
+        "txn_timestamp": "2026-03-21T09:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000037",
+      "explanation": "Transaction TXN-2026-00000037 posted to closed account ACC-CUS-001261-01 (Closed at: 2026-07-11T17:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001261-01",
+        "closed_at": "2026-07-11T17:00:00+00:00",
+        "txn_timestamp": "2026-07-18T02:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000038",
+      "explanation": "Transaction TXN-2026-00000038 posted to closed account ACC-CUS-001296-01 (Closed at: 2026-03-24T09:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001296-01",
+        "closed_at": "2026-03-24T09:00:00+00:00",
+        "txn_timestamp": "2026-04-12T15:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000039",
+      "explanation": "Transaction TXN-2026-00000039 posted to closed account ACC-CUS-001331-01 (Closed at: 2026-05-30T17:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001331-01",
+        "closed_at": "2026-05-30T17:00:00+00:00",
+        "txn_timestamp": "2026-06-01T18:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000040",
+      "explanation": "Transaction TXN-2026-00000040 posted to closed account ACC-CUS-001366-01 (Closed at: 2026-03-30T14:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001366-01",
+        "closed_at": "2026-03-30T14:00:00+00:00",
+        "txn_timestamp": "2026-04-08T18:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000041",
+      "explanation": "Transaction TXN-2026-00000041 posted to closed account ACC-CUS-001401-01 (Closed at: 2026-06-01T19:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001401-01",
+        "closed_at": "2026-06-01T19:00:00+00:00",
+        "txn_timestamp": "2026-06-12T01:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000042",
+      "explanation": "Transaction TXN-2026-00000042 posted to closed account ACC-CUS-001436-01 (Closed at: 2026-06-22T08:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001436-01",
+        "closed_at": "2026-06-22T08:00:00+00:00",
+        "txn_timestamp": "2026-06-25T11:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000043",
+      "explanation": "Transaction TXN-2026-00000043 posted to closed account ACC-CUS-001471-01 (Closed at: 2026-06-03T06:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001471-01",
+        "closed_at": "2026-06-03T06:00:00+00:00",
+        "txn_timestamp": "2026-06-08T13:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000044",
+      "explanation": "Transaction TXN-2026-00000044 posted to closed account ACC-CUS-001506-01 (Closed at: 2026-02-03T20:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001506-01",
+        "closed_at": "2026-02-03T20:00:00+00:00",
+        "txn_timestamp": "2026-02-14T04:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000045",
+      "explanation": "Transaction TXN-2026-00000045 posted to closed account ACC-CUS-001541-01 (Closed at: 2026-06-19T18:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001541-01",
+        "closed_at": "2026-06-19T18:00:00+00:00",
+        "txn_timestamp": "2026-07-01T01:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000046",
+      "explanation": "Transaction TXN-2026-00000046 posted to closed account ACC-CUS-001576-01 (Closed at: 2026-06-27T05:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001576-01",
+        "closed_at": "2026-06-27T05:00:00+00:00",
+        "txn_timestamp": "2026-07-14T09:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000047",
+      "explanation": "Transaction TXN-2026-00000047 posted to closed account ACC-CUS-001611-01 (Closed at: 2026-04-16T13:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001611-01",
+        "closed_at": "2026-04-16T13:00:00+00:00",
+        "txn_timestamp": "2026-04-20T23:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000048",
+      "explanation": "Transaction TXN-2026-00000048 posted to closed account ACC-CUS-001646-01 (Closed at: 2026-08-08T10:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001646-01",
+        "closed_at": "2026-08-08T10:00:00+00:00",
+        "txn_timestamp": "2026-08-20T18:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000049",
+      "explanation": "Transaction TXN-2026-00000049 posted to closed account ACC-CUS-001681-01 (Closed at: 2026-04-07T20:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001681-01",
+        "closed_at": "2026-04-07T20:00:00+00:00",
+        "txn_timestamp": "2026-04-13T02:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000050",
+      "explanation": "Transaction TXN-2026-00000050 posted to closed account ACC-CUS-001716-01 (Closed at: 2026-04-20T22:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001716-01",
+        "closed_at": "2026-04-20T22:00:00+00:00",
+        "txn_timestamp": "2026-04-30T06:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000051",
+      "explanation": "Transaction TXN-2026-00000051 posted to closed account ACC-CUS-001751-01 (Closed at: 2026-03-28T21:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001751-01",
+        "closed_at": "2026-03-28T21:00:00+00:00",
+        "txn_timestamp": "2026-04-18T03:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000052",
+      "explanation": "Transaction TXN-2026-00000052 posted to closed account ACC-CUS-001786-01 (Closed at: 2026-02-21T17:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001786-01",
+        "closed_at": "2026-02-21T17:00:00+00:00",
+        "txn_timestamp": "2026-03-14T04:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000053",
+      "explanation": "Transaction TXN-2026-00000053 posted to closed account ACC-CUS-001821-01 (Closed at: 2026-04-20T12:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001821-01",
+        "closed_at": "2026-04-20T12:00:00+00:00",
+        "txn_timestamp": "2026-05-06T13:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000054",
+      "explanation": "Transaction TXN-2026-00000054 posted to closed account ACC-CUS-001856-01 (Closed at: 2026-02-23T19:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001856-01",
+        "closed_at": "2026-02-23T19:00:00+00:00",
+        "txn_timestamp": "2026-03-05T21:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000055",
+      "explanation": "Transaction TXN-2026-00000055 posted to closed account ACC-CUS-001891-01 (Closed at: 2026-04-11T05:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001891-01",
+        "closed_at": "2026-04-11T05:00:00+00:00",
+        "txn_timestamp": "2026-04-29T10:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000056",
+      "explanation": "Transaction TXN-2026-00000056 posted to closed account ACC-CUS-001926-01 (Closed at: 2026-03-19T01:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001926-01",
+        "closed_at": "2026-03-19T01:00:00+00:00",
+        "txn_timestamp": "2026-04-01T06:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000057",
+      "explanation": "Transaction TXN-2026-00000057 posted to closed account ACC-CUS-001961-01 (Closed at: 2026-06-09T03:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001961-01",
+        "closed_at": "2026-06-09T03:00:00+00:00",
+        "txn_timestamp": "2026-06-13T06:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000058",
+      "explanation": "Transaction TXN-2026-00000058 posted to closed account ACC-CUS-001996-01 (Closed at: 2026-08-16T13:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-001996-01",
+        "closed_at": "2026-08-16T13:00:00+00:00",
+        "txn_timestamp": "2026-09-05T16:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000059",
+      "explanation": "Transaction TXN-2026-00000059 posted to closed account ACC-CUS-002031-01 (Closed at: 2026-07-11T06:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002031-01",
+        "closed_at": "2026-07-11T06:00:00+00:00",
+        "txn_timestamp": "2026-07-13T12:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000060",
+      "explanation": "Transaction TXN-2026-00000060 posted to closed account ACC-CUS-002066-01 (Closed at: 2026-07-24T05:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002066-01",
+        "closed_at": "2026-07-24T05:00:00+00:00",
+        "txn_timestamp": "2026-07-28T10:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000061",
+      "explanation": "Transaction TXN-2026-00000061 posted to closed account ACC-CUS-002101-01 (Closed at: 2026-07-12T10:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002101-01",
+        "closed_at": "2026-07-12T10:00:00+00:00",
+        "txn_timestamp": "2026-07-31T19:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000062",
+      "explanation": "Transaction TXN-2026-00000062 posted to closed account ACC-CUS-002136-01 (Closed at: 2026-03-13T03:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002136-01",
+        "closed_at": "2026-03-13T03:00:00+00:00",
+        "txn_timestamp": "2026-03-31T07:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000063",
+      "explanation": "Transaction TXN-2026-00000063 posted to closed account ACC-CUS-002171-01 (Closed at: 2026-05-24T21:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002171-01",
+        "closed_at": "2026-05-24T21:00:00+00:00",
+        "txn_timestamp": "2026-05-26T03:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000064",
+      "explanation": "Transaction TXN-2026-00000064 posted to closed account ACC-CUS-002206-01 (Closed at: 2026-06-11T05:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002206-01",
+        "closed_at": "2026-06-11T05:00:00+00:00",
+        "txn_timestamp": "2026-06-23T06:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000065",
+      "explanation": "Transaction TXN-2026-00000065 posted to closed account ACC-CUS-002241-01 (Closed at: 2026-03-10T02:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002241-01",
+        "closed_at": "2026-03-10T02:00:00+00:00",
+        "txn_timestamp": "2026-03-25T07:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000066",
+      "explanation": "Transaction TXN-2026-00000066 posted to closed account ACC-CUS-002276-01 (Closed at: 2026-07-15T06:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002276-01",
+        "closed_at": "2026-07-15T06:00:00+00:00",
+        "txn_timestamp": "2026-07-27T12:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000067",
+      "explanation": "Transaction TXN-2026-00000067 posted to closed account ACC-CUS-002311-01 (Closed at: 2026-03-14T06:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002311-01",
+        "closed_at": "2026-03-14T06:00:00+00:00",
+        "txn_timestamp": "2026-03-25T12:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000068",
+      "explanation": "Transaction TXN-2026-00000068 posted to closed account ACC-CUS-002346-01 (Closed at: 2026-05-30T09:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002346-01",
+        "closed_at": "2026-05-30T09:00:00+00:00",
+        "txn_timestamp": "2026-06-01T11:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000069",
+      "explanation": "Transaction TXN-2026-00000069 posted to closed account ACC-CUS-002381-01 (Closed at: 2026-07-03T02:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002381-01",
+        "closed_at": "2026-07-03T02:00:00+00:00",
+        "txn_timestamp": "2026-07-12T13:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000070",
+      "explanation": "Transaction TXN-2026-00000070 posted to closed account ACC-CUS-002416-01 (Closed at: 2026-02-09T22:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002416-01",
+        "closed_at": "2026-02-09T22:00:00+00:00",
+        "txn_timestamp": "2026-02-18T09:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000071",
+      "explanation": "Transaction TXN-2026-00000071 posted to closed account ACC-CUS-002451-01 (Closed at: 2026-07-13T06:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002451-01",
+        "closed_at": "2026-07-13T06:00:00+00:00",
+        "txn_timestamp": "2026-07-16T07:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000072",
+      "explanation": "Transaction TXN-2026-00000072 posted to closed account ACC-CUS-002486-01 (Closed at: 2026-03-26T04:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002486-01",
+        "closed_at": "2026-03-26T04:00:00+00:00",
+        "txn_timestamp": "2026-04-04T08:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000073",
+      "explanation": "Transaction TXN-2026-00000073 posted to closed account ACC-CUS-002521-01 (Closed at: 2026-04-24T19:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002521-01",
+        "closed_at": "2026-04-24T19:00:00+00:00",
+        "txn_timestamp": "2026-05-05T04:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000074",
+      "explanation": "Transaction TXN-2026-00000074 posted to closed account ACC-CUS-002556-01 (Closed at: 2026-06-29T03:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002556-01",
+        "closed_at": "2026-06-29T03:00:00+00:00",
+        "txn_timestamp": "2026-07-12T05:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000075",
+      "explanation": "Transaction TXN-2026-00000075 posted to closed account ACC-CUS-002591-01 (Closed at: 2026-07-09T05:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002591-01",
+        "closed_at": "2026-07-09T05:00:00+00:00",
+        "txn_timestamp": "2026-07-15T07:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000076",
+      "explanation": "Transaction TXN-2026-00000076 posted to closed account ACC-CUS-002626-01 (Closed at: 2026-03-20T11:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002626-01",
+        "closed_at": "2026-03-20T11:00:00+00:00",
+        "txn_timestamp": "2026-03-28T19:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000077",
+      "explanation": "Transaction TXN-2026-00000077 posted to closed account ACC-CUS-002661-01 (Closed at: 2026-07-13T17:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002661-01",
+        "closed_at": "2026-07-13T17:00:00+00:00",
+        "txn_timestamp": "2026-07-15T02:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000078",
+      "explanation": "Transaction TXN-2026-00000078 posted to closed account ACC-CUS-002696-01 (Closed at: 2026-07-29T23:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002696-01",
+        "closed_at": "2026-07-29T23:00:00+00:00",
+        "txn_timestamp": "2026-08-01T05:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000079",
+      "explanation": "Transaction TXN-2026-00000079 posted to closed account ACC-CUS-002731-01 (Closed at: 2026-07-17T02:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002731-01",
+        "closed_at": "2026-07-17T02:00:00+00:00",
+        "txn_timestamp": "2026-07-31T08:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-07-CLOSED-ACCOUNT-TXN",
+      "check_name": "Closed Account Transaction Posting",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000080",
+      "explanation": "Transaction TXN-2026-00000080 posted to closed account ACC-CUS-002766-01 (Closed at: 2026-03-15T17:00:00+00:00).",
+      "details": {
+        "account_id": "ACC-CUS-002766-01",
+        "closed_at": "2026-03-15T17:00:00+00:00",
+        "txn_timestamp": "2026-03-25T03:00:00+00:00"
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000081",
+      "explanation": "Transaction TXN-2026-00000081 balance_after ($-3149.90) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3149.9,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000082",
+      "explanation": "Transaction TXN-2026-00000082 balance_after ($-2968.60) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2968.6,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000083",
+      "explanation": "Transaction TXN-2026-00000083 balance_after ($-2940.43) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2940.43,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000084",
+      "explanation": "Transaction TXN-2026-00000084 balance_after ($-2637.25) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2637.25,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000085",
+      "explanation": "Transaction TXN-2026-00000085 balance_after ($-3299.65) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3299.65,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000086",
+      "explanation": "Transaction TXN-2026-00000086 balance_after ($-2423.78) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2423.78,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000087",
+      "explanation": "Transaction TXN-2026-00000087 balance_after ($-2707.84) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2707.84,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000088",
+      "explanation": "Transaction TXN-2026-00000088 balance_after ($-2621.55) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2621.55,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000089",
+      "explanation": "Transaction TXN-2026-00000089 balance_after ($-3113.21) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3113.21,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000090",
+      "explanation": "Transaction TXN-2026-00000090 balance_after ($-2836.81) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2836.81,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000091",
+      "explanation": "Transaction TXN-2026-00000091 balance_after ($-3301.75) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3301.75,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000092",
+      "explanation": "Transaction TXN-2026-00000092 balance_after ($-3298.39) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3298.39,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000093",
+      "explanation": "Transaction TXN-2026-00000093 balance_after ($-2886.68) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2886.68,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000094",
+      "explanation": "Transaction TXN-2026-00000094 balance_after ($-2765.62) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2765.62,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000095",
+      "explanation": "Transaction TXN-2026-00000095 balance_after ($-7167.24) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7167.24,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000096",
+      "explanation": "Transaction TXN-2026-00000096 balance_after ($-1634.82) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -1634.82,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000097",
+      "explanation": "Transaction TXN-2026-00000097 balance_after ($-6742.86) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -6742.86,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000098",
+      "explanation": "Transaction TXN-2026-00000098 balance_after ($-3341.83) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3341.83,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000099",
+      "explanation": "Transaction TXN-2026-00000099 balance_after ($-3374.57) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3374.57,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000100",
+      "explanation": "Transaction TXN-2026-00000100 balance_after ($-2741.28) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2741.28,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000101",
+      "explanation": "Transaction TXN-2026-00000101 balance_after ($-3147.89) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3147.89,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000102",
+      "explanation": "Transaction TXN-2026-00000102 balance_after ($-2811.49) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2811.49,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000103",
+      "explanation": "Transaction TXN-2026-00000103 balance_after ($-2068.95) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2068.95,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000104",
+      "explanation": "Transaction TXN-2026-00000104 balance_after ($-2211.87) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2211.87,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000105",
+      "explanation": "Transaction TXN-2026-00000105 balance_after ($-3394.63) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3394.63,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000106",
+      "explanation": "Transaction TXN-2026-00000106 balance_after ($-3008.34) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3008.34,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000107",
+      "explanation": "Transaction TXN-2026-00000107 balance_after ($-2885.52) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2885.52,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000108",
+      "explanation": "Transaction TXN-2026-00000108 balance_after ($-2060.79) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2060.79,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000109",
+      "explanation": "Transaction TXN-2026-00000109 balance_after ($-7074.89) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7074.89,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000110",
+      "explanation": "Transaction TXN-2026-00000110 balance_after ($-3075.60) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3075.6,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000111",
+      "explanation": "Transaction TXN-2026-00000111 balance_after ($-3256.54) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3256.54,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000112",
+      "explanation": "Transaction TXN-2026-00000112 balance_after ($-6871.94) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -6871.94,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000113",
+      "explanation": "Transaction TXN-2026-00000113 balance_after ($-2323.33) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2323.33,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000114",
+      "explanation": "Transaction TXN-2026-00000114 balance_after ($-3431.24) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3431.24,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000115",
+      "explanation": "Transaction TXN-2026-00000115 balance_after ($-2910.37) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2910.37,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000116",
+      "explanation": "Transaction TXN-2026-00000116 balance_after ($-6680.80) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -6680.8,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000117",
+      "explanation": "Transaction TXN-2026-00000117 balance_after ($-3147.06) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3147.06,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000118",
+      "explanation": "Transaction TXN-2026-00000118 balance_after ($-2600.47) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2600.47,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000119",
+      "explanation": "Transaction TXN-2026-00000119 balance_after ($-7227.46) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7227.46,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000120",
+      "explanation": "Transaction TXN-2026-00000120 balance_after ($-7141.04) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7141.04,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000121",
+      "explanation": "Transaction TXN-2026-00000121 balance_after ($-2840.96) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2840.96,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000122",
+      "explanation": "Transaction TXN-2026-00000122 balance_after ($-3371.00) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3371.0,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000123",
+      "explanation": "Transaction TXN-2026-00000123 balance_after ($-6635.15) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -6635.15,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000124",
+      "explanation": "Transaction TXN-2026-00000124 balance_after ($-3489.36) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3489.36,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000125",
+      "explanation": "Transaction TXN-2026-00000125 balance_after ($-2962.88) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2962.88,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000126",
+      "explanation": "Transaction TXN-2026-00000126 balance_after ($-3486.23) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3486.23,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000127",
+      "explanation": "Transaction TXN-2026-00000127 balance_after ($-3254.82) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3254.82,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000128",
+      "explanation": "Transaction TXN-2026-00000128 balance_after ($-3312.21) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3312.21,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000129",
+      "explanation": "Transaction TXN-2026-00000129 balance_after ($-3104.69) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3104.69,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000130",
+      "explanation": "Transaction TXN-2026-00000130 balance_after ($-2845.03) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2845.03,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000131",
+      "explanation": "Transaction TXN-2026-00000131 balance_after ($-1822.41) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -1822.41,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000132",
+      "explanation": "Transaction TXN-2026-00000132 balance_after ($-3450.90) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3450.9,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000133",
+      "explanation": "Transaction TXN-2026-00000133 balance_after ($-1751.30) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -1751.3,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000134",
+      "explanation": "Transaction TXN-2026-00000134 balance_after ($-7402.09) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7402.09,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000135",
+      "explanation": "Transaction TXN-2026-00000135 balance_after ($-2989.69) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2989.69,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000136",
+      "explanation": "Transaction TXN-2026-00000136 balance_after ($-2801.16) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2801.16,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000137",
+      "explanation": "Transaction TXN-2026-00000137 balance_after ($-3067.44) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3067.44,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000138",
+      "explanation": "Transaction TXN-2026-00000138 balance_after ($-2247.49) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2247.49,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000139",
+      "explanation": "Transaction TXN-2026-00000139 balance_after ($-2779.97) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2779.97,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000140",
+      "explanation": "Transaction TXN-2026-00000140 balance_after ($-6663.68) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -6663.68,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000141",
+      "explanation": "Transaction TXN-2026-00000141 balance_after ($-3407.95) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3407.95,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000142",
+      "explanation": "Transaction TXN-2026-00000142 balance_after ($-2293.10) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2293.1,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000143",
+      "explanation": "Transaction TXN-2026-00000143 balance_after ($-6916.32) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -6916.32,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000144",
+      "explanation": "Transaction TXN-2026-00000144 balance_after ($-3353.69) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -3353.69,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000145",
+      "explanation": "Transaction TXN-2026-00000145 balance_after ($-1830.63) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -1830.63,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000146",
+      "explanation": "Transaction TXN-2026-00000146 balance_after ($-2216.19) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2216.19,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000147",
+      "explanation": "Transaction TXN-2026-00000147 balance_after ($-2859.32) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2859.32,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000148",
+      "explanation": "Transaction TXN-2026-00000148 balance_after ($-7117.82) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7117.82,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000149",
+      "explanation": "Transaction TXN-2026-00000149 balance_after ($-7312.43) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7312.43,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000150",
+      "explanation": "Transaction TXN-2026-00000150 balance_after ($-2727.00) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2727.0,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000151",
+      "explanation": "Transaction TXN-2026-00000151 balance_after ($-7023.75) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7023.75,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000152",
+      "explanation": "Transaction TXN-2026-00000152 balance_after ($-6698.67) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -6698.67,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000153",
+      "explanation": "Transaction TXN-2026-00000153 balance_after ($-1948.40) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -1948.4,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000154",
+      "explanation": "Transaction TXN-2026-00000154 balance_after ($-2161.68) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2161.68,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000155",
+      "explanation": "Transaction TXN-2026-00000155 balance_after ($-2488.07) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -2488.07,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000156",
+      "explanation": "Transaction TXN-2026-00000156 balance_after ($-2609.04) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2609.04,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000157",
+      "explanation": "Transaction TXN-2026-00000157 balance_after ($-1789.35) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -1789.35,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000158",
+      "explanation": "Transaction TXN-2026-00000158 balance_after ($-1795.62) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -1795.62,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000159",
+      "explanation": "Transaction TXN-2026-00000159 balance_after ($-2902.02) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2902.02,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000160",
+      "explanation": "Transaction TXN-2026-00000160 balance_after ($-7235.14) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -7235.14,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000171",
+      "explanation": "Transaction TXN-2026-00000171 balance_after ($-3185.55) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -3185.55,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000179",
+      "explanation": "Transaction TXN-2026-00000179 balance_after ($-8227.33) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -8227.33,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000183",
+      "explanation": "Transaction TXN-2026-00000183 balance_after ($-9367.18) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -9367.18,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000203",
+      "explanation": "Transaction TXN-2026-00000203 balance_after ($-12109.71) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -12109.71,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000205",
+      "explanation": "Transaction TXN-2026-00000205 balance_after ($-10426.38) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -10426.38,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000213",
+      "explanation": "Transaction TXN-2026-00000213 balance_after ($-4033.44) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -4033.44,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000221",
+      "explanation": "Transaction TXN-2026-00000221 balance_after ($-2367.82) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -2367.82,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000225",
+      "explanation": "Transaction TXN-2026-00000225 balance_after ($-9117.64) breaches overdraft limit ($0.00).",
+      "details": {
+        "balance_after": -9117.64,
+        "overdraft_limit": 0.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000239",
+      "explanation": "Transaction TXN-2026-00000239 balance_after ($-11687.06) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -11687.06,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000251",
+      "explanation": "Transaction TXN-2026-00000251 balance_after ($-5219.93) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -5219.93,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000253",
+      "explanation": "Transaction TXN-2026-00000253 balance_after ($-1865.26) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -1865.26,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000281",
+      "explanation": "Transaction TXN-2026-00000281 balance_after ($-7419.07) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -7419.07,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000295",
+      "explanation": "Transaction TXN-2026-00000295 balance_after ($-14015.65) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -14015.65,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000297",
+      "explanation": "Transaction TXN-2026-00000297 balance_after ($-10666.88) breaches overdraft limit ($5000.00).",
+      "details": {
+        "balance_after": -10666.88,
+        "overdraft_limit": 5000.0
+      }
+    },
+    {
+      "check_id": "CHK-08-OVERDRAFT-BREACH",
+      "check_name": "Negative Balance Exceeds Overdraft",
+      "level": "WARNING",
+      "entity_type": "Transaction",
+      "entity_id": "TXN-2026-00000299",
+      "explanation": "Transaction TXN-2026-00000299 balance_after ($-4083.63) breaches overdraft limit ($1000.00).",
+      "details": {
+        "balance_after": -4083.63,
+        "overdraft_limit": 1000.0
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000001",
+      "explanation": "Transfer link TRL-2026-00000001 legs do not reconcile: Source $14601.27 GBP != Dest $13141.14 EUR.",
+      "details": {
+        "source_amount": 14601.27,
+        "dest_amount": 13141.14,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000002",
+      "explanation": "Transfer link TRL-2026-00000002 legs do not reconcile: Source $16089.40 EUR != Dest $14480.46 GBP.",
+      "details": {
+        "source_amount": 16089.4,
+        "dest_amount": 14480.46,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000003",
+      "explanation": "Transfer link TRL-2026-00000003 legs do not reconcile: Source $17851.71 GBP != Dest $16066.54 GBP.",
+      "details": {
+        "source_amount": 17851.71,
+        "dest_amount": 16066.54,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000004",
+      "explanation": "Transfer link TRL-2026-00000004 legs do not reconcile: Source $7963.31 GBP != Dest $7166.98 GBP.",
+      "details": {
+        "source_amount": 7963.31,
+        "dest_amount": 7166.98,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000005",
+      "explanation": "Transfer link TRL-2026-00000005 legs do not reconcile: Source $6283.29 GBP != Dest $5654.96 GBP.",
+      "details": {
+        "source_amount": 6283.29,
+        "dest_amount": 5654.96,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000006",
+      "explanation": "Transfer link TRL-2026-00000006 legs do not reconcile: Source $8969.31 GBP != Dest $8072.38 GBP.",
+      "details": {
+        "source_amount": 8969.31,
+        "dest_amount": 8072.38,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000007",
+      "explanation": "Transfer link TRL-2026-00000007 legs do not reconcile: Source $5676.83 GBP != Dest $5109.15 USD.",
+      "details": {
+        "source_amount": 5676.83,
+        "dest_amount": 5109.15,
+        "source_curr": "GBP",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000008",
+      "explanation": "Transfer link TRL-2026-00000008 legs do not reconcile: Source $18851.08 USD != Dest $16965.97 GBP.",
+      "details": {
+        "source_amount": 18851.08,
+        "dest_amount": 16965.97,
+        "source_curr": "USD",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000009",
+      "explanation": "Transfer link TRL-2026-00000009 legs do not reconcile: Source $11809.92 GBP != Dest $10628.93 GBP.",
+      "details": {
+        "source_amount": 11809.92,
+        "dest_amount": 10628.93,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000010",
+      "explanation": "Transfer link TRL-2026-00000010 legs do not reconcile: Source $12234.12 GBP != Dest $11010.71 GBP.",
+      "details": {
+        "source_amount": 12234.12,
+        "dest_amount": 11010.71,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000011",
+      "explanation": "Transfer link TRL-2026-00000011 legs do not reconcile: Source $15456.87 GBP != Dest $13911.18 GBP.",
+      "details": {
+        "source_amount": 15456.87,
+        "dest_amount": 13911.18,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000012",
+      "explanation": "Transfer link TRL-2026-00000012 legs do not reconcile: Source $12033.47 GBP != Dest $10830.12 GBP.",
+      "details": {
+        "source_amount": 12033.47,
+        "dest_amount": 10830.12,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000013",
+      "explanation": "Transfer link TRL-2026-00000013 legs do not reconcile: Source $15438.44 GBP != Dest $13894.60 EUR.",
+      "details": {
+        "source_amount": 15438.44,
+        "dest_amount": 13894.6,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000014",
+      "explanation": "Transfer link TRL-2026-00000014 legs do not reconcile: Source $11940.05 EUR != Dest $10746.05 EUR.",
+      "details": {
+        "source_amount": 11940.05,
+        "dest_amount": 10746.05,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000015",
+      "explanation": "Transfer link TRL-2026-00000015 legs do not reconcile: Source $6814.42 EUR != Dest $6132.98 GBP.",
+      "details": {
+        "source_amount": 6814.42,
+        "dest_amount": 6132.98,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000016",
+      "explanation": "Transfer link TRL-2026-00000016 legs do not reconcile: Source $11046.02 GBP != Dest $9941.42 GBP.",
+      "details": {
+        "source_amount": 11046.02,
+        "dest_amount": 9941.42,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000017",
+      "explanation": "Transfer link TRL-2026-00000017 legs do not reconcile: Source $8893.20 GBP != Dest $8003.88 GBP.",
+      "details": {
+        "source_amount": 8893.2,
+        "dest_amount": 8003.88,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000018",
+      "explanation": "Transfer link TRL-2026-00000018 legs do not reconcile: Source $9496.97 GBP != Dest $8547.27 GBP.",
+      "details": {
+        "source_amount": 9496.97,
+        "dest_amount": 8547.27,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000019",
+      "explanation": "Transfer link TRL-2026-00000019 legs do not reconcile: Source $10218.39 GBP != Dest $9196.55 EUR.",
+      "details": {
+        "source_amount": 10218.39,
+        "dest_amount": 9196.55,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000020",
+      "explanation": "Transfer link TRL-2026-00000020 legs do not reconcile: Source $17977.85 EUR != Dest $16180.06 EUR.",
+      "details": {
+        "source_amount": 17977.85,
+        "dest_amount": 16180.06,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000021",
+      "explanation": "Transfer link TRL-2026-00000021 legs do not reconcile: Source $10261.56 EUR != Dest $9235.40 EUR.",
+      "details": {
+        "source_amount": 10261.56,
+        "dest_amount": 9235.4,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000022",
+      "explanation": "Transfer link TRL-2026-00000022 legs do not reconcile: Source $17342.91 EUR != Dest $15608.62 GBP.",
+      "details": {
+        "source_amount": 17342.91,
+        "dest_amount": 15608.62,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000023",
+      "explanation": "Transfer link TRL-2026-00000023 legs do not reconcile: Source $16980.42 GBP != Dest $15282.38 GBP.",
+      "details": {
+        "source_amount": 16980.42,
+        "dest_amount": 15282.38,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000024",
+      "explanation": "Transfer link TRL-2026-00000024 legs do not reconcile: Source $5409.82 GBP != Dest $4868.84 GBP.",
+      "details": {
+        "source_amount": 5409.82,
+        "dest_amount": 4868.84,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000025",
+      "explanation": "Transfer link TRL-2026-00000025 legs do not reconcile: Source $18173.51 GBP != Dest $16356.16 USD.",
+      "details": {
+        "source_amount": 18173.51,
+        "dest_amount": 16356.16,
+        "source_curr": "GBP",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000026",
+      "explanation": "Transfer link TRL-2026-00000026 legs do not reconcile: Source $17204.74 USD != Dest $15484.27 USD.",
+      "details": {
+        "source_amount": 17204.74,
+        "dest_amount": 15484.27,
+        "source_curr": "USD",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000027",
+      "explanation": "Transfer link TRL-2026-00000027 legs do not reconcile: Source $15913.76 USD != Dest $14322.38 GBP.",
+      "details": {
+        "source_amount": 15913.76,
+        "dest_amount": 14322.38,
+        "source_curr": "USD",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000028",
+      "explanation": "Transfer link TRL-2026-00000028 legs do not reconcile: Source $18020.38 GBP != Dest $16218.34 GBP.",
+      "details": {
+        "source_amount": 18020.38,
+        "dest_amount": 16218.34,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000029",
+      "explanation": "Transfer link TRL-2026-00000029 legs do not reconcile: Source $16549.09 GBP != Dest $14894.18 EUR.",
+      "details": {
+        "source_amount": 16549.09,
+        "dest_amount": 14894.18,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000030",
+      "explanation": "Transfer link TRL-2026-00000030 legs do not reconcile: Source $6995.88 EUR != Dest $6296.29 EUR.",
+      "details": {
+        "source_amount": 6995.88,
+        "dest_amount": 6296.29,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000031",
+      "explanation": "Transfer link TRL-2026-00000031 legs do not reconcile: Source $17630.55 EUR != Dest $15867.49 USD.",
+      "details": {
+        "source_amount": 17630.55,
+        "dest_amount": 15867.49,
+        "source_curr": "EUR",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000032",
+      "explanation": "Transfer link TRL-2026-00000032 legs do not reconcile: Source $7482.82 USD != Dest $6734.54 EUR.",
+      "details": {
+        "source_amount": 7482.82,
+        "dest_amount": 6734.54,
+        "source_curr": "USD",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000033",
+      "explanation": "Transfer link TRL-2026-00000033 legs do not reconcile: Source $19093.09 EUR != Dest $17183.78 GBP.",
+      "details": {
+        "source_amount": 19093.09,
+        "dest_amount": 17183.78,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000034",
+      "explanation": "Transfer link TRL-2026-00000034 legs do not reconcile: Source $12650.80 GBP != Dest $11385.72 GBP.",
+      "details": {
+        "source_amount": 12650.8,
+        "dest_amount": 11385.72,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000035",
+      "explanation": "Transfer link TRL-2026-00000035 legs do not reconcile: Source $10073.30 GBP != Dest $9065.97 GBP.",
+      "details": {
+        "source_amount": 10073.3,
+        "dest_amount": 9065.97,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000036",
+      "explanation": "Transfer link TRL-2026-00000036 legs do not reconcile: Source $8790.33 GBP != Dest $7911.30 GBP.",
+      "details": {
+        "source_amount": 8790.33,
+        "dest_amount": 7911.3,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000037",
+      "explanation": "Transfer link TRL-2026-00000037 legs do not reconcile: Source $16023.23 GBP != Dest $14420.91 GBP.",
+      "details": {
+        "source_amount": 16023.23,
+        "dest_amount": 14420.91,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000038",
+      "explanation": "Transfer link TRL-2026-00000038 legs do not reconcile: Source $5266.38 GBP != Dest $4739.74 USD.",
+      "details": {
+        "source_amount": 5266.38,
+        "dest_amount": 4739.74,
+        "source_curr": "GBP",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000039",
+      "explanation": "Transfer link TRL-2026-00000039 legs do not reconcile: Source $15917.20 USD != Dest $14325.48 GBP.",
+      "details": {
+        "source_amount": 15917.2,
+        "dest_amount": 14325.48,
+        "source_curr": "USD",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000040",
+      "explanation": "Transfer link TRL-2026-00000040 legs do not reconcile: Source $14615.74 GBP != Dest $13154.17 EUR.",
+      "details": {
+        "source_amount": 14615.74,
+        "dest_amount": 13154.17,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000041",
+      "explanation": "Transfer link TRL-2026-00000041 legs do not reconcile: Source $7843.49 EUR != Dest $7059.14 EUR.",
+      "details": {
+        "source_amount": 7843.49,
+        "dest_amount": 7059.14,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000042",
+      "explanation": "Transfer link TRL-2026-00000042 legs do not reconcile: Source $18570.68 EUR != Dest $16713.61 GBP.",
+      "details": {
+        "source_amount": 18570.68,
+        "dest_amount": 16713.61,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000043",
+      "explanation": "Transfer link TRL-2026-00000043 legs do not reconcile: Source $11027.62 GBP != Dest $9924.86 EUR.",
+      "details": {
+        "source_amount": 11027.62,
+        "dest_amount": 9924.86,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000044",
+      "explanation": "Transfer link TRL-2026-00000044 legs do not reconcile: Source $5890.27 EUR != Dest $5301.24 GBP.",
+      "details": {
+        "source_amount": 5890.27,
+        "dest_amount": 5301.24,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000045",
+      "explanation": "Transfer link TRL-2026-00000045 legs do not reconcile: Source $18472.28 GBP != Dest $16625.05 EUR.",
+      "details": {
+        "source_amount": 18472.28,
+        "dest_amount": 16625.05,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000046",
+      "explanation": "Transfer link TRL-2026-00000046 legs do not reconcile: Source $17113.47 EUR != Dest $15402.12 USD.",
+      "details": {
+        "source_amount": 17113.47,
+        "dest_amount": 15402.12,
+        "source_curr": "EUR",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000047",
+      "explanation": "Transfer link TRL-2026-00000047 legs do not reconcile: Source $17327.82 USD != Dest $15595.04 GBP.",
+      "details": {
+        "source_amount": 17327.82,
+        "dest_amount": 15595.04,
+        "source_curr": "USD",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000048",
+      "explanation": "Transfer link TRL-2026-00000048 legs do not reconcile: Source $5034.79 GBP != Dest $4531.31 GBP.",
+      "details": {
+        "source_amount": 5034.79,
+        "dest_amount": 4531.31,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000049",
+      "explanation": "Transfer link TRL-2026-00000049 legs do not reconcile: Source $11701.74 GBP != Dest $10531.57 GBP.",
+      "details": {
+        "source_amount": 11701.74,
+        "dest_amount": 10531.57,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000050",
+      "explanation": "Transfer link TRL-2026-00000050 legs do not reconcile: Source $9060.19 GBP != Dest $8154.17 GBP.",
+      "details": {
+        "source_amount": 9060.19,
+        "dest_amount": 8154.17,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000051",
+      "explanation": "Transfer link TRL-2026-00000051 legs do not reconcile: Source $7597.25 GBP != Dest $6837.53 EUR.",
+      "details": {
+        "source_amount": 7597.25,
+        "dest_amount": 6837.53,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000052",
+      "explanation": "Transfer link TRL-2026-00000052 legs do not reconcile: Source $9035.05 EUR != Dest $8131.54 GBP.",
+      "details": {
+        "source_amount": 9035.05,
+        "dest_amount": 8131.54,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000053",
+      "explanation": "Transfer link TRL-2026-00000053 legs do not reconcile: Source $9190.65 GBP != Dest $8271.58 GBP.",
+      "details": {
+        "source_amount": 9190.65,
+        "dest_amount": 8271.58,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000054",
+      "explanation": "Transfer link TRL-2026-00000054 legs do not reconcile: Source $12161.71 GBP != Dest $10945.54 USD.",
+      "details": {
+        "source_amount": 12161.71,
+        "dest_amount": 10945.54,
+        "source_curr": "GBP",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000055",
+      "explanation": "Transfer link TRL-2026-00000055 legs do not reconcile: Source $7584.24 USD != Dest $6825.82 EUR.",
+      "details": {
+        "source_amount": 7584.24,
+        "dest_amount": 6825.82,
+        "source_curr": "USD",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000056",
+      "explanation": "Transfer link TRL-2026-00000056 legs do not reconcile: Source $17957.13 EUR != Dest $16161.42 EUR.",
+      "details": {
+        "source_amount": 17957.13,
+        "dest_amount": 16161.42,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000057",
+      "explanation": "Transfer link TRL-2026-00000057 legs do not reconcile: Source $19998.62 EUR != Dest $17998.76 USD.",
+      "details": {
+        "source_amount": 19998.62,
+        "dest_amount": 17998.76,
+        "source_curr": "EUR",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000058",
+      "explanation": "Transfer link TRL-2026-00000058 legs do not reconcile: Source $5959.55 USD != Dest $5363.60 USD.",
+      "details": {
+        "source_amount": 5959.55,
+        "dest_amount": 5363.6,
+        "source_curr": "USD",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000059",
+      "explanation": "Transfer link TRL-2026-00000059 legs do not reconcile: Source $18008.25 USD != Dest $16207.43 EUR.",
+      "details": {
+        "source_amount": 18008.25,
+        "dest_amount": 16207.43,
+        "source_curr": "USD",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000060",
+      "explanation": "Transfer link TRL-2026-00000060 legs do not reconcile: Source $16202.90 EUR != Dest $14582.61 EUR.",
+      "details": {
+        "source_amount": 16202.9,
+        "dest_amount": 14582.61,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000061",
+      "explanation": "Transfer link TRL-2026-00000061 legs do not reconcile: Source $11691.67 EUR != Dest $10522.50 EUR.",
+      "details": {
+        "source_amount": 11691.67,
+        "dest_amount": 10522.5,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000062",
+      "explanation": "Transfer link TRL-2026-00000062 legs do not reconcile: Source $16792.31 EUR != Dest $15113.08 GBP.",
+      "details": {
+        "source_amount": 16792.31,
+        "dest_amount": 15113.08,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000063",
+      "explanation": "Transfer link TRL-2026-00000063 legs do not reconcile: Source $17348.55 GBP != Dest $15613.69 GBP.",
+      "details": {
+        "source_amount": 17348.55,
+        "dest_amount": 15613.69,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000064",
+      "explanation": "Transfer link TRL-2026-00000064 legs do not reconcile: Source $18761.39 GBP != Dest $16885.25 USD.",
+      "details": {
+        "source_amount": 18761.39,
+        "dest_amount": 16885.25,
+        "source_curr": "GBP",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000065",
+      "explanation": "Transfer link TRL-2026-00000065 legs do not reconcile: Source $7807.82 USD != Dest $7027.04 USD.",
+      "details": {
+        "source_amount": 7807.82,
+        "dest_amount": 7027.04,
+        "source_curr": "USD",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000066",
+      "explanation": "Transfer link TRL-2026-00000066 legs do not reconcile: Source $12139.65 USD != Dest $10925.68 USD.",
+      "details": {
+        "source_amount": 12139.65,
+        "dest_amount": 10925.68,
+        "source_curr": "USD",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000067",
+      "explanation": "Transfer link TRL-2026-00000067 legs do not reconcile: Source $15571.33 USD != Dest $14014.20 EUR.",
+      "details": {
+        "source_amount": 15571.33,
+        "dest_amount": 14014.2,
+        "source_curr": "USD",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000068",
+      "explanation": "Transfer link TRL-2026-00000068 legs do not reconcile: Source $19989.77 EUR != Dest $17990.79 GBP.",
+      "details": {
+        "source_amount": 19989.77,
+        "dest_amount": 17990.79,
+        "source_curr": "EUR",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000069",
+      "explanation": "Transfer link TRL-2026-00000069 legs do not reconcile: Source $18089.81 GBP != Dest $16280.83 GBP.",
+      "details": {
+        "source_amount": 18089.81,
+        "dest_amount": 16280.83,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000070",
+      "explanation": "Transfer link TRL-2026-00000070 legs do not reconcile: Source $5194.42 GBP != Dest $4674.98 GBP.",
+      "details": {
+        "source_amount": 5194.42,
+        "dest_amount": 4674.98,
+        "source_curr": "GBP",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000071",
+      "explanation": "Transfer link TRL-2026-00000071 legs do not reconcile: Source $15137.38 GBP != Dest $13623.64 EUR.",
+      "details": {
+        "source_amount": 15137.38,
+        "dest_amount": 13623.64,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000072",
+      "explanation": "Transfer link TRL-2026-00000072 legs do not reconcile: Source $8952.84 EUR != Dest $8057.56 EUR.",
+      "details": {
+        "source_amount": 8952.84,
+        "dest_amount": 8057.56,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000073",
+      "explanation": "Transfer link TRL-2026-00000073 legs do not reconcile: Source $6133.46 EUR != Dest $5520.11 EUR.",
+      "details": {
+        "source_amount": 6133.46,
+        "dest_amount": 5520.11,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000074",
+      "explanation": "Transfer link TRL-2026-00000074 legs do not reconcile: Source $19897.46 EUR != Dest $17907.71 USD.",
+      "details": {
+        "source_amount": 19897.46,
+        "dest_amount": 17907.71,
+        "source_curr": "EUR",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000075",
+      "explanation": "Transfer link TRL-2026-00000075 legs do not reconcile: Source $18416.89 USD != Dest $16575.20 USD.",
+      "details": {
+        "source_amount": 18416.89,
+        "dest_amount": 16575.2,
+        "source_curr": "USD",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000076",
+      "explanation": "Transfer link TRL-2026-00000076 legs do not reconcile: Source $8191.68 USD != Dest $7372.51 GBP.",
+      "details": {
+        "source_amount": 8191.68,
+        "dest_amount": 7372.51,
+        "source_curr": "USD",
+        "dest_curr": "GBP"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000077",
+      "explanation": "Transfer link TRL-2026-00000077 legs do not reconcile: Source $8297.39 GBP != Dest $7467.65 EUR.",
+      "details": {
+        "source_amount": 8297.39,
+        "dest_amount": 7467.65,
+        "source_curr": "GBP",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000078",
+      "explanation": "Transfer link TRL-2026-00000078 legs do not reconcile: Source $19894.12 EUR != Dest $17904.71 USD.",
+      "details": {
+        "source_amount": 19894.12,
+        "dest_amount": 17904.71,
+        "source_curr": "EUR",
+        "dest_curr": "USD"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000079",
+      "explanation": "Transfer link TRL-2026-00000079 legs do not reconcile: Source $15475.53 USD != Dest $13927.98 EUR.",
+      "details": {
+        "source_amount": 15475.53,
+        "dest_amount": 13927.98,
+        "source_curr": "USD",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-09-TRANSFER-RECONCILIATION-FAIL",
+      "check_name": "Transfer Amount/Currency Mismatch",
+      "level": "WARNING",
+      "entity_type": "TransferLink",
+      "entity_id": "TRL-2026-00000080",
+      "explanation": "Transfer link TRL-2026-00000080 legs do not reconcile: Source $14806.33 EUR != Dest $13325.70 EUR.",
+      "details": {
+        "source_amount": 14806.33,
+        "dest_amount": 13325.7,
+        "source_curr": "EUR",
+        "dest_curr": "EUR"
+      }
+    },
+    {
+      "check_id": "CHK-10-ALERT-NO-TXN",
+      "check_name": "Alert Has No Triggering Transaction",
+      "level": "ERROR",
+      "entity_type": "Alert",
+      "entity_id": "ALT-2026-003681",
+      "explanation": "Data integrity fault: Alert ALT-2026-003681 has empty triggered_transaction_ids list.",
+      "details": {}
+    },
+    {
+      "check_id": "CHK-13-CASE-CHRONOLOGY-VIOLATION",
+      "check_name": "Case Disposition Precedes Alert",
+      "level": "WARNING",
+      "entity_type": "Case",
+      "entity_id": "CASE-2026-000002",
+      "explanation": "Chronological integrity violation: Case CASE-2026-000002 disposition timestamp (2026-08-08T22:00:00+00:00) precedes alert ALT-2026-000002 created_at (2026-08-09T03:00:00+00:00).",
+      "details": {
+        "case_id": "CASE-2026-000002",
+        "alert_id": "ALT-2026-000002",
+        "case_closed_at": "2026-08-08T22:00:00+00:00",
+        "alert_created_at": "2026-08-09T03:00:00+00:00"
+      }
+    }
+  ]
+}

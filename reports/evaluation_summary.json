@@ -1,0 +1,110 @@
+{
+  "evaluation_timestamp": "2026-10-28T12:34:41.875287Z",
+  "confusion_matrix": {
+    "true_positives": 671,
+    "false_positives": 305,
+    "true_negatives": 98845,
+    "false_negatives": 179
+  },
+  "metrics": {
+    "precision": 0.6875,
+    "recall": 0.7894,
+    "f1_score": 0.7349,
+    "specificity": 0.9969,
+    "accuracy": 0.9952
+  },
+  "alerts_by_severity": {
+    "CRITICAL": 604,
+    "HIGH": 171,
+    "MEDIUM": 225,
+    "LOW": 0
+  },
+  "total_alerts_evaluated": 1000,
+  "total_transactions_scope": 100000,
+  "per_rule_metrics": {
+    "RULE-CLOSED-ACCOUNT": {
+      "alerts_triggered": 80,
+      "true_positives": 80,
+      "false_positives": 0
+    },
+    "RULE-NEW-DEVICE": {
+      "alerts_triggered": 822,
+      "true_positives": 506,
+      "false_positives": 0
+    },
+    "RULE-OVERDRAFT-EXCEEDED": {
+      "alerts_triggered": 95,
+      "true_positives": 80,
+      "false_positives": 0
+    },
+    "RULE-HIGH-VALUE": {
+      "alerts_triggered": 473,
+      "true_positives": 372,
+      "false_positives": 0
+    },
+    "RULE-MULTI-SIGNAL": {
+      "alerts_triggered": 77,
+      "true_positives": 65,
+      "false_positives": 0
+    },
+    "RULE-UNUSUAL-MERCHANT": {
+      "alerts_triggered": 131,
+      "true_positives": 131,
+      "false_positives": 0
+    },
+    "RULE-TRANSFER-MISMATCH": {
+      "alerts_triggered": 80,
+      "true_positives": 80,
+      "false_positives": 0
+    },
+    "RULE-ALERT-NO-TXN": {
+      "alerts_triggered": 1,
+      "true_positives": 0,
+      "false_positives": 0
+    }
+  },
+  "per_scenario_metrics": {
+    "SCEN-CLOSED-ACCOUNT": {
+      "total": 80,
+      "detected": 80,
+      "missed": 0
+    },
+    "SCEN-OVERDRAFT-BREACH": {
+      "total": 80,
+      "detected": 80,
+      "missed": 0
+    },
+    "SCEN-TRANSFER-MISMATCH": {
+      "total": 80,
+      "detected": 80,
+      "missed": 0
+    },
+    "SCEN-HIGH-VALUE": {
+      "total": 300,
+      "detected": 300,
+      "missed": 0
+    },
+    "SCEN-HIGH-VELOCITY": {
+      "total": 50,
+      "detected": 0,
+      "missed": 50
+    },
+    "SCEN-ANOMALOUS-DEVICE": {
+      "total": 120,
+      "detected": 0,
+      "missed": 120
+    },
+    "SCEN-HIGH-RISK-MERCHANT": {
+      "total": 140,
+      "detected": 131,
+      "missed": 9
+    }
+  },
+  "metric_definitions": {
+    "precision": "TP / (TP + FP) \u2014 Fraction of generated alerts that correspond to genuine risk scenarios.",
+    "recall": "TP / (TP + FN) \u2014 Fraction of genuine risk scenarios successfully flagged by rules.",
+    "f1_score": "2 * (Precision * Recall) / (Precision + Recall) \u2014 Harmonic mean of precision and recall.",
+    "specificity": "TN / (TN + FP) \u2014 Proportion of legitimate transactions accurately unflagged.",
+    "accuracy": "(TP + TN) / Total \u2014 Overall classification accuracy across all transactions."
+  }
+}

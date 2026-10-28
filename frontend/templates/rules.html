@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Detection Rules{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Configurable Risk Detection Rules</h1>
+    <p class="page-subtitle">Deterministic rules engine parameters, severity banding, weights, and statutory thresholds.</p>
+  </div>
+</div>
+
+<div class="table-card">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Rule ID</th>
+        <th>Rule Name</th>
+        <th>Category</th>
+        <th>Severity</th>
+        <th>Weight</th>
+        <th>Threshold</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in rules %}
+      <tr>
+        <td><code>{{ r.rule_id }}</code></td>
+        <td style="font-weight: 600;">{{ r.rule_name }}</td>
+        <td><span style="font-size: 11px; color: var(--text-muted);">{{ r.rule_category }}</span></td>
+        <td>
+          <span class="badge badge-{{ r.severity | lower }}">{{ r.severity }}</span>
+        </td>
+        <td><strong>{{ "%.1f"|format(r.weight) }}</strong></td>
+        <td>{{ "%.2f"|format(r.threshold) }}</td>
+        <td>
+          <span class="badge badge-{{ 'low' if r.enabled else 'closed' }}">
+            {{ 'ACTIVE' if r.enabled else 'DISABLED' }}
+          </span>
+        </td>
+        <td>
+          <a href="/rules/{{ r.rule_id }}" class="btn btn-secondary btn-sm">Configure & Test</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

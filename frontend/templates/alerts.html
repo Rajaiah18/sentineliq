@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Risk Alerts{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Alert Queue & Risk Telemetry</h1>
+    <p class="page-subtitle">Deterministic rule-based risk detections, severity classification, and evidence.</p>
+  </div>
+</div>
+
+<div class="table-card">
+  <form method="GET" action="/alerts" class="table-header-toolbar">
+    <div class="search-filter-box">
+      <select name="severity" class="select-input">
+        <option value="">All Severities</option>
+        <option value="CRITICAL" {% if selected_severity == 'CRITICAL' %}selected{% endif %}>Critical (90-100)</option>
+        <option value="HIGH" {% if selected_severity == 'HIGH' %}selected{% endif %}>High (70-89)</option>
+        <option value="MEDIUM" {% if selected_severity == 'MEDIUM' %}selected{% endif %}>Medium (40-69)</option>
+        <option value="LOW" {% if selected_severity == 'LOW' %}selected{% endif %}>Low (0-39)</option>
+      </select>
+
+      <select name="status" class="select-input">
+        <option value="">All Statuses</option>
+        <option value="NEW" {% if selected_status == 'NEW' %}selected{% endif %}>New</option>
+        <option value="UNDER_REVIEW" {% if selected_status == 'UNDER_REVIEW' %}selected{% endif %}>Under Review</option>
+        <option value="ESCALATED" {% if selected_status == 'ESCALATED' %}selected{% endif %}>Escalated</option>
+        <option value="CLOSED" {% if selected_status == 'CLOSED' %}selected{% endif %}>Closed</option>
+      </select>
+
+      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+      {% if selected_severity or selected_status %}
+      <a href="/alerts" class="btn btn-secondary btn-sm">Clear</a>
+      {% endif %}
+    </div>
+
+    <div style="font-size: 12px; color: var(--text-muted);">
+      Total: <strong>{{ total }}</strong> alerts
+    </div>
+  </form>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Alert ID</th>
+        <th>Alert Title</th>
+        <th>Severity</th>
+        <th>Risk Score</th>
+        <th>Triggered Rules</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for alt in alerts %}
+      <tr>
+        <td><code>{{ alt.alert_id }}</code></td>
+        <td style="font-weight: 600;">{{ alt.title }}</td>
+        <td>
+          <span class="badge badge-{{ alt.severity | lower }}">{{ alt.severity }}</span>
+        </td>
+        <td>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <strong style="color: #38bdf8;">{{ "%.1f"|format(alt.risk_score) }}</strong>
+            <div style="width: 50px; height: 6px; background-color: var(--border-color); border-radius: 3px; overflow: hidden;">
+              <div style="width: {{ alt.risk_score }}%; height: 100%; background: linear-gradient(90deg, #38bdf8, #ef4444);"></div>
+            </div>
+          </div>
+        </td>
+        <td>
+          {% for r in alt.triggered_rule_ids %}
+            <span style="font-size: 10px; background-color: var(--bg-surface); border: 1px solid var(--border-color); padding: 0.1rem 0.35rem; border-radius: 3px; color: #94a3b8; display: inline-block; margin: 1px;">{{ r }}</span>
+          {% endfor %}
+        </td>
+        <td><a href="/customers/{{ alt.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ alt.customer_id }}</a></td>
+        <td>
+          <span class="badge badge-{{ 'open' if alt.alert_status != 'CLOSED' else 'closed' }}">{{ alt.alert_status }}</span>
+        </td>
+        <td>{{ alt.created_at[:16].replace("T", " ") }}</td>
+        <td><a href="/alerts/{{ alt.alert_id }}" class="btn btn-primary btn-sm">Investigate</a></td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="9" style="text-align: center; color: var(--text-dim); padding: 2rem;">No alerts found matching filter.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-bar">
+    <div>Showing page {{ page }} ({{ alerts|length }} items)</div>
+    <div class="pagination-controls">
+      {% if page > 1 %}
+      <a href="/alerts?page={{ page - 1 }}&severity={{ selected_severity or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
+      {% endif %}
+      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
+      {% if alerts|length == page_size %}
+      <a href="/alerts?page={{ page + 1 }}&severity={{ selected_severity or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Customer {{ customer.customer_id }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <div style="font-size: 12px; color: var(--brand-cyan); margin-bottom: 0.25rem;">
+      <a href="/customers" style="color: var(--text-muted); text-decoration: none;">&larr; Back to Customers</a>
+    </div>
+    <h1 class="page-title">{{ customer.first_name }} {{ customer.last_name }} ({{ customer.customer_id }})</h1>
+    <p class="page-subtitle">Onboarded {{ customer.created_at[:10] }} &bull; Customer Type: {{ customer.customer_type }}</p>
+  </div>
+  <div>
+    <span class="badge badge-{{ 'low' if customer.risk_profile == 'LOW' else ('high' if customer.risk_profile == 'HIGH' else 'medium') }}" style="font-size: 13px; padding: 0.35rem 0.75rem;">
+      {{ customer.risk_profile }} RISK
+    </span>
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div>
+    <!-- Linked Accounts Table -->
+    <div class="table-card">
+      <div class="table-header-toolbar">
+        <div style="font-weight: 700; color: #ffffff;">Linked Core Banking Accounts</div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Account ID</th>
+            <th>Type</th>
+            <th>Currency</th>
+            <th>Balance</th>
+            <th>Overdraft</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for acc in accounts %}
+          <tr>
+            <td><code>{{ acc.account_id }}</code></td>
+            <td>{{ acc.account_type }}</td>
+            <td>{{ acc.currency }}</td>
+            <td><strong>${{ "%.2f"|format(acc.current_balance) }}</strong></td>
+            <td>${{ "%.2f"|format(acc.overdraft_limit) }}</td>
+            <td>
+              <span class="badge badge-{{ 'low' if acc.account_status == 'OPEN' else 'critical' }}">
+                {{ acc.account_status }}
+              </span>
+            </td>
+            <td><a href="/accounts/{{ acc.account_id }}" class="btn btn-secondary btn-sm">Inspect</a></td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 1.5rem;">No linked accounts found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Related Alerts for this Customer -->
+    <div class="table-card">
+      <div class="table-header-toolbar">
+        <div style="font-weight: 700; color: #ffffff;">Risk Intelligence Alerts (Customer Scope)</div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Alert ID</th>
+            <th>Title</th>
+            <th>Severity</th>
+            <th>Risk Score</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for alt in alerts %}
+          <tr>
+            <td><code>{{ alt.alert_id }}</code></td>
+            <td>{{ alt.title }}</td>
+            <td><span class="badge badge-{{ alt.severity | lower }}">{{ alt.severity }}</span></td>
+            <td><strong style="color: #38bdf8;">{{ "%.1f"|format(alt.risk_score) }}</strong></td>
+            <td><span class="badge badge-open">{{ alt.alert_status }}</span></td>
+            <td><a href="/alerts/{{ alt.alert_id }}" class="btn btn-primary btn-sm">Investigate</a></td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 1.5rem;">No active alerts on customer record.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <!-- Customer Demographics Card -->
+    <div class="panel-card">
+      <h3 class="panel-title">Customer KYC Metadata</h3>
+      <div class="data-row">
+        <span class="data-label">Customer ID</span>
+        <span class="data-value"><code>{{ customer.customer_id }}</code></span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Full Legal Name</span>
+        <span class="data-value">{{ customer.first_name }} {{ customer.last_name }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Date of Birth</span>
+        <span class="data-value">{{ customer.date_of_birth }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Customer Type</span>
+        <span class="data-value">{{ customer.customer_type }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Country Code</span>
+        <span class="data-value">{{ customer.country_code }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Profile Status</span>
+        <span class="data-value">
+          <span class="badge badge-{{ 'low' if customer.customer_status == 'ACTIVE' else 'critical' }}">
+            {{ customer.customer_status }}
+          </span>
+        </span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Created Timestamp</span>
+        <span class="data-value">{{ customer.created_at }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Updated Timestamp</span>
+        <span class="data-value">{{ customer.updated_at }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

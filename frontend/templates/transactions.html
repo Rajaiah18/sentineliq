@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Transactions{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Transaction Ledger</h1>
+    <p class="page-subtitle">Real-time ledger entries, card payments, wires, and internal transfers.</p>
+  </div>
+</div>
+
+<div class="table-card">
+  <form method="GET" action="/transactions" class="table-header-toolbar">
+    <div class="search-filter-box">
+      <input type="text" name="search" value="{{ search or '' }}" class="input-text" placeholder="Search by Transaction ID..." style="min-width: 250px;">
+      
+      <select name="type" class="select-input">
+        <option value="">All Types</option>
+        <option value="CARD_PAYMENT" {% if selected_type == 'CARD_PAYMENT' %}selected{% endif %}>Card Payment</option>
+        <option value="PURCHASE" {% if selected_type == 'PURCHASE' %}selected{% endif %}>Purchase</option>
+        <option value="CASH_WITHDRAWAL" {% if selected_type == 'CASH_WITHDRAWAL' %}selected{% endif %}>Cash Withdrawal</option>
+        <option value="DEPOSIT" {% if selected_type == 'DEPOSIT' %}selected{% endif %}>Deposit</option>
+        <option value="ACCOUNT_TRANSFER" {% if selected_type == 'ACCOUNT_TRANSFER' %}selected{% endif %}>Account Transfer</option>
+        <option value="BANK_TRANSFER" {% if selected_type == 'BANK_TRANSFER' %}selected{% endif %}>Bank Transfer</option>
+      </select>
+
+      <select name="status" class="select-input">
+        <option value="">All Statuses</option>
+        <option value="COMPLETED" {% if selected_status == 'COMPLETED' %}selected{% endif %}>Completed</option>
+        <option value="PENDING" {% if selected_status == 'PENDING' %}selected{% endif %}>Pending</option>
+        <option value="FAILED" {% if selected_status == 'FAILED' %}selected{% endif %}>Failed</option>
+      </select>
+
+      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+      {% if search or selected_type or selected_status %}
+      <a href="/transactions" class="btn btn-secondary btn-sm">Clear</a>
+      {% endif %}
+    </div>
+
+    <div style="font-size: 12px; color: var(--text-muted);">
+      Total: <strong>{{ total }}</strong> transactions
+    </div>
+  </form>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Transaction ID</th>
+        <th>Source Account</th>
+        <th>Customer</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Channel</th>
+        <th>Status</th>
+        <th>Timestamp</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for txn in transactions %}
+      <tr>
+        <td><code>{{ txn.transaction_id }}</code></td>
+        <td><a href="/accounts/{{ txn.source_account_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ txn.source_account_id }}</a></td>
+        <td><a href="/customers/{{ txn.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ txn.customer_id }}</a></td>
+        <td><span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">{{ txn.transaction_type }}</span></td>
+        <td><strong>${{ "%.2f"|format(txn.amount) }}</strong> {{ txn.currency }}</td>
+        <td>{{ txn.channel }}</td>
+        <td>
+          <span class="badge badge-{{ 'low' if txn.transaction_status == 'COMPLETED' else ('critical' if txn.transaction_status == 'FAILED' else 'medium') }}">
+            {{ txn.transaction_status }}
+          </span>
+        </td>
+        <td>{{ txn.transaction_timestamp }}</td>
+        <td><a href="/transactions/{{ txn.transaction_id }}" class="btn btn-secondary btn-sm">Details</a></td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="9" style="text-align: center; color: var(--text-dim); padding: 2rem;">No matching transactions found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-bar">
+    <div>Showing page {{ page }} ({{ transactions|length }} items)</div>
+    <div class="pagination-controls">
+      {% if page > 1 %}
+      <a href="/transactions?page={{ page - 1 }}&search={{ search or '' }}&type={{ selected_type or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
+      {% endif %}
+      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
+      {% if transactions|length == page_size %}
+      <a href="/transactions?page={{ page + 1 }}&search={{ search or '' }}&type={{ selected_type or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

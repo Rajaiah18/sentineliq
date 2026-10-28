@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Customers{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Customer Directory</h1>
+    <p class="page-subtitle">Know Your Customer (KYC) profiles, risk tiers, and linked accounts.</p>
+  </div>
+</div>
+
+<div class="table-card">
+  <form method="GET" action="/customers" class="table-header-toolbar">
+    <div class="search-filter-box">
+      <input type="text" name="search" value="{{ search or '' }}" class="input-text" placeholder="Search by ID or Name..." style="min-width: 250px;">
+      
+      <select name="risk" class="select-input">
+        <option value="">All Risk Profiles</option>
+        <option value="LOW" {% if selected_risk == 'LOW' %}selected{% endif %}>Low</option>
+        <option value="MEDIUM" {% if selected_risk == 'MEDIUM' %}selected{% endif %}>Medium</option>
+        <option value="HIGH" {% if selected_risk == 'HIGH' %}selected{% endif %}>High</option>
+      </select>
+
+      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+      {% if search or selected_risk %}
+      <a href="/customers" class="btn btn-secondary btn-sm">Clear</a>
+      {% endif %}
+    </div>
+
+    <div style="font-size: 12px; color: var(--text-muted);">
+      Total: <strong>{{ total }}</strong> customers
+    </div>
+  </form>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Customer ID</th>
+        <th>Full Name</th>
+        <th>Type</th>
+        <th>Risk Profile</th>
+        <th>Country</th>
+        <th>Status</th>
+        <th>Onboarded Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cust in customers %}
+      <tr>
+        <td><code>{{ cust.customer_id }}</code></td>
+        <td><strong>{{ cust.first_name }} {{ cust.last_name }}</strong></td>
+        <td><span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">{{ cust.customer_type }}</span></td>
+        <td>
+          <span class="badge badge-{{ 'low' if cust.risk_profile == 'LOW' else ('high' if cust.risk_profile == 'HIGH' else 'medium') }}">
+            {{ cust.risk_profile }}
+          </span>
+        </td>
+        <td>{{ cust.country_code }}</td>
+        <td>
+          <span class="badge badge-{{ 'low' if cust.customer_status == 'ACTIVE' else 'critical' }}">
+            {{ cust.customer_status }}
+          </span>
+        </td>
+        <td>{{ cust.created_at[:10] }}</td>
+        <td><a href="/customers/{{ cust.customer_id }}" class="btn btn-secondary btn-sm">Profile</a></td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="8" style="text-align: center; color: var(--text-dim); padding: 2rem;">No matching customers found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-bar">
+    <div>Showing page {{ page }} ({{ customers|length }} items)</div>
+    <div class="pagination-controls">
+      {% if page > 1 %}
+      <a href="/customers?page={{ page - 1 }}&search={{ search or '' }}&risk={{ selected_risk or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
+      {% endif %}
+      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
+      {% if customers|length == page_size %}
+      <a href="/customers?page={{ page + 1 }}&search={{ search or '' }}&risk={{ selected_risk or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

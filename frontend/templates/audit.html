@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Audit Trail{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Immutable Audit Trail</h1>
+    <p class="page-subtitle">Append-only compliance log capturing rule modifications, case actions, and pipeline executions.</p>
+  </div>
+</div>
+
+<div class="table-card">
+  <form method="GET" action="/audit" class="table-header-toolbar">
+    <div class="search-filter-box">
+      <select name="entity_type" class="select-input">
+        <option value="">All Entity Types</option>
+        <option value="CASE" {% if selected_entity == 'CASE' %}selected{% endif %}>Cases</option>
+        <option value="ALERT" {% if selected_entity == 'ALERT' %}selected{% endif %}>Alerts</option>
+        <option value="RISK_RULE" {% if selected_entity == 'RISK_RULE' %}selected{% endif %}>Risk Rules</option>
+        <option value="SYSTEM" {% if selected_entity == 'SYSTEM' %}selected{% endif %}>System Pipelines</option>
+      </select>
+
+      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+      {% if selected_entity %}
+      <a href="/audit" class="btn btn-secondary btn-sm">Clear</a>
+      {% endif %}
+    </div>
+
+    <div style="font-size: 12px; color: var(--text-muted);">
+      Total: <strong>{{ total }}</strong> recorded events
+    </div>
+  </form>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Event ID</th>
+        <th>Event Type</th>
+        <th>Actor</th>
+        <th>Entity Type</th>
+        <th>Entity ID</th>
+        <th>Action Summary</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for evt in audit_events %}
+      <tr>
+        <td><code>{{ evt.event_id }}</code></td>
+        <td><span class="badge badge-open">{{ evt.event_type }}</span></td>
+        <td><strong>{{ evt.actor_id }}</strong></td>
+        <td>{{ evt.entity_type }}</td>
+        <td><code>{{ evt.entity_id }}</code></td>
+        <td style="max-width: 400px; font-size: 12px; color: var(--text-main);">{{ evt.action_summary }}</td>
+        <td>{{ evt.timestamp }}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 2rem;">No audit events recorded.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-bar">
+    <div>Showing page {{ page }} ({{ audit_events|length }} items)</div>
+    <div class="pagination-controls">
+      {% if page > 1 %}
+      <a href="/audit?page={{ page - 1 }}&entity_type={{ selected_entity or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
+      {% endif %}
+      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
+      {% if audit_events|length == page_size %}
+      <a href="/audit?page={{ page + 1 }}&entity_type={{ selected_entity or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Detection Evaluation{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Detection Performance & Evaluation</h1>
+    <p class="page-subtitle">Benchmarked against isolated ground-truth labels joined strictly after inference.</p>
+  </div>
+  <div style="display: flex; gap: 0.5rem;">
+    <form method="POST" action="/evaluation/run" style="margin: 0;">
+      <button type="submit" class="btn btn-primary btn-sm">Recompute Evaluation</button>
+    </form>
+    <a href="/api/v1/exports/evaluation_summary.json" class="btn btn-secondary btn-sm" download>Download Metrics JSON</a>
+  </div>
+</div>
+
+<!-- Primary Performance Metrics -->
+<div class="metrics-grid">
+  <div class="metric-card open">
+    <div class="metric-label">Precision</div>
+    <div class="metric-value" style="color: var(--brand-cyan);">{{ "%.1f"|format(report.metrics.precision * 100) }}%</div>
+    <div class="metric-sub">TP / (TP + FP)</div>
+  </div>
+
+  <div class="metric-card open">
+    <div class="metric-label">Recall</div>
+    <div class="metric-value" style="color: #38bdf8;">{{ "%.1f"|format(report.metrics.recall * 100) }}%</div>
+    <div class="metric-sub">TP / (TP + FN)</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">F1 Score</div>
+    <div class="metric-value" style="color: #4ade80;">{{ "%.1f"|format(report.metrics.f1_score * 100) }}%</div>
+    <div class="metric-sub">Harmonic Mean</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Specificity</div>
+    <div class="metric-value">{{ "%.2f"|format(report.metrics.specificity * 100) }}%</div>
+    <div class="metric-sub">TN / (TN + FP)</div>
+  </div>
+
+  <div class="metric-card">
+    <div class="metric-label">Accuracy</div>
+    <div class="metric-value">{{ "%.2f"|format(report.metrics.accuracy * 100) }}%</div>
+    <div class="metric-sub">(TP + TN) / Scope</div>
+  </div>
+</div>
+
+<!-- Confusion Matrix & Ground Truth Isolation -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+  
+  <!-- Confusion Matrix Box -->
+  <div class="panel-card" style="margin-bottom: 0;">
+    <h3 class="panel-title">Binary Confusion Matrix</h3>
+    <table style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 1rem;">
+      <thead>
+        <tr>
+          <th style="padding: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--text-dim);"></th>
+          <th style="padding: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px;">PREDICTED SUSPICIOUS</th>
+          <th style="padding: 0.5rem; border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px;">PREDICTED NORMAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 1rem 0.5rem; border-right: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; font-weight: 700;">TRUE SUSPICIOUS</td>
+          <td style="padding: 1rem; background-color: rgba(14, 165, 233, 0.1); border: 1px solid var(--border-color);">
+            <div style="font-size: 22px; font-weight: 700; color: #38bdf8;">{{ report.confusion_matrix.true_positives }}</div>
+            <div style="font-size: 10px; color: var(--text-dim); text-transform: uppercase;">True Positives (TP)</div>
+          </td>
+          <td style="padding: 1rem; background-color: rgba(239, 68, 68, 0.1); border: 1px solid var(--border-color);">
+            <div style="font-size: 22px; font-weight: 700; color: #f87171;">{{ report.confusion_matrix.false_negatives }}</div>
+            <div style="font-size: 10px; color: var(--text-dim); text-transform: uppercase;">False Negatives (FN)</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 1rem 0.5rem; border-right: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; font-weight: 700;">TRUE NORMAL</td>
+          <td style="padding: 1rem; background-color: rgba(251, 146, 60, 0.1); border: 1px solid var(--border-color);">
+            <div style="font-size: 22px; font-weight: 700; color: #fb923c;">{{ report.confusion_matrix.false_positives }}</div>
+            <div style="font-size: 10px; color: var(--text-dim); text-transform: uppercase;">False Positives (FP)</div>
+          </td>
+          <td style="padding: 1rem; background-color: rgba(74, 222, 128, 0.1); border: 1px solid var(--border-color);">
+            <div style="font-size: 22px; font-weight: 700; color: #4ade80;">{{ report.confusion_matrix.true_negatives }}</div>
+            <div style="font-size: 10px; color: var(--text-dim); text-transform: uppercase;">True Negatives (TN)</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Metric Definitions & Ground Truth Separation Proof -->
+  <div class="panel-card" style="margin-bottom: 0;">
+    <h3 class="panel-title">Ground Truth Separation & Methodology</h3>
+    <div style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+      <p style="margin-bottom: 0.75rem;">
+        <strong style="color: #ffffff;">Isolation Guarantee:</strong> Ground-truth anomaly labels are maintained strictly in <code>ground_truth/</code>. The detection engine operates with <strong>zero access</strong> to ground truth. Joining occurs exclusively in post-inference evaluation.
+      </p>
+      <div style="background-color: var(--bg-surface); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: var(--radius-sm);">
+        <div style="font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; margin-bottom: 0.25rem;">Evaluation Formula Definitions:</div>
+        <ul style="list-style: disc; padding-left: 1rem; font-size: 11px; color: var(--text-main);">
+          <li><strong>Precision:</strong> {{ report.metric_definitions.precision }}</li>
+          <li><strong>Recall:</strong> {{ report.metric_definitions.recall }}</li>
+          <li><strong>F1 Score:</strong> {{ report.metric_definitions.f1_score }}</li>
+          <li><strong>Specificity:</strong> {{ report.metric_definitions.specificity }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Per Scenario Breakdown Table -->
+<div class="table-card">
+  <div class="table-header-toolbar">
+    <div style="font-weight: 700; color: #ffffff;">Per-Scenario Detection Rates</div>
+  </div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Scenario ID</th>
+        <th>Ground Truth Target Cases</th>
+        <th>Flagged by Risk Rules</th>
+        <th>Missed</th>
+        <th>Scenario Recall</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for scen_id, sc in report.per_scenario_metrics.items() %}
+      {% set rec = (sc.detected / sc.total) if sc.total > 0 else 0 %}
+      <tr>
+        <td><code>{{ scen_id }}</code></td>
+        <td>{{ sc.total }}</td>
+        <td><strong style="color: #38bdf8;">{{ sc.detected }}</strong></td>
+        <td>{{ sc.missed }}</td>
+        <td>
+          <span class="badge badge-{{ 'low' if rec >= 0.8 else ('medium' if rec >= 0.5 else 'critical') }}">
+            {{ "%.1f"|format(rec * 100) }}%
+          </span>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

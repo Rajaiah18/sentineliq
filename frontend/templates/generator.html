@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}SentinelIQ | Data Generation & Exports{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Dataset Generation & Export Repository</h1>
+    <p class="page-subtitle">Deterministic financial dataset synthesizer, seed management, checksums, and relational SQL exports.</p>
+  </div>
+</div>
+
+<div class="detail-grid">
+  <div>
+    <!-- Trigger Generation Form -->
+    <div class="panel-card">
+      <h3 class="panel-title">Deterministic Generator Orchestration</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem;">
+        Generate synthetic interconnected customers, accounts, ledger transactions, and transfer links with deterministic seed control.
+      </p>
+
+      <form method="POST" action="/generator/run" onsubmit="return confirm('Initiate synthetic data generation? Existing local artifacts will be deterministically refreshed.');">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Dataset Profile</label>
+            <select name="profile" class="select-input" style="width: 100%;">
+              <option value="demo" {% if manifest.profile == 'demo' %}selected{% endif %}>Demo Profile (100 CUS, 150 ACC, 2k TXN, 25 ALT)</option>
+              <option value="full" {% if manifest.profile == 'full' %}selected{% endif %}>Full Challenge Baseline (5,000 CUS, 7,000 ACC, 100,000 TXN, 1,000 ALT)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Deterministic Seed</label>
+            <input type="number" name="seed" value="{{ manifest.seed | default(20261022) }}" class="input-text" style="width: 100%;">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="padding: 0.65rem 1.25rem;">
+          &reg; Execute Synthetic Dataset Generation
+        </button>
+      </form>
+    </div>
+
+    <!-- Available Exports Table -->
+    <div class="table-card">
+      <div class="table-header-toolbar">
+        <div style="font-weight: 700; color: #ffffff;">Export Manifest & SHA-256 Checksums</div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Export Artifact</th>
+            <th>Type</th>
+            <th>SHA-256 Fingerprint</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for fname, hval in manifest.checksums.items() %}
+          <tr>
+            <td><strong>{{ fname }}</strong></td>
+            <td>
+              <span class="badge badge-open">
+                {{ 'SQL' if fname.endswith('.sql') else ('CSV' if fname.endswith('.csv') else 'JSON') }}
+              </span>
+            </td>
+            <td>
+              <span style="font-family: monospace; font-size: 11px; color: #38bdf8; cursor: pointer;" onclick="copyToClipboard('{{ hval }}')" title="Click to copy SHA-256">
+                {{ hval[:18] }}...{{ hval[-10:] }}
+              </span>
+            </td>
+            <td>
+              <a href="/api/v1/exports/{{ fname }}" class="btn btn-secondary btn-sm" download>Download</a>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="4" style="text-align: center; color: var(--text-dim); padding: 1.5rem;">No export files generated yet.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <!-- Generation Run Info Card -->
+    <div class="panel-card">
+      <h3 class="panel-title">Current Dataset Fingerprint</h3>
+      <div class="data-row">
+        <span class="data-label">Profile</span>
+        <span class="data-value">{{ manifest.profile | upper }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Active Seed</span>
+        <span class="data-value"><code>{{ manifest.seed }}</code></span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Customers</span>
+        <span class="data-value">{{ manifest.record_counts.get("customers", 0) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Accounts</span>
+        <span class="data-value">{{ manifest.record_counts.get("accounts", 0) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Transactions</span>
+        <span class="data-value">{{ manifest.record_counts.get("transactions", 0) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Generated Alerts</span>
+        <span class="data-value">{{ manifest.record_counts.get("alerts", 0) }}</span>
+      </div>
+      <div class="data-row">
+        <span class="data-label">Generator Version</span>
+        <span class="data-value">{{ manifest.generator_version }}</span>
+      </div>
+    </div>
+
+    <!-- Operations Panel -->
+    <div class="panel-card">
+      <h3 class="panel-title">Autonomous Pipeline Triggers</h3>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <form method="POST" action="/validation/run" style="margin: 0;">
+          <button type="submit" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            &check; Run Full Validation Suite
+          </button>
+        </form>
+
+        <form method="POST" action="/evaluation/run" style="margin: 0;">
+          <button type="submit" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+            &target; Compute Ground Truth Evaluation
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

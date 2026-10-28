@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SentinelIQ | Transaction Risk Intelligence{% endblock %}</title>
+  <meta name="description" content="SentinelIQ — Intelligent Transaction Risk & Investigation Platform. Explainable Risk. Traceable Decisions.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <a href="/dashboard" class="brand-container">
+      <div class="brand-logo-mark">S</div>
+      <div class="brand-text">
+        <span class="brand-name">SentinelIQ</span>
+        <span class="brand-tagline">Explainable Risk. Traceable Decisions.</span>
+      </div>
+    </a>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a href="/dashboard" class="nav-link {% if active_page == 'dashboard' %}active{% endif %}">Dashboard</a></li>
+        <li><a href="/transactions" class="nav-link {% if active_page == 'transactions' %}active{% endif %}">Transactions</a></li>
+        <li><a href="/customers" class="nav-link {% if active_page == 'customers' %}active{% endif %}">Customers</a></li>
+        <li><a href="/accounts" class="nav-link {% if active_page == 'accounts' %}active{% endif %}">Accounts</a></li>
+        <li><a href="/alerts" class="nav-link {% if active_page == 'alerts' %}active{% endif %}">Alerts</a></li>
+        <li><a href="/cases" class="nav-link {% if active_page == 'cases' %}active{% endif %}">Cases</a></li>
+        <li><a href="/rules" class="nav-link {% if active_page == 'rules' %}active{% endif %}">Rules</a></li>
+        <li><a href="/validation" class="nav-link {% if active_page == 'validation' %}active{% endif %}">Data Quality</a></li>
+        <li><a href="/evaluation" class="nav-link {% if active_page == 'evaluation' %}active{% endif %}">Evaluation</a></li>
+        <li><a href="/generator" class="nav-link {% if active_page == 'generator' %}active{% endif %}">Exports & Gen</a></li>
+        <li><a href="/audit" class="nav-link {% if active_page == 'audit' %}active{% endif %}">Audit Log</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-user">
+      {% if current_user %}
+        <div class="user-badge">
+          <span>{{ current_user.username }}</span>
+          <span class="role-pill">{{ current_user.role }}</span>
+        </div>
+        <form action="/api/v1/auth/logout" method="POST" style="margin: 0;">
+          <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
+        </form>
+      {% else %}
+        <a href="/login" class="btn btn-primary btn-sm">Sign In</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      <strong>SentinelIQ</strong> — Intelligent Transaction Risk & Investigation Platform &copy; 2026.
+      <span style="margin-left: 0.5rem; color: var(--text-dim);">YottaFlex.ai Associate AI Forward Deployed Engineer Challenge</span>
+    </div>
+    <div>
+      <span style="color: var(--brand-cyan);">Storage Mode:</span> {{ storage_mode | default("memory") | upper }}
+      &nbsp;|&nbsp;
+      <a href="/docs" target="_blank" style="color: var(--text-muted); text-decoration: none;">API Docs</a>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
