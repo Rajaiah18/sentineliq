@@ -7,6 +7,9 @@
 [![UI](https://img.shields.io/badge/frontend-Jinja2%20%7C%20Modern%20CSS-orange.svg)]()
 [![Code Challenge](https://img.shields.io/badge/Challenge-YottaFlex.ai%20Associate%20AI%20FDE-purple.svg)]()
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ajayreddy510/sentineliq)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ajayreddy510/sentineliq)
+
 SentinelIQ is a production-minded, end-to-end financial transaction monitoring, risk scoring, referential integrity validation, and case investigation platform built for the **YottaFlex.ai Associate AI Forward Deployed Engineer — 72 Hours Code Challenge**.
 
 ---
@@ -464,9 +467,26 @@ REPRODUCIBILITY VERIFICATION PASSED: 100% Deterministic & Seed-Sensitive.
 
 ## 27. Deployment Instructions
 
-- **Backend (Render):** Uses `render.yaml`. See [docs/deployment.md](docs/deployment.md).
-- **Frontend (Vercel):** Uses `vercel.json` with `api/index.py`. See [docs/deployment.md](docs/deployment.md).
-- **Database (MongoDB Atlas):** Fully supported via connection URI and seeder script.
+SentinelIQ is configured for instant, automated deployment to both **Render** and **Vercel**:
+
+### 1-Click Deploy Buttons
+- **Render:** [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/ajayreddy510/sentineliq)
+- **Vercel:** [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ajayreddy510/sentineliq)
+
+### Render Deployment (Unified Web Service)
+1. Go to [Render Dashboard](https://dashboard.render.com) and click **New +** &rarr; **Blueprint**.
+2. Connect `https://github.com/ajayreddy510/sentineliq`.
+3. Render automatically loads [`render.yaml`](render.yaml) and provisions the web service on the free tier.
+4. (Optional) Provide `MONGODB_URI` in the Environment settings if connecting a MongoDB Atlas cluster.
+5. Click **Apply Blueprint**.
+
+### Vercel Deployment (Serverless ASGI Platform)
+1. Go to [Vercel](https://vercel.com) and click **Add New...** &rarr; **Project**.
+2. Import `ajayreddy510/sentineliq`.
+3. Vercel automatically detects [`vercel.json`](vercel.json) and builds [`api/index.py`](api/index.py) using the Python serverless runtime.
+4. Click **Deploy**. Vercel will output a live domain (e.g. `https://sentineliq.vercel.app`).
+
+For detailed operational checklists, see [docs/deployment.md](docs/deployment.md).
 
 ---
 
