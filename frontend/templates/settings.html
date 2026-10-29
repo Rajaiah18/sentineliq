@@ -7,64 +7,68 @@
   <div>
     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
       <h1 class="page-title">System & Security Settings</h1>
-      <span class="role-pill" style="background-color: #581c87; color: #d8b4fe; border: 1px solid #7e22ce;">ADMIN ONLY</span>
+      <span class="role-pill role-pill-admin">ADMIN ONLY</span>
     </div>
-    <p class="page-subtitle">Runtime environment configuration, persistence backend, and cryptographic parameters.</p>
+    <p class="page-meta">Runtime environment configuration, persistence backend, and cryptographic parameters.</p>
   </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-  <div class="panel-card">
-    <h3 class="panel-title">Active Environment Parameters</h3>
-    <table class="data-table">
+<div class="grid-2col">
+  <div class="panel">
+    <div class="panel-header">
+      <h3 class="panel-title">Active Environment Parameters</h3>
+    </div>
+    <table class="table-clean" style="margin: 0;">
       <tbody>
         <tr>
-          <td style="color: var(--text-muted);">Environment Name</td>
-          <td><strong style="color: #ffffff;">{{ config.APP_ENV | upper }}</strong></td>
+          <td style="color: var(--text-dim); width: 45%; font-size: 11px; text-transform: uppercase;">Environment</td>
+          <td><strong style="color: var(--text-primary);">{{ config.APP_ENV | upper }}</strong></td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">Configured Storage Mode</td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Configured Storage</td>
           <td><span class="badge badge-low">{{ config.APP_STORAGE | upper }}</span></td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">Effective Storage Backend</td>
-          <td><strong style="color: var(--brand-cyan);">{{ storage_mode | upper }}</strong></td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Effective Storage Backend</td>
+          <td><strong style="color: var(--brand-primary);">{{ storage_mode | upper }}</strong></td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">API Base Prefix</td>
-          <td><code>/api/v1</code></td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">API Base Prefix</td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">/api/v1</code></td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">Default Seed</td>
-          <td><code>20261022</code></td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Default Seed</td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">20261022</code></td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="panel-card">
-    <h3 class="panel-title">Cryptographic & Session Configuration</h3>
-    <table class="data-table">
+  <div class="panel">
+    <div class="panel-header">
+      <h3 class="panel-title">Cryptographic & Session Configuration</h3>
+    </div>
+    <table class="table-clean" style="margin: 0;">
       <tbody>
         <tr>
-          <td style="color: var(--text-muted);">JWT Algorithm</td>
-          <td><code>{{ config.ALGORITHM }}</code> (HMAC-SHA256)</td>
+          <td style="color: var(--text-dim); width: 45%; font-size: 11px; text-transform: uppercase;">JWT Algorithm</td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ config.ALGORITHM }}</code> (HMAC-SHA256)</td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">Access Token Expiry</td>
-          <td><strong style="color: #ffffff;">{{ config.ACCESS_TOKEN_EXPIRE_MINUTES }} minutes</strong></td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Token Expiry</td>
+          <td><strong style="color: var(--text-primary);">{{ config.ACCESS_TOKEN_EXPIRE_MINUTES }} minutes</strong></td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">Password Hashing</td>
-          <td><code>bcrypt (12 rounds)</code></td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Password Hashing</td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">bcrypt (12 rounds)</code></td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">Demo Users Enabled</td>
-          <td><span class="badge badge-low">TRUE</span></td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Demo Accounts</td>
+          <td><span class="badge badge-low">ENABLED</span></td>
         </tr>
         <tr>
-          <td style="color: var(--text-muted);">CORS Allow Origins</td>
-          <td><code>{{ config.CORS_ORIGINS }}</code></td>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">CORS Allow Origins</td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ config.CORS_ORIGINS }}</code></td>
         </tr>
       </tbody>
     </table>

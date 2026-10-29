@@ -1,27 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}SentinelIQ | Risk Alerts{% endblock %}
+{% block title %}SentinelIQ | Alert Triage Queue{% endblock %}
 
 {% block content %}
 <div class="page-header">
   <div>
-    <h1 class="page-title">Alert Queue & Risk Telemetry</h1>
-    <p class="page-subtitle">Deterministic rule-based risk detections, severity classification, and evidence.</p>
+    <h1 class="page-title">Alert Triage Queue</h1>
+    <p class="page-subtitle">Deterministic rule-based risk detections with calibrated severity banding and evidence links.</p>
+  </div>
+  <div class="page-actions">
+    <span style="font-size: 12px; color: var(--text-dim);">
+      Showing <strong>{{ alerts | length }}</strong> of <strong>{{ total }}</strong> alerts
+    </span>
   </div>
 </div>
 
-<div class="table-card">
-  <form method="GET" action="/alerts" class="table-header-toolbar">
-    <div class="search-filter-box">
-      <select name="severity" class="select-input">
+<!-- Compact Filter Bar -->
+<div class="panel" style="margin-bottom: 1rem;">
+  <div class="panel-body" style="padding: 0.75rem 1rem;">
+    <form method="GET" action="/alerts" class="filter-bar" style="margin: 0;">
+      <select name="severity" class="input-control" style="width: 160px;">
         <option value="">All Severities</option>
-        <option value="CRITICAL" {% if selected_severity == 'CRITICAL' %}selected{% endif %}>Critical (90-100)</option>
-        <option value="HIGH" {% if selected_severity == 'HIGH' %}selected{% endif %}>High (70-89)</option>
-        <option value="MEDIUM" {% if selected_severity == 'MEDIUM' %}selected{% endif %}>Medium (40-69)</option>
-        <option value="LOW" {% if selected_severity == 'LOW' %}selected{% endif %}>Low (0-39)</option>
+        <option value="CRITICAL" {% if selected_severity == 'CRITICAL' %}selected{% endif %}>Critical (&ge; 85)</option>
+        <option value="HIGH" {% if selected_severity == 'HIGH' %}selected{% endif %}>High (70–84)</option>
+        <option value="MEDIUM" {% if selected_severity == 'MEDIUM' %}selected{% endif %}>Medium (50–69)</option>
+        <option value="LOW" {% if selected_severity == 'LOW' %}selected{% endif %}>Low (&lt; 50)</option>
       </select>
 
-      <select name="status" class="select-input">
+      <select name="status" class="input-control" style="width: 150px;">
         <option value="">All Statuses</option>
         <option value="NEW" {% if selected_status == 'NEW' %}selected{% endif %}>New</option>
         <option value="UNDER_REVIEW" {% if selected_status == 'UNDER_REVIEW' %}selected{% endif %}>Under Review</option>
@@ -29,77 +35,82 @@
         <option value="CLOSED" {% if selected_status == 'CLOSED' %}selected{% endif %}>Closed</option>
       </select>
 
-      <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
+      <button type="submit" class="btn btn-secondary btn-sm">Apply Filters</button>
       {% if selected_severity or selected_status %}
-      <a href="/alerts" class="btn btn-secondary btn-sm">Clear</a>
+        <a href="/alerts" class="btn btn-secondary btn-sm" style="color: var(--text-dim);">Reset</a>
       {% endif %}
-    </div>
+    </form>
+  </div>
+</div>
 
-    <div style="font-size: 12px; color: var(--text-muted);">
-      Total: <strong>{{ total }}</strong> alerts
-    </div>
-  </form>
-
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Alert ID</th>
-        <th>Alert Title</th>
-        <th>Severity</th>
-        <th>Risk Score</th>
-        <th>Triggered Rules</th>
-        <th>Customer</th>
-        <th>Status</th>
-        <th>Created</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for alt in alerts %}
-      <tr>
-        <td><code>{{ alt.alert_id }}</code></td>
-        <td style="font-weight: 600;">{{ alt.title }}</td>
-        <td>
-          <span class="badge badge-{{ alt.severity | lower }}">{{ alt.severity }}</span>
-        </td>
-        <td>
-          <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <strong style="color: #38bdf8;">{{ "%.1f"|format(alt.risk_score) }}</strong>
-            <div style="width: 50px; height: 6px; background-color: var(--border-color); border-radius: 3px; overflow: hidden;">
-              <div style="width: {{ alt.risk_score }}%; height: 100%; background: linear-gradient(90deg, #38bdf8, #ef4444);"></div>
-            </div>
-          </div>
-        </td>
-        <td>
-          {% for r in alt.triggered_rule_ids %}
-            <span style="font-size: 10px; background-color: var(--bg-surface); border: 1px solid var(--border-color); padding: 0.1rem 0.35rem; border-radius: 3px; color: #94a3b8; display: inline-block; margin: 1px;">{{ r }}</span>
-          {% endfor %}
-        </td>
-        <td><a href="/customers/{{ alt.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ alt.customer_id }}</a></td>
-        <td>
-          <span class="badge badge-{{ 'open' if alt.alert_status != 'CLOSED' else 'closed' }}">{{ alt.alert_status }}</span>
-        </td>
-        <td>{{ alt.created_at[:16].replace("T", " ") }}</td>
-        <td><a href="/alerts/{{ alt.alert_id }}" class="btn btn-primary btn-sm">Investigate</a></td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="9" style="text-align: center; color: var(--text-dim); padding: 2rem;">No alerts found matching filter.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<!-- Alerts Data Table -->
+<div class="panel">
+  <div class="table-wrapper">
+    <table class="table-clean">
+      <thead>
+        <tr>
+          <th>Alert ID</th>
+          <th>Risk Score</th>
+          <th>Severity</th>
+          <th>Triggered Rule</th>
+          <th>Customer</th>
+          <th>Workflow Status</th>
+          <th>Generated Time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for alt in alerts %}
+        <tr>
+          <td>
+            <a href="/alerts/{{ alt.alert_id }}" style="color: var(--brand-primary-light); font-family: var(--font-mono); font-weight: 600; text-decoration: none;">
+              {{ alt.alert_id }}
+            </a>
+          </td>
+          <td>
+            {% with score=alt.risk_score, severity=alt.severity %}
+              {% include "components/risk_score_inline.html" %}
+            {% endwith %}
+          </td>
+          <td><span class="badge badge-{{ alt.severity | lower }}">{{ alt.severity }}</span></td>
+          <td>
+            <strong style="color: var(--text-primary); font-size: 12px;">{{ alt.rule_name | default(alt.title) }}</strong>
+          </td>
+          <td>
+            <a href="/customers/{{ alt.customer_id }}" style="color: var(--text-muted); text-decoration: none; font-family: var(--font-mono);">
+              {{ alt.customer_id }}
+            </a>
+          </td>
+          <td>
+            <span class="badge badge-{{ 'open' if alt.alert_status != 'CLOSED' else 'closed' }}">{{ alt.alert_status }}</span>
+          </td>
+          <td style="color: var(--text-dim); font-size: 11px; font-family: var(--font-mono); white-space: nowrap;">
+            {{ alt.created_at[:16] | replace("T", " ") }}
+          </td>
+          <td>
+            <a href="/alerts/{{ alt.alert_id }}" class="btn btn-primary btn-sm" style="padding: 0.2rem 0.55rem;">Investigate</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="8" style="text-align: center; color: var(--text-dim); padding: 3rem 1rem;">
+            No alerts match current filter criteria.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   <!-- Pagination Controls -->
-  <div class="pagination-bar">
-    <div>Showing page {{ page }} ({{ alerts|length }} items)</div>
-    <div class="pagination-controls">
+  <div style="padding: 0.75rem 1rem; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
+    <div style="color: var(--text-dim);">Page {{ page }} of {{ ((total - 1) // page_size) + 1 if total else 1 }}</div>
+    <div style="display: flex; gap: 0.5rem;">
       {% if page > 1 %}
-      <a href="/alerts?page={{ page - 1 }}&severity={{ selected_severity or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
+        <a href="/alerts?page={{ page - 1 }}&severity={{ selected_severity or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
       {% endif %}
-      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
-      {% if alerts|length == page_size %}
-      <a href="/alerts?page={{ page + 1 }}&severity={{ selected_severity or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
+      {% if (page * page_size) < total %}
+        <a href="/alerts?page={{ page + 1 }}&severity={{ selected_severity or '' }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
       {% endif %}
     </div>
   </div>

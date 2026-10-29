@@ -6,14 +6,19 @@
 <div class="page-header">
   <div>
     <h1 class="page-title">Immutable Audit Trail</h1>
-    <p class="page-subtitle">Append-only compliance log capturing rule modifications, case actions, and pipeline executions.</p>
+    <p class="page-meta">Append-only compliance log capturing rule modifications, case actions, and pipeline executions.</p>
+  </div>
+  <div>
+    <span class="badge" style="background-color: var(--bg-surface); color: var(--text-dim); font-size: 12px; padding: 0.35rem 0.75rem;">
+      Total: <strong style="color: var(--text-primary);">{{ total }}</strong> Recorded Events
+    </span>
   </div>
 </div>
 
-<div class="table-card">
-  <form method="GET" action="/audit" class="table-header-toolbar">
-    <div class="search-filter-box">
-      <select name="entity_type" class="select-input">
+<div class="panel" style="padding: 0;">
+  <form method="GET" action="/audit" class="toolbar" style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-subtle); margin-bottom: 0;">
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+      <select name="entity_type" class="input-control" style="width: auto; min-width: 160px; font-size: 12px;">
         <option value="">All Entity Types</option>
         <option value="CASE" {% if selected_entity == 'CASE' %}selected{% endif %}>Cases</option>
         <option value="ALERT" {% if selected_entity == 'ALERT' %}selected{% endif %}>Alerts</option>
@@ -26,51 +31,49 @@
       <a href="/audit" class="btn btn-secondary btn-sm">Clear</a>
       {% endif %}
     </div>
-
-    <div style="font-size: 12px; color: var(--text-muted);">
-      Total: <strong>{{ total }}</strong> recorded events
-    </div>
   </form>
 
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Event ID</th>
-        <th>Event Type</th>
-        <th>Actor</th>
-        <th>Entity Type</th>
-        <th>Entity ID</th>
-        <th>Action Summary</th>
-        <th>Timestamp</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for evt in audit_events %}
-      <tr>
-        <td><code>{{ evt.event_id }}</code></td>
-        <td><span class="badge badge-open">{{ evt.event_type }}</span></td>
-        <td><strong>{{ evt.actor_id }}</strong></td>
-        <td>{{ evt.entity_type }}</td>
-        <td><code>{{ evt.entity_id }}</code></td>
-        <td style="max-width: 400px; font-size: 12px; color: var(--text-main);">{{ evt.action_summary }}</td>
-        <td>{{ evt.timestamp }}</td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 2rem;">No audit events recorded.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div style="overflow-x: auto;">
+    <table class="table-clean">
+      <thead>
+        <tr>
+          <th>Event ID</th>
+          <th>Event Type</th>
+          <th>Actor</th>
+          <th>Entity Type</th>
+          <th>Entity ID</th>
+          <th>Action Summary</th>
+          <th style="text-align: right;">Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for evt in audit_events %}
+        <tr>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ evt.event_id }}</code></td>
+          <td><span class="badge badge-open">{{ evt.event_type }}</span></td>
+          <td style="font-weight: 600; color: var(--text-primary); font-size: 11px;">{{ evt.actor_id }}</td>
+          <td><span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">{{ evt.entity_type }}</span></td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ evt.entity_id }}</code></td>
+          <td style="max-width: 380px; font-size: 12px; color: var(--text-primary);">{{ evt.action_summary }}</td>
+          <td style="text-align: right; font-size: 11px; color: var(--text-dim);">{{ evt.timestamp }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 2rem;">No audit events recorded.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   <!-- Pagination Controls -->
-  <div class="pagination-bar">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-top: 1px solid var(--border-subtle); font-size: 12px; color: var(--text-muted);">
     <div>Showing page {{ page }} ({{ audit_events|length }} items)</div>
-    <div class="pagination-controls">
+    <div style="display: flex; gap: 0.4rem; align-items: center;">
       {% if page > 1 %}
       <a href="/audit?page={{ page - 1 }}&entity_type={{ selected_entity or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
       {% endif %}
-      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
+      <span style="padding: 0.2rem 0.5rem; font-family: var(--font-mono);">Page {{ page }}</span>
       {% if audit_events|length == page_size %}
       <a href="/audit?page={{ page + 1 }}&entity_type={{ selected_entity or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
       {% endif %}

@@ -6,143 +6,163 @@
 <div class="page-header">
   <div>
     <h1 class="page-title">Dataset Generation & Export Repository</h1>
-    <p class="page-subtitle">Deterministic financial dataset synthesizer, seed management, checksums, and relational SQL exports.</p>
+    <p class="page-meta">Deterministic financial dataset synthesizer, seed management, checksums, and relational SQL exports.</p>
   </div>
 </div>
 
-<div class="detail-grid">
-  <div>
+<div class="grid-2col">
+  <!-- Left Column: Generator Form & Exports Manifest -->
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
     {% if can_run_generator %}
-    <!-- Trigger Generation Form (ADMIN Only) -->
-    <div class="panel-card">
-      <h3 class="panel-title">Deterministic Generator Orchestration</h3>
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem;">
-        Generate synthetic interconnected customers, accounts, ledger transactions, and transfer links with deterministic seed control.
+    <div class="panel">
+      <div class="panel-header">
+        <h3 class="panel-title">Deterministic Generator Orchestration</h3>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin: 0 0 1rem 0;">
+        Synthesize interconnected customers, accounts, ledger transactions, and transfer links with deterministic seed control.
       </p>
 
       <form method="POST" action="/generator/run" onsubmit="return confirm('Initiate synthetic data generation? Existing local artifacts will be deterministically refreshed.');">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
           <div>
-            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Dataset Profile</label>
-            <select name="profile" class="select-input" style="width: 100%;">
+            <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Dataset Profile</label>
+            <select name="profile" class="input-control" style="width: 100%; font-size: 12px;">
               <option value="demo" {% if manifest.profile == 'demo' %}selected{% endif %}>Demo Profile (100 CUS, 150 ACC, 2k TXN, 25 ALT)</option>
-              <option value="full" {% if manifest.profile == 'full' %}selected{% endif %}>Full Challenge Baseline (5,000 CUS, 7,000 ACC, 100,000 TXN, 1,000 ALT)</option>
+              <option value="full" {% if manifest.profile == 'full' %}selected{% endif %}>Full Baseline (5,000 CUS, 7,000 ACC, 100k TXN, 1k ALT)</option>
             </select>
           </div>
 
           <div>
-            <label style="display: block; font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.3rem;">Deterministic Seed</label>
-            <input type="number" name="seed" value="{{ manifest.seed | default(20261022) }}" class="input-text" style="width: 100%;">
+            <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Deterministic Seed</label>
+            <input type="number" name="seed" value="{{ manifest.seed | default(20261022) }}" class="input-control" style="width: 100%; font-size: 12px;">
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="padding: 0.65rem 1.25rem;">
-          &reg; Execute Synthetic Dataset Generation
+        <button type="submit" class="btn btn-primary" style="font-size: 12px;">
+          Execute Synthetic Dataset Generation
         </button>
       </form>
     </div>
     {% else %}
-    <div class="panel-card" style="border-left: 4px solid var(--text-muted); margin-bottom: 1.5rem;">
-      <h3 class="panel-title">Dataset Manifest & Repository</h3>
-      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
-        Synthetic dataset generation is restricted to <strong>ADMIN</strong> users. Below is the verified export manifest with SHA-256 integrity digests for all generated datasets.
+    <div class="panel">
+      <div class="panel-header">
+        <h3 class="panel-title">Dataset Manifest & Repository</h3>
+      </div>
+      <p style="font-size: 12px; color: var(--text-muted); margin: 0;">
+        Synthetic dataset generation is restricted to <strong style="color: var(--text-primary);">ADMIN</strong> users. Below is the verified export manifest with SHA-256 integrity digests for all generated datasets.
       </p>
     </div>
     {% endif %}
 
     <!-- Available Exports Table -->
-    <div class="table-card">
-      <div class="table-header-toolbar">
-        <div style="font-weight: 700; color: #ffffff;">Export Manifest & SHA-256 Checksums</div>
+    <div class="panel" style="padding: 0;">
+      <div class="panel-header" style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-subtle);">
+        <h3 class="panel-title">Export Manifest & SHA-256 Checksums</h3>
+        <span class="badge" style="background-color: var(--bg-surface); color: var(--text-dim); font-size: 11px;">
+          {{ manifest.checksums | length }} Artifact(s)
+        </span>
       </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Export Artifact</th>
-            <th>Type</th>
-            <th>SHA-256 Fingerprint</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for fname, hval in manifest.checksums.items() %}
-          <tr>
-            <td><strong>{{ fname }}</strong></td>
-            <td>
-              <span class="badge badge-open">
-                {{ 'SQL' if fname.endswith('.sql') else ('CSV' if fname.endswith('.csv') else 'JSON') }}
-              </span>
-            </td>
-            <td>
-              <span style="font-family: monospace; font-size: 11px; color: #38bdf8; cursor: pointer;" onclick="copyToClipboard('{{ hval }}')" title="Click to copy SHA-256">
-                {{ hval[:18] }}...{{ hval[-10:] }}
-              </span>
-            </td>
-            <td>
-              <a href="/api/v1/exports/{{ fname }}" class="btn btn-secondary btn-sm" download>Download</a>
-            </td>
-          </tr>
-          {% else %}
-          <tr>
-            <td colspan="4" style="text-align: center; color: var(--text-dim); padding: 1.5rem;">No export files generated yet.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div style="overflow-x: auto;">
+        <table class="table-clean">
+          <thead>
+            <tr>
+              <th>Export Artifact</th>
+              <th>Type</th>
+              <th>SHA-256 Fingerprint</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for fname, hval in manifest.checksums.items() %}
+            <tr>
+              <td><strong style="color: var(--text-primary); font-size: 12px;">{{ fname }}</strong></td>
+              <td>
+                <span class="badge badge-open">
+                  {{ 'SQL' if fname.endswith('.sql') else ('CSV' if fname.endswith('.csv') else 'JSON') }}
+                </span>
+              </td>
+              <td>
+                <code style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);" title="{{ hval }}">
+                  {{ hval[:16] }}...{{ hval[-8:] }}
+                </code>
+              </td>
+              <td style="text-align: right;">
+                <a href="/api/v1/exports/{{ fname }}" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 0.2rem 0.5rem;" download>Download</a>
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--text-dim); padding: 1.5rem;">No export files generated yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <div>
-    <!-- Generation Run Info Card -->
-    <div class="panel-card">
-      <h3 class="panel-title">Current Dataset Fingerprint</h3>
-      <div class="data-row">
-        <span class="data-label">Profile</span>
-        <span class="data-value">{{ manifest.profile | upper }}</span>
+  <!-- Right Column: Dataset Fingerprint & Operation Triggers -->
+  <div style="display: flex; flex-direction: column; gap: 1rem;">
+    <!-- Dataset Fingerprint -->
+    <div class="panel">
+      <div class="panel-header">
+        <h3 class="panel-title">Active Dataset Snapshot</h3>
       </div>
-      <div class="data-row">
-        <span class="data-label">Active Seed</span>
-        <span class="data-value"><code>{{ manifest.seed }}</code></span>
-      </div>
-      <div class="data-row">
-        <span class="data-label">Customers</span>
-        <span class="data-value">{{ manifest.record_counts.get("customers", 0) }}</span>
-      </div>
-      <div class="data-row">
-        <span class="data-label">Accounts</span>
-        <span class="data-value">{{ manifest.record_counts.get("accounts", 0) }}</span>
-      </div>
-      <div class="data-row">
-        <span class="data-label">Transactions</span>
-        <span class="data-value">{{ manifest.record_counts.get("transactions", 0) }}</span>
-      </div>
-      <div class="data-row">
-        <span class="data-label">Generated Alerts</span>
-        <span class="data-value">{{ manifest.record_counts.get("alerts", 0) }}</span>
-      </div>
-      <div class="data-row">
-        <span class="data-label">Generator Version</span>
-        <span class="data-value">{{ manifest.generator_version }}</span>
-      </div>
+      <table class="table-clean" style="margin: 0;">
+        <tbody>
+          <tr>
+            <td style="color: var(--text-dim); width: 45%; font-size: 11px; text-transform: uppercase;">Profile</td>
+            <td><strong style="color: var(--text-primary);">{{ manifest.profile | upper }}</strong></td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Active Seed</td>
+            <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ manifest.seed }}</code></td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Customers</td>
+            <td style="font-family: var(--font-mono);">{{ "{:,}".format(manifest.record_counts.get("customers", 0)) }}</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Accounts</td>
+            <td style="font-family: var(--font-mono);">{{ "{:,}".format(manifest.record_counts.get("accounts", 0)) }}</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Transactions</td>
+            <td style="font-family: var(--font-mono);"><strong style="color: var(--brand-primary);">{{ "{:,}".format(manifest.record_counts.get("transactions", 0)) }}</strong></td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Alerts</td>
+            <td style="font-family: var(--font-mono);">{{ "{:,}".format(manifest.record_counts.get("alerts", 0)) }}</td>
+          </tr>
+          <tr>
+            <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Generator Version</td>
+            <td style="font-size: 11px; color: var(--text-dim);">{{ manifest.generator_version }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- Operations Panel -->
-    <div class="panel-card">
-      <h3 class="panel-title">Autonomous Pipeline Triggers</h3>
-      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    <!-- Autonomous Pipeline Triggers -->
+    {% if can_run_generator %}
+    <div class="panel">
+      <div class="panel-header">
+        <h3 class="panel-title">Pipeline Triggers</h3>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
         <form method="POST" action="/validation/run" style="margin: 0;">
-          <button type="submit" class="btn btn-secondary" style="width: 100%; justify-content: center;">
-            &check; Run Full Validation Suite
+          <button type="submit" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+            &check; Run Validation Suite
           </button>
         </form>
 
         <form method="POST" action="/evaluation/run" style="margin: 0;">
-          <button type="submit" class="btn btn-secondary" style="width: 100%; justify-content: center;">
-            &target; Compute Ground Truth Evaluation
+          <button type="submit" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+            &bull; Compute Ground Truth Evaluation
           </button>
         </form>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

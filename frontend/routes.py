@@ -18,6 +18,7 @@ from backend.app.security.permissions import (
     normalize_role,
     has_permission,
     get_navigation_for_role,
+    get_grouped_navigation_for_role,
     VALID_ROLES
 )
 from generator.generate import DatasetGenerator
@@ -89,12 +90,14 @@ def get_base_context(request: Request, active_page: str, user: Optional[Dict[str
     nav_items = get_navigation_for_role(role) if curr_user else [
         {"id": "login", "name": "Sign In", "url": "/login"}
     ]
+    nav_groups = get_grouped_navigation_for_role(role) if curr_user else []
 
     return {
         "request": request,
         "active_page": active_page,
         "current_user": curr_user,
         "nav_items": nav_items,
+        "nav_groups": nav_groups,
         "storage_mode": repo.storage_mode,
         "can_edit_cases": has_permission(role, "edit:cases"),
         "can_disposition": has_permission(role, "disposition:cases"),

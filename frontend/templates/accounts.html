@@ -6,18 +6,23 @@
 <div class="page-header">
   <div>
     <h1 class="page-title">Account Inventory</h1>
-    <p class="page-subtitle">Deposit accounts, overdraft configurations, and ledger balances.</p>
+    <p class="page-meta">Deposit accounts, overdraft configurations, and ledger balances.</p>
+  </div>
+  <div>
+    <span class="badge" style="background-color: var(--bg-surface); color: var(--text-dim); font-size: 12px; padding: 0.35rem 0.75rem;">
+      Total: <strong style="color: var(--text-primary);">{{ total }}</strong> Accounts
+    </span>
   </div>
 </div>
 
-<div class="table-card">
-  <form method="GET" action="/accounts" class="table-header-toolbar">
-    <div class="search-filter-box">
-      <select name="status" class="select-input">
+<div class="panel" style="padding: 0;">
+  <form method="GET" action="/accounts" class="toolbar" style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-subtle); margin-bottom: 0;">
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+      <select name="status" class="input-control" style="width: auto; min-width: 140px; font-size: 12px;">
         <option value="">All Account Statuses</option>
-        <option value="OPEN" {% if selected_status == 'OPEN' %}selected{% endif %}>Open</option>
-        <option value="RESTRICTED" {% if selected_status == 'RESTRICTED' %}selected{% endif %}>Restricted</option>
-        <option value="CLOSED" {% if selected_status == 'CLOSED' %}selected{% endif %}>Closed</option>
+        <option value="OPEN" {% if selected_status == 'OPEN' %}selected{% endif %}>OPEN</option>
+        <option value="RESTRICTED" {% if selected_status == 'RESTRICTED' %}selected{% endif %}>RESTRICTED</option>
+        <option value="CLOSED" {% if selected_status == 'CLOSED' %}selected{% endif %}>CLOSED</option>
       </select>
 
       <button type="submit" class="btn btn-secondary btn-sm">Filter</button>
@@ -25,59 +30,59 @@
       <a href="/accounts" class="btn btn-secondary btn-sm">Clear</a>
       {% endif %}
     </div>
-
-    <div style="font-size: 12px; color: var(--text-muted);">
-      Total: <strong>{{ total }}</strong> accounts
-    </div>
   </form>
 
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Account ID</th>
-        <th>Customer ID</th>
-        <th>Type</th>
-        <th>Currency</th>
-        <th>Current Balance</th>
-        <th>Overdraft Limit</th>
-        <th>Status</th>
-        <th>Opened Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for acc in accounts %}
-      <tr>
-        <td><code>{{ acc.account_id }}</code></td>
-        <td><a href="/customers/{{ acc.customer_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ acc.customer_id }}</a></td>
-        <td>{{ acc.account_type }}</td>
-        <td>{{ acc.currency }}</td>
-        <td><strong style="color: {{ '#f87171' if acc.current_balance < 0 else '#ffffff' }};">${{ "%.2f"|format(acc.current_balance) }}</strong></td>
-        <td>${{ "%.2f"|format(acc.overdraft_limit) }}</td>
-        <td>
-          <span class="badge badge-{{ 'low' if acc.account_status == 'OPEN' else 'critical' }}">
-            {{ acc.account_status }}
-          </span>
-        </td>
-        <td>{{ acc.opened_at[:10] }}</td>
-        <td><a href="/accounts/{{ acc.account_id }}" class="btn btn-secondary btn-sm">Inspect</a></td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="9" style="text-align: center; color: var(--text-dim); padding: 2rem;">No matching accounts found.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div style="overflow-x: auto;">
+    <table class="table-clean">
+      <thead>
+        <tr>
+          <th>Account ID</th>
+          <th>Customer ID</th>
+          <th>Type</th>
+          <th>Currency</th>
+          <th>Current Balance</th>
+          <th>Overdraft Limit</th>
+          <th>Status</th>
+          <th>Opened</th>
+          <th style="text-align: right;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for acc in accounts %}
+        <tr>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ acc.account_id }}</code></td>
+          <td><a href="/customers/{{ acc.customer_id }}" style="color: var(--brand-primary); text-decoration: none; font-family: var(--font-mono); font-size: 11px;">{{ acc.customer_id }}</a></td>
+          <td style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">{{ acc.account_type }}</td>
+          <td style="font-size: 11px; color: var(--text-dim);">{{ acc.currency }}</td>
+          <td><strong style="color: {% if acc.current_balance < 0 %}#ef4444{% else %}var(--text-primary){% endif %};">${{ "%.2f"|format(acc.current_balance) }}</strong></td>
+          <td style="font-size: 11px; color: var(--text-muted);">${{ "%.2f"|format(acc.overdraft_limit) }}</td>
+          <td>
+            <span class="badge badge-{{ 'low' if acc.account_status == 'OPEN' else 'critical' }}">
+              {{ acc.account_status }}
+            </span>
+          </td>
+          <td style="font-size: 11px; color: var(--text-dim);">{{ acc.opened_at[:10] }}</td>
+          <td style="text-align: right;">
+            <a href="/accounts/{{ acc.account_id }}" class="btn btn-secondary btn-sm" style="font-size: 11px; padding: 0.2rem 0.5rem;">Inspect &rarr;</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="9" style="text-align: center; color: var(--text-dim); padding: 2rem;">No matching accounts found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 
   <!-- Pagination Controls -->
-  <div class="pagination-bar">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-top: 1px solid var(--border-subtle); font-size: 12px; color: var(--text-muted);">
     <div>Showing page {{ page }} ({{ accounts|length }} items)</div>
-    <div class="pagination-controls">
+    <div style="display: flex; gap: 0.4rem; align-items: center;">
       {% if page > 1 %}
       <a href="/accounts?page={{ page - 1 }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">&larr; Previous</a>
       {% endif %}
-      <span style="padding: 0.3rem 0.6rem; color: #ffffff;">Page {{ page }}</span>
+      <span style="padding: 0.2rem 0.5rem; font-family: var(--font-mono);">Page {{ page }}</span>
       {% if accounts|length == page_size %}
       <a href="/accounts?page={{ page + 1 }}&status={{ selected_status or '' }}" class="btn btn-secondary btn-sm">Next &rarr;</a>
       {% endif %}

@@ -1,188 +1,35 @@
 {% extends "base.html" %}
 
-{% block title %}SentinelIQ | Risk Intelligence Dashboard{% endblock %}
+{% block title %}SentinelIQ | Overview{% endblock %}
 
 {% block content %}
 <div class="page-header">
   <div>
     <h1 class="page-title">Executive Risk Overview</h1>
-    <p class="page-subtitle">Real-time financial transaction monitoring and investigation telemetry.</p>
-  </div>
-  <div style="display: flex; gap: 0.5rem;">
-    <a href="/generator" class="btn btn-secondary btn-sm">Regenerate Data</a>
-    <a href="/validation" class="btn btn-primary btn-sm">Inspect Data Quality</a>
+    <p class="page-meta">Real-time financial transaction monitoring and risk intelligence telemetry.</p>
   </div>
 </div>
 
-<!-- Primary Metric Cards -->
-<div class="metrics-grid">
+<div class="metrics-row-4">
   <div class="metric-card">
     <div class="metric-label">Total Customers</div>
     <div class="metric-value">{{ metrics.total_customers | default(0) }}</div>
     <div class="metric-sub">Monitored Profiles</div>
   </div>
-
   <div class="metric-card">
     <div class="metric-label">Active Accounts</div>
     <div class="metric-value">{{ metrics.total_accounts | default(0) }}</div>
-    <div class="metric-sub">Checking, Savings, Business</div>
+    <div class="metric-sub">Deposit Accounts</div>
   </div>
-
   <div class="metric-card">
     <div class="metric-label">Total Transactions</div>
     <div class="metric-value">{{ metrics.total_transactions | default(0) }}</div>
     <div class="metric-sub">Ledger Operations</div>
   </div>
-
-  <div class="metric-card high">
-    <div class="metric-label">Generated Alerts</div>
-    <div class="metric-value">{{ metrics.total_alerts | default(0) }}</div>
+  <div class="metric-card">
+    <div class="metric-label">Open Alerts</div>
+    <div class="metric-value" style="color: #ef4444;">{{ metrics.total_alerts | default(0) }}</div>
     <div class="metric-sub">Risk Rules Triggered</div>
   </div>
-
-  <div class="metric-card critical">
-    <div class="metric-label">Critical Alerts</div>
-    <div class="metric-value" style="color: #f87171;">{{ metrics.critical_alerts | default(0) }}</div>
-    <div class="metric-sub">Immediate Escalation</div>
-  </div>
-
-  <div class="metric-card open">
-    <div class="metric-label">Open Cases</div>
-    <div class="metric-value" style="color: var(--brand-cyan);">{{ metrics.open_cases | default(0) }}</div>
-    <div class="metric-sub">Active Investigations</div>
-  </div>
-</div>
-
-<!-- Alert Distributions -->
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-  <div class="panel-card" style="margin-bottom: 0;">
-    <h3 class="panel-title">Alerts by Severity</h3>
-    <div style="display: flex; gap: 1rem; align-items: center; justify-content: space-around; padding: 1rem 0;">
-      <div style="text-align: center;">
-        <span class="badge badge-critical" style="font-size: 14px; padding: 0.4rem 0.8rem;">
-          {{ metrics.alerts_by_severity.get("CRITICAL", 0) }}
-        </span>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 0.4rem;">CRITICAL</div>
-      </div>
-      <div style="text-align: center;">
-        <span class="badge badge-high" style="font-size: 14px; padding: 0.4rem 0.8rem;">
-          {{ metrics.alerts_by_severity.get("HIGH", 0) }}
-        </span>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 0.4rem;">HIGH</div>
-      </div>
-      <div style="text-align: center;">
-        <span class="badge badge-medium" style="font-size: 14px; padding: 0.4rem 0.8rem;">
-          {{ metrics.alerts_by_severity.get("MEDIUM", 0) }}
-        </span>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 0.4rem;">MEDIUM</div>
-      </div>
-      <div style="text-align: center;">
-        <span class="badge badge-low" style="font-size: 14px; padding: 0.4rem 0.8rem;">
-          {{ metrics.alerts_by_severity.get("LOW", 0) }}
-        </span>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 0.4rem;">LOW</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel-card" style="margin-bottom: 0;">
-    <h3 class="panel-title">Cases by Status</h3>
-    <div style="display: flex; gap: 1rem; align-items: center; justify-content: space-around; padding: 1rem 0;">
-      <div style="text-align: center;">
-        <span class="badge badge-open" style="font-size: 14px; padding: 0.4rem 0.8rem;">
-          {{ metrics.cases_by_status.get("OPEN", 0) }}
-        </span>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 0.4rem;">OPEN</div>
-      </div>
-      <div style="text-align: center;">
-        <span class="badge badge-high" style="font-size: 14px; padding: 0.4rem 0.8rem;">
-          {{ metrics.cases_by_status.get("IN_PROGRESS", 0) }}
-        </span>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 0.4rem;">IN PROGRESS</div>
-      </div>
-      <div style="text-align: center;">
-        <span class="badge badge-closed" style="font-size: 14px; padding: 0.4rem 0.8rem;">
-          {{ metrics.cases_by_status.get("CLOSED", 0) }}
-        </span>
-        <div style="font-size: 11px; color: var(--text-muted); margin-top: 0.4rem;">CLOSED</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Recent Alerts Table -->
-<div class="table-card">
-  <div class="table-header-toolbar">
-    <div style="font-weight: 700; color: #ffffff;">Recent Critical & High Risk Alerts</div>
-    <a href="/alerts" class="btn btn-secondary btn-sm">View All Alerts &rarr;</a>
-  </div>
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Alert ID</th>
-        <th>Title</th>
-        <th>Severity</th>
-        <th>Risk Score</th>
-        <th>Status</th>
-        <th>Created Timestamp</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for alt in metrics.recent_alerts %}
-      <tr>
-        <td><strong>{{ alt.alert_id }}</strong></td>
-        <td>{{ alt.title }}</td>
-        <td>
-          <span class="badge badge-{{ alt.severity | lower }}">{{ alt.severity }}</span>
-        </td>
-        <td><strong style="color: #38bdf8;">{{ "%.1f"|format(alt.risk_score) }}</strong> / 100</td>
-        <td><span class="badge badge-{{ 'open' if alt.alert_status != 'CLOSED' else 'closed' }}">{{ alt.alert_status }}</span></td>
-        <td>{{ alt.created_at }}</td>
-        <td><a href="/alerts/{{ alt.alert_id }}" class="btn btn-primary btn-sm">Investigate</a></td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="7" style="text-align: center; color: var(--text-dim); padding: 2rem;">No alerts generated yet.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-<!-- Recent Analyst Audit Actions -->
-<div class="table-card">
-  <div class="table-header-toolbar">
-    <div style="font-weight: 700; color: #ffffff;">Recent Analyst Actions & Audit Events</div>
-    <a href="/audit" class="btn btn-secondary btn-sm">View Full Audit Trail &rarr;</a>
-  </div>
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Action ID</th>
-        <th>Case ID</th>
-        <th>Analyst</th>
-        <th>Action Type</th>
-        <th>Comment</th>
-        <th>Timestamp</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for act in metrics.recent_actions %}
-      <tr>
-        <td><code>{{ act.action_id }}</code></td>
-        <td><a href="/cases/{{ act.case_id }}" style="color: var(--brand-cyan); text-decoration: none;">{{ act.case_id }}</a></td>
-        <td>{{ act.analyst_id }}</td>
-        <td><span class="badge badge-open">{{ act.action_type }}</span></td>
-        <td style="max-width: 350px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ act.comment }}</td>
-        <td>{{ act.timestamp }}</td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="6" style="text-align: center; color: var(--text-dim); padding: 2rem;">No analyst actions logged yet.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
 </div>
 {% endblock %}

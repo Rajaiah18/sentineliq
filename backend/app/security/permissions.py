@@ -94,55 +94,72 @@ def has_permission(role: str, permission: str) -> bool:
 def get_navigation_for_role(role: str) -> List[Dict[str, str]]:
     """
     Return exact navigation items for the authenticated role.
-    Target design specified in challenge Section 3.
+    Target design specified in challenge Section 3, grouped into:
+    Monitor, Investigate, Analyze, Manage.
     """
     norm = normalize_role(role)
     if norm == "ADMIN":
         return [
-            {"id": "dashboard", "name": "Dashboard", "url": "/dashboard"},
-            {"id": "transactions", "name": "Transactions", "url": "/transactions"},
-            {"id": "customers", "name": "Customers", "url": "/customers"},
-            {"id": "accounts", "name": "Accounts", "url": "/accounts"},
-            {"id": "alerts", "name": "Alerts", "url": "/alerts"},
-            {"id": "cases", "name": "Cases", "url": "/cases"},
-            {"id": "rules", "name": "Rules", "url": "/rules"},
-            {"id": "validation", "name": "Data Quality", "url": "/validation"},
-            {"id": "evaluation", "name": "Evaluation", "url": "/evaluation"},
-            {"id": "generator", "name": "Exports & Generation", "url": "/generator"},
-            {"id": "audit", "name": "Audit Log", "url": "/audit"},
-            {"id": "users", "name": "User Management", "url": "/users"},
-            {"id": "settings", "name": "System Settings", "url": "/settings"}
+            {"id": "dashboard", "name": "Overview", "url": "/dashboard", "group": "Monitor"},
+            {"id": "transactions", "name": "Transactions", "url": "/transactions", "group": "Monitor"},
+            {"id": "alerts", "name": "Alerts", "url": "/alerts", "group": "Monitor"},
+            {"id": "cases", "name": "Cases", "url": "/cases", "group": "Investigate"},
+            {"id": "customers", "name": "Customers", "url": "/customers", "group": "Investigate"},
+            {"id": "accounts", "name": "Accounts", "url": "/accounts", "group": "Investigate"},
+            {"id": "rules", "name": "Risk Rules", "url": "/rules", "group": "Analyze"},
+            {"id": "validation", "name": "Data Quality", "url": "/validation", "group": "Analyze"},
+            {"id": "evaluation", "name": "Evaluation", "url": "/evaluation", "group": "Analyze"},
+            {"id": "generator", "name": "Data & Exports", "url": "/generator", "group": "Manage"},
+            {"id": "audit", "name": "Audit Log", "url": "/audit", "group": "Manage"},
+            {"id": "users", "name": "User Management", "url": "/users", "group": "Manage"},
+            {"id": "settings", "name": "System Settings", "url": "/settings", "group": "Manage"}
         ]
     elif norm == "ANALYST":
         return [
-            {"id": "dashboard", "name": "My Dashboard", "url": "/dashboard"},
-            {"id": "transactions", "name": "Transactions", "url": "/transactions"},
-            {"id": "customers", "name": "Customers", "url": "/customers"},
-            {"id": "accounts", "name": "Accounts", "url": "/accounts"},
-            {"id": "alerts", "name": "Alerts", "url": "/alerts"},
-            {"id": "cases", "name": "My Cases", "url": "/cases?filter=my_cases"},
-            {"id": "workspace", "name": "Investigation Workspace", "url": "/cases/workspace"}
+            {"id": "dashboard", "name": "Overview", "url": "/dashboard", "group": "Monitor"},
+            {"id": "transactions", "name": "Transactions", "url": "/transactions", "group": "Monitor"},
+            {"id": "alerts", "name": "Alerts", "url": "/alerts", "group": "Monitor"},
+            {"id": "cases", "name": "My Cases", "url": "/cases?filter=my_cases", "group": "Investigate"},
+            {"id": "workspace", "name": "Workspace", "url": "/cases/workspace", "group": "Investigate"},
+            {"id": "customers", "name": "Customers", "url": "/customers", "group": "Investigate"},
+            {"id": "accounts", "name": "Accounts", "url": "/accounts", "group": "Investigate"}
         ]
     elif norm == "COMPLIANCE_REVIEWER":
         return [
-            {"id": "dashboard", "name": "Compliance Dashboard", "url": "/dashboard"},
-            {"id": "alerts", "name": "Alerts", "url": "/alerts"},
-            {"id": "cases", "name": "Cases for Review", "url": "/cases?status=PENDING_REVIEW"},
-            {"id": "audit", "name": "Audit Log", "url": "/audit"},
-            {"id": "validation", "name": "Data Quality", "url": "/validation"},
-            {"id": "evaluation", "name": "Evaluation", "url": "/evaluation"},
-            {"id": "reports", "name": "Reports", "url": "/reports"}
+            {"id": "dashboard", "name": "Overview", "url": "/dashboard", "group": "Monitor"},
+            {"id": "alerts", "name": "Alerts", "url": "/alerts", "group": "Monitor"},
+            {"id": "cases", "name": "Cases for Review", "url": "/cases?status=PENDING_REVIEW", "group": "Investigate"},
+            {"id": "validation", "name": "Data Quality", "url": "/validation", "group": "Analyze"},
+            {"id": "evaluation", "name": "Evaluation", "url": "/evaluation", "group": "Analyze"},
+            {"id": "reports", "name": "Reports", "url": "/reports", "group": "Analyze"},
+            {"id": "audit", "name": "Audit Log", "url": "/audit", "group": "Manage"}
         ]
     else:  # READ_ONLY
         return [
-            {"id": "dashboard", "name": "Overview Dashboard", "url": "/dashboard"},
-            {"id": "transactions", "name": "Transactions", "url": "/transactions"},
-            {"id": "customers", "name": "Customers", "url": "/customers"},
-            {"id": "accounts", "name": "Accounts", "url": "/accounts"},
-            {"id": "alerts", "name": "Alerts", "url": "/alerts"},
-            {"id": "cases", "name": "Read-Only Cases", "url": "/cases"},
-            {"id": "reports", "name": "Reports", "url": "/reports"}
+            {"id": "dashboard", "name": "Overview", "url": "/dashboard", "group": "Monitor"},
+            {"id": "transactions", "name": "Transactions", "url": "/transactions", "group": "Monitor"},
+            {"id": "alerts", "name": "Alerts", "url": "/alerts", "group": "Monitor"},
+            {"id": "cases", "name": "Cases", "url": "/cases", "group": "Investigate"},
+            {"id": "customers", "name": "Customers", "url": "/customers", "group": "Investigate"},
+            {"id": "accounts", "name": "Accounts", "url": "/accounts", "group": "Investigate"},
+            {"id": "reports", "name": "Reports", "url": "/reports", "group": "Analyze"}
         ]
+
+
+def get_grouped_navigation_for_role(role: str) -> List[Dict[str, Any]]:
+    """Return navigation organized into non-empty logical sections."""
+    items = get_navigation_for_role(role)
+    ordered_groups = ["Monitor", "Investigate", "Analyze", "Manage"]
+    groups: Dict[str, List[Dict[str, str]]] = {g: [] for g in ordered_groups}
+    for item in items:
+        grp = item.get("group", "Monitor")
+        if grp in groups:
+            groups[grp].append(item)
+    return [
+        {"title": g, "items": groups[g], "nav_items": groups[g]}
+        for g in ordered_groups
+        if groups[g]
+    ]
 
 
 def get_current_user(

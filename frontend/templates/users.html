@@ -7,134 +7,142 @@
   <div>
     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
       <h1 class="page-title">User & Role Management</h1>
-      <span class="role-pill" style="background-color: #581c87; color: #d8b4fe; border: 1px solid #7e22ce;">ADMIN ONLY</span>
+      <span class="role-pill role-pill-admin">ADMIN ONLY</span>
     </div>
-    <p class="page-subtitle">Configure system users, assign role privileges, and inspect authentication access controls.</p>
+    <p class="page-meta">Configure system users, assign role privileges, and inspect authentication access controls.</p>
   </div>
   {% if msg %}
-    <div style="background: rgba(34, 197, 94, 0.15); border: 1px solid #22c55e; color: #4ade80; padding: 0.4rem 0.8rem; border-radius: var(--radius-sm); font-size: 13px;">
+    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; color: #10b981; padding: 0.35rem 0.75rem; border-radius: var(--radius-xs); font-size: 12px;">
       {{ msg }}
     </div>
   {% endif %}
 </div>
 
-<div class="panel-card">
-  <h3 class="panel-title">System Users & Role Assignments</h3>
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>User ID</th>
-        <th>Username</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Current Role</th>
-        <th>Status</th>
-        <th>Change Role</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for u in users %}
+<div class="panel" style="padding: 0; margin-bottom: 1.25rem;">
+  <div class="panel-header" style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-subtle);">
+    <h3 class="panel-title">System Users & Role Assignments</h3>
+  </div>
+  <div style="overflow-x: auto;">
+    <table class="table-clean">
+      <thead>
         <tr>
-          <td><code>{{ u.user_id }}</code></td>
-          <td><strong style="color: #ffffff;">{{ u.username }}</strong></td>
-          <td>{{ u.full_name }}</td>
-          <td style="color: var(--text-muted);">{{ u.email }}</td>
-          <td>
-            <span class="role-pill {% if u.role == 'ADMIN' %}role-pill-admin{% elif u.role == 'ANALYST' %}role-pill-analyst{% elif u.role == 'COMPLIANCE_REVIEWER' %}role-pill-compliance{% else %}role-pill-readonly{% endif %}">
-              {{ u.role }}
-            </span>
-          </td>
-          <td>
-            <span class="badge badge-low">ACTIVE</span>
-          </td>
-          <td>
-            <form action="/users/{{ u.username }}/role" method="POST" style="display: flex; gap: 0.5rem; align-items: center; margin: 0;">
-              <select name="new_role" class="input-field" style="padding: 0.2rem 0.5rem; font-size: 11px; width: 140px;">
-                <option value="ADMIN" {% if u.role == 'ADMIN' %}selected{% endif %}>ADMIN</option>
-                <option value="ANALYST" {% if u.role == 'ANALYST' %}selected{% endif %}>ANALYST</option>
-                <option value="COMPLIANCE_REVIEWER" {% if u.role == 'COMPLIANCE_REVIEWER' %}selected{% endif %}>COMPLIANCE_REVIEWER</option>
-                <option value="READ_ONLY" {% if u.role == 'READ_ONLY' %}selected{% endif %}>READ_ONLY</option>
-              </select>
-              <button type="submit" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.6rem; font-size: 11px;">Save</button>
-            </form>
-          </td>
+          <th>User ID</th>
+          <th>Username</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Current Role</th>
+          <th>Status</th>
+          <th style="text-align: right;">Change Role</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for u in users %}
+          <tr>
+            <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ u.user_id }}</code></td>
+            <td><strong style="color: var(--text-primary);">{{ u.username }}</strong></td>
+            <td style="color: var(--text-primary);">{{ u.full_name }}</td>
+            <td style="color: var(--text-muted); font-size: 11px;">{{ u.email }}</td>
+            <td>
+              <span class="role-pill {% if u.role == 'ADMIN' %}role-pill-admin{% elif u.role == 'ANALYST' %}role-pill-analyst{% elif u.role == 'COMPLIANCE_REVIEWER' %}role-pill-compliance{% else %}role-pill-readonly{% endif %}">
+                {{ u.role }}
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-low">ACTIVE</span>
+            </td>
+            <td style="text-align: right;">
+              <form action="/users/{{ u.username }}/role" method="POST" style="display: inline-flex; gap: 0.4rem; align-items: center; margin: 0;">
+                <select name="new_role" class="input-control" style="padding: 0.2rem 0.4rem; font-size: 11px; width: 130px;">
+                  <option value="ADMIN" {% if u.role == 'ADMIN' %}selected{% endif %}>ADMIN</option>
+                  <option value="ANALYST" {% if u.role == 'ANALYST' %}selected{% endif %}>ANALYST</option>
+                  <option value="COMPLIANCE_REVIEWER" {% if u.role == 'COMPLIANCE_REVIEWER' %}selected{% endif %}>COMPLIANCE_REVIEWER</option>
+                  <option value="READ_ONLY" {% if u.role == 'READ_ONLY' %}selected{% endif %}>READ_ONLY</option>
+                </select>
+                <button type="submit" class="btn btn-secondary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 11px;">Save</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- Role Permission Matrix Reference -->
-<div class="panel-card">
-  <h3 class="panel-title">Authoritative Role Permission Matrix</h3>
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Privilege / Capability</th>
-        <th>ADMIN</th>
-        <th>ANALYST</th>
-        <th>COMPLIANCE_REVIEWER</th>
-        <th>READ_ONLY</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>View Transactions, Customers & Accounts</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-      </tr>
-      <tr>
-        <td>View Alert Dossiers & Explainability</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-      </tr>
-      <tr>
-        <td>Perform Alert Triage & Update Status</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-      </tr>
-      <tr>
-        <td>Create Cases & Record Investigation Notes</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-      </tr>
-      <tr>
-        <td>Record Final Case Dispositions (SAR Sign-Off)</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-      </tr>
-      <tr>
-        <td>Modify Risk Rules, Weights & Thresholds</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-      </tr>
-      <tr>
-        <td>Execute Dataset Generation Runs</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-      </tr>
-      <tr>
-        <td>User & Role Administration</td>
-        <td><span class="badge badge-low">&#10003; Yes</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-        <td><span class="badge badge-closed">&#10005; Denied</span></td>
-      </tr>
-    </tbody>
-  </table>
+<div class="panel" style="padding: 0;">
+  <div class="panel-header" style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-subtle);">
+    <h3 class="panel-title">Authoritative Role Permission Matrix</h3>
+  </div>
+  <div style="overflow-x: auto;">
+    <table class="table-clean">
+      <thead>
+        <tr>
+          <th>Privilege / Capability</th>
+          <th>ADMIN</th>
+          <th>ANALYST</th>
+          <th>COMPLIANCE_REVIEWER</th>
+          <th>READ_ONLY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color: var(--text-primary);">View Transactions, Customers & Accounts</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-primary);">View Alert Dossiers & Explainability</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-primary);">Perform Alert Triage & Update Status</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-primary);">Create Cases & Record Investigation Notes</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-primary);">Record Final Case Dispositions (SAR Sign-Off)</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-primary);">Modify Risk Rules, Weights & Thresholds</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-primary);">Execute Dataset Generation Runs</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-primary);">User & Role Administration</td>
+          <td><span class="badge badge-low">&#10003; Yes</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+          <td><span class="badge badge-closed">&#10005; Denied</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

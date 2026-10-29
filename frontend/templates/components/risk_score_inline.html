@@ -1,0 +1,9 @@
+<!-- Compact Inline Risk Score for Data Tables -->
+<div class="score-inline" title="Risk Score: {{ score | round(1) }} ({{ severity }})">
+  <div class="score-inline-bar">
+    <div class="score-inline-fill" style="width: {{ [score, 100] | min }}%; background-color: {% if score >= 85 %}#ef4444{% elif score >= 70 %}#f97316{% elif score >= 50 %}#f59e0b{% else %}#10b981{% endif %};"></div>
+  </div>
+  <span class="score-inline-text" style="color: {% if score >= 85 %}#ef4444{% elif score >= 70 %}#f97316{% elif score >= 50 %}#f59e0b{% else %}#10b981{% endif %};">
+    {{ score | round(1) }}
+  </span>
+</div>

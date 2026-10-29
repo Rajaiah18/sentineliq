@@ -3,38 +3,46 @@
 {% block title %}403 Access Denied | SentinelIQ{% endblock %}
 
 {% block content %}
-<div style="max-width: 650px; margin: 4rem auto; text-align: center;">
-  <div style="width: 72px; height: 72px; margin: 0 auto 1.5rem; background: rgba(239, 68, 68, 0.15); border: 2px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-    <span style="font-size: 32px; color: #ef4444; font-weight: 800;">!</span>
+<div style="max-width: 580px; margin: 3rem auto; text-align: center;">
+  <div style="width: 56px; height: 56px; margin: 0 auto 1.25rem; background: rgba(239, 68, 68, 0.1); border: 2px solid #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+    <span style="font-size: 24px; color: #ef4444; font-weight: 800;">!</span>
   </div>
 
-  <h1 style="font-size: 28px; font-weight: 800; color: #ffffff; margin-bottom: 0.75rem;">Access Denied — 403 Forbidden</h1>
-  <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 2rem; line-height: 1.6;">
-    Your current role does not have authorization to view or perform operations on this resource.
+  <h1 style="font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Access Denied &mdash; 403 Forbidden</h1>
+  <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 1.5rem; line-height: 1.5;">
+    Your authenticated role does not have authorization to view or perform operations on this resource.
   </p>
 
-  <div class="panel-card" style="text-align: left; margin-bottom: 2rem;">
-    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-subtle);">
-      <span style="color: var(--text-muted);">Authenticated User:</span>
-      <strong style="color: #ffffff;">{{ current_user.username if current_user else "Anonymous" }}</strong>
-    </div>
-    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-subtle);">
-      <span style="color: var(--text-muted);">Assigned Role:</span>
-      <span class="role-pill">{{ current_user.role if current_user else "UNAUTHENTICATED" }}</span>
-    </div>
-    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--border-subtle);">
-      <span style="color: var(--text-muted);">Attempted Path:</span>
-      <code style="color: var(--brand-cyan);">{{ attempted_path | default(request.url.path) }}</code>
-    </div>
-    <div style="display: flex; justify-content: space-between; padding: 0.6rem 0;">
-      <span style="color: var(--text-muted);">Required Permission:</span>
-      <span style="color: #f87171; font-weight: 600;">{{ required_permission | default("ELEVATED_ROLE") }}</span>
-    </div>
+  <div class="panel" style="text-align: left; margin-bottom: 1.5rem;">
+    <table class="table-clean" style="margin: 0;">
+      <tbody>
+        <tr>
+          <td style="color: var(--text-dim); width: 45%; font-size: 11px; text-transform: uppercase;">Authenticated User</td>
+          <td><strong style="color: var(--text-primary);">{{ current_user.username if current_user else "Anonymous" }}</strong></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Assigned Role</td>
+          <td>
+            <span class="role-pill {% if current_user and current_user.role == 'ADMIN' %}role-pill-admin{% elif current_user and current_user.role == 'ANALYST' %}role-pill-analyst{% elif current_user and current_user.role == 'COMPLIANCE_REVIEWER' %}role-pill-compliance{% else %}role-pill-readonly{% endif %}">
+              {{ current_user.role if current_user else "UNAUTHENTICATED" }}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Attempted Path</td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px; color: var(--brand-primary);">{{ attempted_path | default(request.url.path) }}</code></td>
+        </tr>
+        <tr>
+          <td style="color: var(--text-dim); font-size: 11px; text-transform: uppercase;">Required Permission</td>
+          <td><span style="color: #ef4444; font-family: var(--font-mono); font-size: 11px; font-weight: 600;">{{ required_permission | default("ELEVATED_ROLE") }}</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div style="display: flex; gap: 1rem; justify-content: center;">
-    <a href="/dashboard" class="btn btn-primary">Return to My Dashboard</a>
-    <a href="/login" class="btn btn-secondary">Switch User / Login</a>
+  <div style="display: flex; gap: 0.75rem; justify-content: center;">
+    <a href="/dashboard" class="btn btn-primary btn-sm">Return to Dashboard</a>
+    <a href="/login" class="btn btn-secondary btn-sm">Switch Account / Sign In</a>
   </div>
 </div>
 {% endblock %}

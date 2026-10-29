@@ -7,25 +7,26 @@
   <div>
     <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem;">
       <h1 class="page-title">Analyst Investigation Workspace</h1>
-      <span class="role-pill" style="background-color: #0c4a6e; color: #7dd3fc; border: 1px solid #0284c7;">INVESTIGATOR</span>
+      <span class="role-pill role-pill-analyst">INVESTIGATOR</span>
     </div>
-    <p class="page-subtitle">Streamlined case management, alert association, evidence review, and note keeping.</p>
+    <p class="page-meta">Streamlined case management, alert association, evidence review, and note keeping.</p>
   </div>
-  <div>
+  <div style="display: flex; gap: 0.5rem;">
     <a href="/cases" class="btn btn-secondary btn-sm">All Cases</a>
-    <a href="/alerts" class="btn btn-primary btn-sm">Triage New Alerts</a>
+    <a href="/alerts" class="btn btn-primary btn-sm">Triage Alerts</a>
   </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+<div class="grid-2col">
   <!-- Left Column: Active Cases Assigned to Me -->
-  <div class="panel-card">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-      <h3 class="panel-title" style="margin-bottom: 0;">My Active Investigation Cases</h3>
+  <div class="panel" style="padding: 0;">
+    <div class="panel-header" style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-subtle);">
+      <h3 class="panel-title">My Active Investigation Cases</h3>
       <span class="badge badge-open">{{ my_cases | length }} Active</span>
     </div>
     {% if my_cases %}
-      <table class="data-table">
+    <div style="overflow-x: auto;">
+      <table class="table-clean">
         <thead>
           <tr>
             <th>Case ID</th>
@@ -33,61 +34,64 @@
             <th>Priority</th>
             <th>Status</th>
             <th>Created</th>
-            <th>Action</th>
+            <th style="text-align: right;">Action</th>
           </tr>
         </thead>
         <tbody>
           {% for c in my_cases %}
             <tr>
-              <td><code>{{ c.case_id }}</code></td>
-              <td><strong style="color: #ffffff;">{{ c.case_title }}</strong></td>
+              <td><code style="font-family: var(--font-mono); font-size: 11px;">{{ c.case_id }}</code></td>
+              <td style="font-weight: 500; color: var(--text-primary); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ c.case_title }}</td>
               <td><span class="badge badge-{{ c.priority | lower }}">{{ c.priority }}</span></td>
               <td><span class="badge badge-open">{{ c.case_status }}</span></td>
               <td style="color: var(--text-dim); font-size: 11px;">{{ c.created_at[:10] }}</td>
-              <td>
-                <a href="/cases/{{ c.case_id }}" class="btn btn-primary btn-sm" style="padding: 0.2rem 0.5rem; font-size: 11px;">Open Dossier</a>
+              <td style="text-align: right;">
+                <a href="/cases/{{ c.case_id }}" class="btn btn-primary btn-sm" style="font-size: 11px; padding: 0.2rem 0.5rem;">Open &rarr;</a>
               </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
+    </div>
     {% else %}
-      <div style="padding: 2rem 0; text-align: center;">
-        <p style="color: var(--text-muted); margin-bottom: 0.75rem;">No cases currently assigned to you.</p>
+      <div style="padding: 2.5rem 1rem; text-align: center;">
+        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 0.75rem;">No cases currently assigned to you.</p>
         <a href="/cases" class="btn btn-secondary btn-sm">Claim an Unassigned Case</a>
       </div>
     {% endif %}
   </div>
 
   <!-- Right Column: Quick Case Opener -->
-  <div class="panel-card">
-    <h3 class="panel-title">Open New Investigation Case</h3>
-    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 1rem;">
+  <div class="panel">
+    <div class="panel-header">
+      <h3 class="panel-title">Open New Investigation Case</h3>
+    </div>
+    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 0.85rem;">
       Create a case linked to an alert and customer profile.
     </p>
     <form action="/cases" method="POST">
-      <div style="margin-bottom: 0.75rem;">
-        <label class="form-label" style="font-size: 12px;">Alert ID to Investigate</label>
-        <input type="text" name="alert_id" class="input-field" placeholder="e.g. ALT-2026-00000001" required style="width: 100%;">
+      <div style="margin-bottom: 0.65rem;">
+        <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Alert ID to Investigate</label>
+        <input type="text" name="alert_id" class="input-control" placeholder="e.g. ALT-2026-000001" required style="width: 100%; font-size: 12px;">
       </div>
-      <div style="margin-bottom: 0.75rem;">
-        <label class="form-label" style="font-size: 12px;">Customer ID</label>
-        <input type="text" name="customer_id" class="input-field" placeholder="e.g. CUST-00001" required style="width: 100%;">
+      <div style="margin-bottom: 0.65rem;">
+        <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Customer ID</label>
+        <input type="text" name="customer_id" class="input-control" placeholder="e.g. CUST-00001" required style="width: 100%; font-size: 12px;">
       </div>
-      <div style="margin-bottom: 0.75rem;">
-        <label class="form-label" style="font-size: 12px;">Case Title</label>
-        <input type="text" name="case_title" class="input-field" placeholder="Brief descriptive summary" required style="width: 100%;">
+      <div style="margin-bottom: 0.65rem;">
+        <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Case Title</label>
+        <input type="text" name="case_title" class="input-control" placeholder="Brief descriptive summary" required style="width: 100%; font-size: 12px;">
       </div>
-      <div style="margin-bottom: 1rem;">
-        <label class="form-label" style="font-size: 12px;">Initial Priority</label>
-        <select name="priority" class="input-field" style="width: 100%;">
+      <div style="margin-bottom: 0.85rem;">
+        <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem;">Initial Priority</label>
+        <select name="priority" class="input-control" style="width: 100%; font-size: 12px;">
           <option value="LOW">LOW</option>
           <option value="MEDIUM" selected>MEDIUM</option>
           <option value="HIGH">HIGH</option>
           <option value="CRITICAL">CRITICAL</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary" style="width: 100%;">Create Case & Claim</button>
+      <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 12px;">Create Case & Claim</button>
     </form>
   </div>
 </div>

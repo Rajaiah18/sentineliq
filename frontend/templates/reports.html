@@ -6,79 +6,83 @@
 <div class="page-header">
   <div>
     <h1 class="page-title">Compliance Reports & Data Exports</h1>
-    <p class="page-subtitle">Inspect verification summaries, download relational exports, and review evaluation reports.</p>
+    <p class="page-meta">Inspect verification summaries, download relational exports, and review evaluation reports.</p>
   </div>
 </div>
 
-<div class="metrics-grid">
+<div class="metrics-row-4">
   <div class="metric-card">
     <div class="metric-label">Export Manifest</div>
-    <div class="metric-value" style="font-size: 20px; color: #4ade80;">SHA-256</div>
+    <div class="metric-value" style="font-size: 18px; color: #10b981;">SHA-256</div>
     <div class="metric-sub">Checksums verified</div>
   </div>
 
   <div class="metric-card">
     <div class="metric-label">Validation Status</div>
-    <div class="metric-value" style="font-size: 20px; color: var(--brand-cyan);">24 / 24 Checks</div>
+    <div class="metric-value" style="font-size: 18px; color: var(--brand-primary);">24 / 24 Checks</div>
     <div class="metric-sub">Referential integrity verified</div>
   </div>
 
   <div class="metric-card">
-    <div class="metric-label">Evaluation Benchmark</div>
-    <div class="metric-value" style="font-size: 20px; color: #facc15;">F1: 0.968</div>
-    <div class="metric-sub">P: 0.952 | R: 0.984</div>
+    <div class="metric-label">Evaluation Metric</div>
+    <div class="metric-value" style="font-size: 18px; color: #f59e0b;">F1: 0.735</div>
+    <div class="metric-sub">P: 68.8% | R: 78.9%</div>
   </div>
 
   <div class="metric-card">
     <div class="metric-label">Relational Export</div>
-    <div class="metric-value" style="font-size: 20px; color: #ffffff;">SQL + CSV</div>
-    <div class="metric-sub">PostgreSQL / MySQL compatible</div>
+    <div class="metric-value" style="font-size: 18px; color: var(--text-primary);">SQL + CSV</div>
+    <div class="metric-sub">PostgreSQL / MySQL DDL+DML</div>
   </div>
 </div>
 
-<div class="panel-card">
-  <h3 class="panel-title">Available Relational Exports & Manifests</h3>
-  <table class="data-table">
-    <thead>
-      <tr>
-        <th>Artifact Name</th>
-        <th>Format</th>
-        <th>Description</th>
-        <th>Download</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Transactions Export</strong></td>
-        <td><code>CSV</code></td>
-        <td>Full transaction ledger records</td>
-        <td><a href="/api/v1/operations/exports/transactions.csv" class="btn btn-secondary btn-sm" download>Download CSV</a></td>
-      </tr>
-      <tr>
-        <td><strong>Alerts Intelligence Export</strong></td>
-        <td><code>CSV</code></td>
-        <td>Generated alerts with explainability scores and reason codes</td>
-        <td><a href="/api/v1/operations/exports/alerts.csv" class="btn btn-secondary btn-sm" download>Download CSV</a></td>
-      </tr>
-      <tr>
-        <td><strong>Investigation Cases Export</strong></td>
-        <td><code>CSV</code></td>
-        <td>Cases and analyst dispositions</td>
-        <td><a href="/api/v1/operations/exports/cases.csv" class="btn btn-secondary btn-sm" download>Download CSV</a></td>
-      </tr>
-      <tr>
-        <td><strong>Relational Database DDL + DML</strong></td>
-        <td><code>SQL</code></td>
-        <td>ANSI-SQL compatible export (Tables, foreign keys, row data)</td>
-        <td><a href="/api/v1/operations/exports/sentineliq_relational_export.sql" class="btn btn-secondary btn-sm" download>Download SQL</a></td>
-      </tr>
-      <tr>
-        <td><strong>Integrity Manifest</strong></td>
-        <td><code>JSON</code></td>
-        <td>Cryptographic SHA-256 hashes for all exported artifacts</td>
-        <td><a href="/api/v1/operations/exports/manifest.json" class="btn btn-secondary btn-sm" download>Download JSON</a></td>
-      </tr>
-    </tbody>
-  </table>
+<div class="panel" style="padding: 0;">
+  <div class="panel-header" style="padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-subtle);">
+    <h3 class="panel-title">Available Relational Exports & Manifests</h3>
+  </div>
+  <div style="overflow-x: auto;">
+    <table class="table-clean">
+      <thead>
+        <tr>
+          <th>Artifact Name</th>
+          <th>Format</th>
+          <th>Description</th>
+          <th style="text-align: right;">Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color: var(--text-primary);">Transactions Export</strong></td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">CSV</code></td>
+          <td style="color: var(--text-muted); font-size: 12px;">Full transaction ledger records</td>
+          <td style="text-align: right;"><a href="/api/v1/operations/exports/transactions.csv" class="btn btn-secondary btn-sm" download>Download CSV</a></td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--text-primary);">Alerts Intelligence Export</strong></td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">CSV</code></td>
+          <td style="color: var(--text-muted); font-size: 12px;">Generated alerts with explainability scores and reason codes</td>
+          <td style="text-align: right;"><a href="/api/v1/operations/exports/alerts.csv" class="btn btn-secondary btn-sm" download>Download CSV</a></td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--text-primary);">Investigation Cases Export</strong></td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">CSV</code></td>
+          <td style="color: var(--text-muted); font-size: 12px;">Cases and analyst dispositions</td>
+          <td style="text-align: right;"><a href="/api/v1/operations/exports/cases.csv" class="btn btn-secondary btn-sm" download>Download CSV</a></td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--text-primary);">Relational Database DDL + DML</strong></td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">SQL</code></td>
+          <td style="color: var(--text-muted); font-size: 12px;">ANSI-SQL compatible export (Tables, foreign keys, row data)</td>
+          <td style="text-align: right;"><a href="/api/v1/operations/exports/sentineliq_relational_export.sql" class="btn btn-secondary btn-sm" download>Download SQL</a></td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--text-primary);">Integrity Manifest</strong></td>
+          <td><code style="font-family: var(--font-mono); font-size: 11px;">JSON</code></td>
+          <td style="color: var(--text-muted); font-size: 12px;">Cryptographic SHA-256 hashes for all exported artifacts</td>
+          <td style="text-align: right;"><a href="/api/v1/operations/exports/manifest.json" class="btn btn-secondary btn-sm" download>Download JSON</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

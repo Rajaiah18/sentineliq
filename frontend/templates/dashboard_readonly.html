@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}SentinelIQ | Executive Overview (Read-Only){% endblock %}
+{% block title %}SentinelIQ | Executive Risk Overview (Auditor Access){% endblock %}
 
 {% block content %}
-<!-- Notice Banner for Read-Only Access -->
-<div style="background: rgba(148, 163, 184, 0.1); border: 1px solid var(--border-color); border-left: 4px solid var(--text-muted); padding: 0.75rem 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-  <div style="display: flex; align-items: center; gap: 0.75rem;">
-    <span class="role-pill" style="background-color: #1e293b; color: #94a3b8; border: 1px solid #334155;">AUDITOR ACCESS</span>
-    <span style="color: var(--text-muted); font-size: 13px;">
-      Read-Only mode active. You have full inspection privileges for transaction intelligence and reports. Management controls and data mutation are restricted.
+<div style="background: rgba(148, 163, 184, 0.08); border: 1px solid var(--border-default); border-left: 3px solid var(--text-dim); padding: 0.65rem 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+  <div style="display: flex; align-items: center; gap: 0.65rem;">
+    <span class="role-pill role-pill-readonly">AUDITOR VIEW</span>
+    <span style="color: var(--text-muted); font-size: 12px;">
+      Read-Only mode active. You have full inspection privileges for transaction intelligence and reports. Management controls and data mutations are restricted.
     </span>
   </div>
-  <a href="/reports" class="btn btn-secondary btn-sm" style="font-size: 11px;">View Reports</a>
+  <a href="/reports" class="btn btn-secondary btn-sm">Compliance Reports</a>
 </div>
 
 <div class="page-header">
@@ -21,133 +20,130 @@
   </div>
 </div>
 
-<!-- Read-Only Aggregate Metric Cards -->
-<div class="metrics-grid">
-  <div class="metric-card">
-    <div class="metric-label">Monitored Customers</div>
-    <div class="metric-value">{{ metrics.total_customers | default(0) }}</div>
-    <div class="metric-sub">Monitored customer entities</div>
+<!-- Top Compact 4 Primary Metrics Row -->
+<div class="metrics-row-4">
+  <div class="metric-card-compact accent-primary">
+    <div class="metric-header">
+      <span class="metric-title">Monitored Accounts</span>
+      <span class="badge badge-low">Active</span>
+    </div>
+    <div class="metric-value-large">{{ metrics.total_accounts | default(0) }}</div>
+    <div class="metric-subtext">Across {{ metrics.total_customers | default(0) }} customer profiles</div>
   </div>
 
-  <div class="metric-card">
-    <div class="metric-label">Active Accounts</div>
-    <div class="metric-value">{{ metrics.total_accounts | default(0) }}</div>
-    <div class="metric-sub">Checking, savings, credit</div>
+  <div class="metric-card-compact accent-success">
+    <div class="metric-header">
+      <span class="metric-title">Processed Ledger Volume</span>
+      <span class="badge badge-low">USD</span>
+    </div>
+    <div class="metric-value-large" style="font-size: 20px;">${{ "{:,.2f}".format(metrics.total_volume_usd | default(0)) }}</div>
+    <div class="metric-subtext">{{ metrics.total_transactions | default(0) }} Ledger operations</div>
   </div>
 
-  <div class="metric-card">
-    <div class="metric-label">Total Transactions</div>
-    <div class="metric-value">{{ metrics.total_transactions | default(0) }}</div>
-    <div class="metric-sub">Processed operations</div>
+  <div class="metric-card-compact accent-high">
+    <div class="metric-header">
+      <span class="metric-title">Generated Alerts</span>
+      <span class="badge badge-medium">{{ metrics.alert_rate_percent | default(0) }}% Rate</span>
+    </div>
+    <div class="metric-value-large">{{ metrics.total_alerts | default(0) }}</div>
+    <div class="metric-subtext">{{ metrics.critical_alerts | default(0) }} Critical severity</div>
   </div>
 
-  <div class="metric-card high">
-    <div class="metric-label">Total Alerts</div>
-    <div class="metric-value">{{ metrics.total_alerts | default(0) }}</div>
-    <div class="metric-sub">{{ metrics.critical_alerts | default(0) }} Critical severity</div>
-  </div>
-
-  <div class="metric-card">
-    <div class="metric-label">Alert Rate</div>
-    <div class="metric-value" style="color: var(--brand-cyan);">{{ metrics.alert_rate_percent | default(0) }}%</div>
-    <div class="metric-sub">Transactions flagged</div>
-  </div>
-
-  <div class="metric-card">
-    <div class="metric-label">Investigation Cases</div>
-    <div class="metric-value">{{ metrics.open_cases | default(0) }}</div>
-    <div class="metric-sub">Cases currently open</div>
+  <div class="metric-card-compact accent-primary">
+    <div class="metric-header">
+      <span class="metric-title">Investigation Cases</span>
+      <span class="badge badge-open">Open</span>
+    </div>
+    <div class="metric-value-large">{{ metrics.open_cases | default(0) }}</div>
+    <div class="metric-subtext">Active investigations</div>
   </div>
 </div>
 
 <!-- Visual Distributions (Read-Only) -->
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+<div class="grid-2col">
   <!-- Alert Severity Distribution -->
-  <div class="panel-card" style="margin-bottom: 0;">
-    <h3 class="panel-title">Alert Distribution by Severity</h3>
-    <table class="data-table" style="margin-top: 0.5rem;">
-      <thead>
-        <tr>
-          <th>Severity Band</th>
-          <th>Threshold</th>
-          <th>Alert Count</th>
-          <th>Share</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="badge badge-critical">CRITICAL</span></td>
-          <td>Score &ge; 85</td>
-          <td><strong>{{ metrics.alerts_by_severity.get("CRITICAL", 0) }}</strong></td>
-          <td style="color: var(--text-dim);">Highest priority</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-high">HIGH</span></td>
-          <td>Score 70–84</td>
-          <td><strong>{{ metrics.alerts_by_severity.get("HIGH", 0) }}</strong></td>
-          <td style="color: var(--text-dim);">Suspicious pattern</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-medium">MEDIUM</span></td>
-          <td>Score 50–69</td>
-          <td><strong>{{ metrics.alerts_by_severity.get("MEDIUM", 0) }}</strong></td>
-          <td style="color: var(--text-dim);">Elevated anomaly</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-low">LOW</span></td>
-          <td>Score &lt; 50</td>
-          <td><strong>{{ metrics.alerts_by_severity.get("LOW", 0) }}</strong></td>
-          <td style="color: var(--text-dim);">Informational</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-heading">Alert Distribution by Severity</div>
+    </div>
+    <div class="table-wrapper">
+      <table class="table-clean">
+        <thead>
+          <tr>
+            <th>Severity Band</th>
+            <th>Score Range</th>
+            <th class="num">Alert Count</th>
+            <th>Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-critical">CRITICAL</span></td>
+            <td>Score &ge; 85</td>
+            <td class="num"><strong>{{ metrics.alerts_by_severity.get("CRITICAL", 0) }}</strong></td>
+            <td style="color: var(--text-dim);">Immediate Action</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-high">HIGH</span></td>
+            <td>Score 70–84</td>
+            <td class="num"><strong>{{ metrics.alerts_by_severity.get("HIGH", 0) }}</strong></td>
+            <td style="color: var(--text-dim);">Elevated Pattern</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-medium">MEDIUM</span></td>
+            <td>Score 50–69</td>
+            <td class="num"><strong>{{ metrics.alerts_by_severity.get("MEDIUM", 0) }}</strong></td>
+            <td style="color: var(--text-dim);">Under Surveillance</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-low">LOW</span></td>
+            <td>Score &lt; 50</td>
+            <td class="num"><strong>{{ metrics.alerts_by_severity.get("LOW", 0) }}</strong></td>
+            <td style="color: var(--text-dim);">Informational</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- Case Status Distribution -->
-  <div class="panel-card" style="margin-bottom: 0;">
-    <h3 class="panel-title">Investigation Status Breakdown</h3>
-    <table class="data-table" style="margin-top: 0.5rem;">
-      <thead>
-        <tr>
-          <th>Workflow Status</th>
-          <th>Active Cases</th>
-          <th>Review State</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="badge badge-open">OPEN</span></td>
-          <td><strong>{{ metrics.cases_by_status.get("OPEN", 0) }}</strong></td>
-          <td style="color: var(--text-muted);">Awaiting investigation</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-high">IN_PROGRESS</span></td>
-          <td><strong>{{ metrics.cases_by_status.get("IN_PROGRESS", 0) }}</strong></td>
-          <td style="color: var(--text-muted);">Active analyst review</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-medium">PENDING_REVIEW</span></td>
-          <td><strong>{{ metrics.cases_by_status.get("PENDING_REVIEW", 0) }}</strong></td>
-          <td style="color: var(--text-muted);">Escalated to Compliance</td>
-        </tr>
-        <tr>
-          <td><span class="badge badge-closed">CLOSED</span></td>
-          <td><strong>{{ metrics.cases_by_status.get("CLOSED", 0) }}</strong></td>
-          <td style="color: var(--text-muted);">Final disposition archived</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Read-Only Quick Navigation Links -->
-<div class="panel-card">
-  <h3 class="panel-title">Read-Only Investigation Directories</h3>
-  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 0.5rem;">
-    <a href="/transactions" class="btn btn-secondary" style="text-align: center; padding: 0.75rem;">Inspect Transactions</a>
-    <a href="/customers" class="btn btn-secondary" style="text-align: center; padding: 0.75rem;">Inspect Customers</a>
-    <a href="/alerts" class="btn btn-secondary" style="text-align: center; padding: 0.75rem;">Inspect Alerts</a>
-    <a href="/cases" class="btn btn-secondary" style="text-align: center; padding: 0.75rem;">Inspect Cases</a>
+  <!-- Investigation Case Status Breakdown -->
+  <div class="panel">
+    <div class="panel-header">
+      <div class="panel-heading">Investigation Status Breakdown</div>
+    </div>
+    <div class="table-wrapper">
+      <table class="table-clean">
+        <thead>
+          <tr>
+            <th>Workflow Status</th>
+            <th class="num">Active Cases</th>
+            <th>Review State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-open">OPEN</span></td>
+            <td class="num"><strong>{{ metrics.cases_by_status.get("OPEN", 0) }}</strong></td>
+            <td style="color: var(--text-muted);">Awaiting investigation</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-high">IN_PROGRESS</span></td>
+            <td class="num"><strong>{{ metrics.cases_by_status.get("IN_PROGRESS", 0) }}</strong></td>
+            <td style="color: var(--text-muted);">Active analyst review</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-medium">PENDING_REVIEW</span></td>
+            <td class="num"><strong>{{ metrics.cases_by_status.get("PENDING_REVIEW", 0) }}</strong></td>
+            <td style="color: var(--text-muted);">Escalated to Compliance</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-closed">CLOSED</span></td>
+            <td class="num"><strong>{{ metrics.cases_by_status.get("CLOSED", 0) }}</strong></td>
+            <td style="color: var(--text-muted);">Final disposition recorded</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 {% endblock %}

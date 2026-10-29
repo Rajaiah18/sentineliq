@@ -1,0 +1,56 @@
+<!-- Reusable SentinelIQ Risk Score Component -->
+<div class="risk-score-box">
+  <div class="risk-score-headline">
+    <div>
+      <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-dim); letter-spacing: 0.05em;">Calculated Risk Score</span>
+      <div style="display: flex; align-items: baseline; gap: 0.6rem; margin-top: 0.2rem;">
+        <span class="risk-score-val" style="color: {% if score >= 85 %}#ef4444{% elif score >= 70 %}#f97316{% elif score >= 50 %}#f59e0b{% else %}#10b981{% endif %};">
+          {{ score | round(1) }} <span style="font-size: 14px; font-weight: 500; color: var(--text-dim);">/ 100</span>
+        </span>
+        <span class="badge badge-{{ severity | lower }}" style="font-size: 11px; padding: 0.2rem 0.5rem;">
+          {{ severity }} RISK
+        </span>
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <span style="font-size: 10px; color: var(--text-dim); text-transform: uppercase;">Confidence</span>
+      <div style="font-size: 12px; font-weight: 600; color: var(--text-muted); font-family: var(--font-mono);">DETERMINISTIC · 100%</div>
+    </div>
+  </div>
+
+  <!-- Segmented Severity Scale Track -->
+  <div class="risk-scale-container">
+    <div class="risk-scale-track">
+      <div class="scale-seg-low" title="Low Risk Band: 0 - 49"></div>
+      <div class="scale-seg-med" title="Medium Risk Band: 50 - 69"></div>
+      <div class="scale-seg-high" title="High Risk Band: 70 - 84"></div>
+      <div class="scale-seg-crit" title="Critical Risk Band: 85 - 100"></div>
+
+      <!-- Filled Needle Bar up to score -->
+      <div class="scale-pointer-bar" style="width: {{ [score, 100] | min }}%; background-color: {% if score >= 85 %}#ef4444{% elif score >= 70 %}#f97316{% elif score >= 50 %}#f59e0b{% else %}#10b981{% endif %};"></div>
+    </div>
+    <div class="scale-labels-legend">
+      <span>0 (Low)</span>
+      <span>50 (Medium)</span>
+      <span>70 (High)</span>
+      <span>85 (Critical)</span>
+      <span>100</span>
+    </div>
+  </div>
+
+  {% if explanation %}
+  <div style="background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-xs); padding: 0.65rem 0.85rem; font-size: 12px; line-height: 1.5; color: var(--text-primary);">
+    <strong style="color: var(--text-dim); text-transform: uppercase; font-size: 10px; display: block; margin-bottom: 0.2rem;">Explainability Narrative</strong>
+    {{ explanation }}
+  </div>
+  {% endif %}
+
+  {% if reason_codes %}
+  <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+    <span style="font-size: 10px; color: var(--text-dim); text-transform: uppercase; font-weight: 600;">Standard Reason Codes:</span>
+    {% for rc in reason_codes %}
+      <code style="background-color: var(--bg-surface); border: 1px solid var(--border-default); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 10px; color: var(--brand-cyan);">{{ rc }}</code>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
