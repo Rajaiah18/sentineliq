@@ -448,6 +448,7 @@ def cases_list(
     return templates.TemplateResponse("cases.html", ctx)
 
 
+@frontend_router.get("/workspace", response_class=HTMLResponse)
 @frontend_router.get("/cases/workspace", response_class=HTMLResponse)
 def workspace_view(request: Request):
     user, err = require_html_permission(request, "view:workspace", "workspace")
