@@ -17,7 +17,7 @@ SentinelIQ is a Python-first, FastAPI-powered enterprise application designed fo
 - **Serverless Web Platform on Vercel:**
   - Runs as a Python ASGI Serverless Function (`api/index.py` with `@vercel/python`).
   - Edge-cached static assets (`frontend/static/`).
-  - Deploys via **Vercel Git Integration** (`https://github.com/ajayreddy510/sentineliq`) or `vercel` CLI.
+  - Deploys via **Vercel Git Integration** (`https://github.com/Rajaiah18/sentineliq`) or `vercel` CLI.
   - Storage: In-memory pre-seeded storage or connected MongoDB Atlas.
 
 ---
@@ -30,7 +30,7 @@ SentinelIQ is a Python-first, FastAPI-powered enterprise application designed fo
 2. Click **New +** &rarr; **Blueprint**.
 3. Connect your GitHub repository:
    ```text
-   https://github.com/ajayreddy510/sentineliq
+   https://github.com/Rajaiah18/sentineliq
    ```
 4. Render will automatically read `render.yaml` from the root of the repository.
 5. Click **Apply Blueprint**. Render will build and deploy the `sentineliq` web service on its free tier.
@@ -40,7 +40,7 @@ SentinelIQ is a Python-first, FastAPI-powered enterprise application designed fo
 
 If you prefer to configure the service manually on Render:
 1. Go to **New +** &rarr; **Web Service**.
-2. Select **Build and deploy from a Git repository** and pick `ajayreddy510/sentineliq`.
+2. Select **Build and deploy from a Git repository** and pick `Rajaiah18/sentineliq`.
 3. Fill in the service configuration:
    - **Name:** `sentineliq`
    - **Region:** `Oregon (US West)` or your preferred region
@@ -69,7 +69,7 @@ If you prefer to configure the service manually on Render:
 
 1. Log in to [Vercel](https://vercel.com).
 2. Click **Add New...** &rarr; **Project**.
-3. Select your GitHub repository: `ajayreddy510/sentineliq`.
+3. Select your GitHub repository: `Rajaiah18/sentineliq`.
 4. Vercel automatically detects the project root and `vercel.json`.
 5. Keep **Framework Preset** as **Other**.
 6. (Optional) Set Environment Variables if connecting MongoDB:
