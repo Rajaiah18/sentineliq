@@ -20,12 +20,12 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/api/index.py"
+      "dest": "api/index.py"
     }
   ],
   "env": {
     "APP_ENV": "production",
     "APP_STORAGE": "memory",
-    "API_BASE_URL": "https://sentineliq-backend.onrender.com/api/v1"
+    "API_BASE_URL": "/api/v1"
   }
 }

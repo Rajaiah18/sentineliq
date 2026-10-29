@@ -4,85 +4,132 @@
 
 ---
 
-## 1. Hosting Architecture
+## 1. Hosting Architecture Overview
 
-SentinelIQ is architected for independent, production-grade cloud deployment:
+SentinelIQ is a Python-first, FastAPI-powered enterprise application designed for seamless deployment on both **Render** and **Vercel**:
 
-- **FastAPI Backend:** Deployed to **Render** as a standard Python Web Service (`uvicorn backend.app.main:app`).
-- **Database Persistence:** Hosted on **MongoDB Atlas** with Replica Set support and explicit unique/compound indexing.
-- **Frontend:** Server-rendered Jinja2 interface deployable directly as part of the FastAPI unified service on Render, or as a standalone Python Serverless application on **Vercel** (`api/index.py` with `@vercel/python`).
+- **Unified Web Platform on Render (Recommended for Full Workflows):**
+  - Runs as an active Python ASGI web service (`uvicorn backend.app.main:app`).
+  - Supports background database indexing, streaming exports, and long-running validation suites.
+  - Deploys via one-click **Render Blueprint** (`render.yaml`) or Dockerfile.
+  - Storage: In-memory fallback by default, or persistent MongoDB Atlas.
 
----
-
-## 2. Critical Platform Deployment Analysis: Vercel vs. Render
-
-### Vercel Python Serverless Constraints
-1. **Serverless Execution Model:** Vercel functions are stateless and ephemeral with maximum execution durations (default 10s on hobby, up to 300s on pro). Vercel does **not** support conventional, permanently running daemon processes or persistent background workers.
-2. **Socket & File System Isolation:** The local container filesystem on Vercel is read-only (except `/tmp`). Heavy generation runs (e.g. 100,000 transactions) must not be written to local disks in serverless functions.
-3. **Closest Python-First Alternative:**
-   - **Unified Deployment (Recommended):** Host the FastAPI application on Render, which natively serves both the REST API and the Jinja2 server-rendered HTML pages at full speed with zero cross-origin latency.
-   - **Separated Deployment:** Deploy `frontend/app.py` to Vercel via `@vercel/python` pointing its `API_BASE_URL` to the Render backend service.
+- **Serverless Web Platform on Vercel:**
+  - Runs as a Python ASGI Serverless Function (`api/index.py` with `@vercel/python`).
+  - Edge-cached static assets (`frontend/static/`).
+  - Deploys via **Vercel Git Integration** (`https://github.com/ajayreddy510/sentineliq`) or `vercel` CLI.
+  - Storage: In-memory pre-seeded storage or connected MongoDB Atlas.
 
 ---
 
-## 3. Render Backend Deployment Guide
+## 2. Deploying on Render (Step-by-Step)
 
-### Step 1: Create Web Service on Render
-1. Connect your GitHub repository: `sentineliq-risk-intelligence`.
-2. Select **Python 3** as the runtime environment.
-3. Configure settings:
+### Option A: 1-Click Render Blueprint (Fastest)
+
+1. Go to [Render Dashboard](https://dashboard.render.com).
+2. Click **New +** &rarr; **Blueprint**.
+3. Connect your GitHub repository:
+   ```text
+   https://github.com/ajayreddy510/sentineliq
+   ```
+4. Render will automatically read `render.yaml` from the root of the repository.
+5. Click **Apply Blueprint**. Render will build and deploy the `sentineliq` web service on its free tier.
+6. Once deployed, open your assigned URL: `https://sentineliq.onrender.com` (or similar).
+
+### Option B: Manual Web Service Setup
+
+If you prefer to configure the service manually on Render:
+1. Go to **New +** &rarr; **Web Service**.
+2. Select **Build and deploy from a Git repository** and pick `ajayreddy510/sentineliq`.
+3. Fill in the service configuration:
+   - **Name:** `sentineliq`
+   - **Region:** `Oregon (US West)` or your preferred region
+   - **Branch:** `main`
+   - **Runtime:** `Python 3`
    - **Build Command:** `pip install -r requirements.txt`
    - **Start Command:** `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT --workers 2`
-   - **Health Check Path:** `/health`
-
-### Step 2: Configure Environment Variables
-Set the following environment variables in the Render Dashboard:
-```ini
-APP_ENV=production
-APP_STORAGE=mongodb
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority
-MONGODB_DATABASE=sentineliq_risk_intelligence
-SECRET_KEY=<generate_secure_random_hex_string_32_bytes_min>
-ACCESS_TOKEN_EXPIRE_MINUTES=480
-ENABLE_DEMO_USERS=true
-CORS_ORIGINS=["https://sentineliq.vercel.app","http://localhost:8000"]
-API_BASE_URL=https://<your-render-app>.onrender.com/api/v1
-```
+   - **Instance Type:** `Free`
+4. Add Environment Variables:
+   | Key | Value | Description |
+   | :--- | :--- | :--- |
+   | `PYTHON_VERSION` | `3.10.12` | Runtime version |
+   | `APP_ENV` | `production` | Production mode |
+   | `APP_STORAGE` | `memory` | In-memory with seed (or `mongodb` if using Atlas) |
+   | `ENABLE_DEMO_USERS`| `true` | Enables pre-seeded demo accounts |
+   | `ACCESS_TOKEN_EXPIRE_MINUTES` | `480` | JWT session lifetime |
+   | `CORS_ORIGINS` | `["*"]` | Allowed CORS origins |
+   | `SECRET_KEY` | *(Click Generate)* | Secure JWT HMAC secret key |
+5. Click **Create Web Service**.
 
 ---
 
-## 4. MongoDB Atlas Setup Guide
+## 3. Deploying on Vercel (Step-by-Step)
 
-### Step 1: Create Cluster & User
-1. Log in to [MongoDB Atlas](https://cloud.mongodb.com) and create an **M0 Free Tier** or Dedicated cluster.
-2. Under **Security &rarr; Database Access**, create a user (e.g. `sentineliq_admin`) with `readWriteAnyDatabase` privileges.
-3. Under **Security &rarr; Network Access**, whitelist your deployment IP addresses (or `0.0.0.0/0` with strong authentication for initial testing).
+### Option A: Import via Vercel Dashboard (Recommended)
 
-### Step 2: Get Connection String
-1. Click **Connect &rarr; Drivers &rarr; Python 3.10+**.
-2. Copy the connection URI:
-   `mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority`
-3. Paste into `MONGODB_URI` in `.env` or Render environment settings.
+1. Log in to [Vercel](https://vercel.com).
+2. Click **Add New...** &rarr; **Project**.
+3. Select your GitHub repository: `ajayreddy510/sentineliq`.
+4. Vercel automatically detects the project root and `vercel.json`.
+5. Keep **Framework Preset** as **Other**.
+6. (Optional) Set Environment Variables if connecting MongoDB:
+   - `APP_STORAGE`: `memory` (or `mongodb`)
+   - `MONGODB_URI`: `<your_atlas_connection_string>` (optional)
+7. Click **Deploy**.
+8. Vercel compiles the `@vercel/python` serverless bundle and assigns a live domain:
+   ```text
+   https://sentineliq-*.vercel.app
+   ```
 
-### Step 3: Run Database Seeder
-From a local terminal with network access to Atlas:
+### Option B: Deploy via Vercel CLI
+
+From your local machine:
 ```bash
-python -m scripts.seed_database --export-dir ./exports
+# 1. Login to Vercel
+npx vercel login
+
+# 2. Deploy to Preview
+npx vercel
+
+# 3. Deploy to Production
+npx vercel --prod
 ```
-This idempotently creates all indexes and upserts the generated financial entities into Atlas!
 
 ---
 
-## 5. Deployment Verification Checklist
+## 4. Optional: MongoDB Atlas Database Setup
 
-| Verification Item | Command / URL | Expected Result |
-|---|---|---|
-| **1. Backend Liveness** | `GET /health` | HTTP 200, status: "healthy", service: "SentinelIQ" |
-| **2. Database Readiness** | `GET /health/ready` | HTTP 200, database_connected: true, ping succeeds |
-| **3. OpenAPI Docs** | `GET /docs` | Swagger UI loads with full schema |
-| **4. Web UI Dashboard** | `GET /dashboard` | Metrics populate from real database |
-| **5. Authentication** | `POST /api/v1/auth/login` | Valid JWT token issued, cookie set |
-| **6. Case Management** | `POST /api/v1/cases` | New case created and visible in dashboard |
-| **7. Validation Run** | `GET /api/v1/metrics/data-quality` | 24 validation checks reported |
-| **8. Evaluation Run** | `GET /api/v1/metrics/evaluation/summary` | Precision, recall, and confusion matrix visible |
-| **9. Exports Download** | `GET /api/v1/exports/customers.csv` | Valid UTF-8 CSV stream with SHA-256 matching manifest |
+To persist data permanently across restarts on both Render and Vercel:
+
+1. Create a free cluster at [cloud.mongodb.com](https://cloud.mongodb.com).
+2. Create a database user with read/write privileges (e.g. `sentineliq_admin`).
+3. Add `0.0.0.0/0` to Network Access IP Whitelist.
+4. Copy the connection URI:
+   ```text
+   mongodb+srv://<username>:<password>@cluster0.mongodb.net/?retryWrites=true&w=majority
+   ```
+5. In Render or Vercel dashboard:
+   - Set `APP_STORAGE` = `mongodb`
+   - Set `MONGODB_URI` = `<your connection string>`
+6. Run the initial data seeder:
+   ```bash
+   python -m scripts.seed_database --export-dir ./exports
+   ```
+
+---
+
+## 5. Live Production Verification Checklist
+
+Once deployed to Render or Vercel, verify each endpoint:
+
+| Verification Item | Endpoint | Expected Result |
+| :--- | :--- | :--- |
+| **1. Service Liveness** | `GET /health` | HTTP 200 `{"status": "healthy", ...}` |
+| **2. Database Readiness** | `GET /health/ready` | HTTP 200 (database ping success) |
+| **3. OpenAPI Docs** | `GET /docs` | Swagger interactive API docs |
+| **4. Login Screen** | `GET /login` | SentinelIQ Sign-In with 4 demo accounts |
+| **5. Admin Dashboard** | `GET /dashboard` | 4 metric cards, alerts table, audit stream |
+| **6. Evaluation Benchmark**| `GET /evaluation` | 2x2 confusion matrix, F1 0.735, precision 68.8% |
+| **7. Rules Engine** | `GET /rules` | Configurable rules, scenario simulator |
+| **8. Integrity Suite** | `GET /validation` | 24 automated checks, 5 negative scenarios |
+| **9. Data Exports** | `GET /api/v1/exports/customers.csv` | Streamed CSV with SHA-256 validation |
