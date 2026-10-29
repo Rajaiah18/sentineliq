@@ -48,6 +48,14 @@ htmlcov/
 *.swo
 
 # OS files
+Thumbs.db
+Desktop.ini
+
+# Vercel & local build
+.vercel/
+.python-version
+uv.lock
+
 .DS_Store
 Thumbs.db
 
@@ -65,3 +73,5 @@ reports/*.json
 ground_truth/*.csv
 ground_truth/*.json
 !ground_truth/.gitkeep
+
+.vercel
